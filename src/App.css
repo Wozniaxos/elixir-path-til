@@ -1,0 +1,35 @@
+.add-post {
+  margin: 20px auto;
+  display: block;
+}
+
+.App {
+  margin: 20px;
+}
+
+code {
+  background-color: aqua;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+}
+
+nav li {
+  margin: 0 20px;
+  list-style: none;
+}
+.post {
+  margin-top: 15px;
+  padding: 15px;
+}
+.posts {
+  width: 90%;
+  margin: auto;
+}

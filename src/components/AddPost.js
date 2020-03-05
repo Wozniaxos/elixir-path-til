@@ -1,11 +1,13 @@
+import * as Showdown from "showdown";
 import React, { useState } from "react";
 import ReactMde from "react-mde";
-import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
+import { useHistory } from "react-router-dom";
 
 const AddPost = props => {
-  const [value, setValue] = useState("");
   const [buttonState, setButtonState] = useState(true);
+  const history = useHistory();
+  const [input, setInput] = useState("");
   const [selectedTab, setSelectedTab] = useState("write");
 
   const converter = new Showdown.Converter({
@@ -24,17 +26,25 @@ const AddPost = props => {
       },
       body: data
     });
-    return await response.json();
+    return response.ok;
   };
 
   const savePost = () => {
-    const html = converter.makeHtml(value);
+    const html = converter.makeHtml(input);
     const htmlObject = { html };
-    postData("http://localhost:5000/posts", JSON.stringify(htmlObject));
+    const savePost = postData(
+      "http://localhost:5000/posts",
+      JSON.stringify(htmlObject)
+    );
+    if (savePost) {
+      setInput("");
+      setButtonState(true);
+      history.push("/posts");
+    }
   };
 
   const handleChange = input => {
-    setValue(input);
+    setInput(input);
     if (input.length) setButtonState(false);
     else setButtonState(true);
   };
@@ -43,7 +53,7 @@ const AddPost = props => {
     <>
       <div className="container">
         <ReactMde
-          value={value}
+          value={input}
           onChange={handleChange}
           selectedTab={selectedTab}
           onTabChange={setSelectedTab}

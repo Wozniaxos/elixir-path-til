@@ -9,8 +9,11 @@ const Posts = props => {
   }, []);
 
   const fetchPosts = async () => {
-    const response = await fetch("http://localhost:5000/posts/");
+    const response = await fetch(
+      "http://localhost:5000/posts?_sort=id&_order=DESC"
+    );
     const body = await response.json();
+    console.log({ body });
     const postsHtml = body.map(postObject => postObject.html);
     setPosts(postsHtml);
   };

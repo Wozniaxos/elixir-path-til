@@ -9,6 +9,7 @@ const AddPost = props => {
   const history = useHistory();
   const [input, setInput] = useState("");
   const [selectedTab, setSelectedTab] = useState("write");
+  const [title, setTitle] = useState("");
 
   const converter = new Showdown.Converter({
     tables: true,
@@ -31,35 +32,42 @@ const AddPost = props => {
 
   const savePost = () => {
     const html = converter.makeHtml(input);
-    const htmlObject = { html };
+    const htmlObject = { html, title };
     const savePost = postData(
       "http://localhost:5000/posts",
       JSON.stringify(htmlObject)
     );
     if (savePost) {
-      setInput("");
-      setButtonState(true);
       history.push("/posts");
     }
   };
 
-  const handleChange = input => {
+  const handleInput = input => {
     setInput(input);
     if (input.length) setButtonState(false);
     else setButtonState(true);
   };
 
+  const handleTitle = event => setTitle(event.target.value);
+
   return (
     <>
+      <form>
+        <label>
+          Title:
+          <input type="text" name="name" value={title} onChange={handleTitle} />
+        </label>
+      </form>
       <div className="container">
         <ReactMde
           value={input}
-          onChange={handleChange}
+          onChange={handleInput}
           selectedTab={selectedTab}
           onTabChange={setSelectedTab}
           generateMarkdownPreview={markdown =>
             Promise.resolve(converter.makeHtml(markdown))
           }
+          disablePreview={true}
         />
         <button className="add-post" disabled={buttonState} onClick={savePost}>
           Save Post If You're Happy With It :)

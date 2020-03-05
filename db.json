@@ -2,18 +2,22 @@
   "posts": [
     {
       "html": "<p><strong>Hello world!!!</strong></p>",
+      "title": "Title",
       "id": 1
     },
     {
       "html": "<p><strong>Hello world!!!</strong>fgsfg</p>",
+      "title": "example",
       "id": 2
     },
     {
       "html": "<p>dfdfaee</p>",
+      "title": "Another title",
       "id": 3
     },
     {
       "html": "<p><strong>Hello world!!!</strong></p>\n<p>where is my </p>\n<p>line break???</p>",
+      "title": "Hiya",
       "id": 4
     },
     {
@@ -22,23 +26,33 @@
     },
     {
       "html": "<p><strong>Hello world!!!</strong></p>\n<h1 id=\"headerhere\">header here</h1>\n<p><strong>bold</strong></p>\n<p><em>italic</em></p>\n<p><del> line-through</del></p>\n<p><code>single line of code</code> normal text</p>",
+      "title": "dfdf",
       "id": 6
     },
     {
       "html": "<p>some code picture</p>\n<p><img src=\"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80\" alt=\"\" /></p>",
+      "title": "dfdf",
       "id": 7
     },
     {
       "html": "<p><strong>Hello world!!!</strong></p>\n<pre><code class=\"java language-java\">java code\n</code></pre>",
+      "title": "dfdf",
       "id": 8
     },
     {
-      "html": "<p>**hello ***</p>",
-      "id": 9
+      "html": "<p>hkh</p>",
+      "title": "Łukasz Walczak",
+      "id": 12
     },
     {
-      "html": "<p><em>heaa</em></p>",
-      "id": 10
+      "html": "<p>dffdf</p>",
+      "title": "dfef",
+      "id": 13
+    },
+    {
+      "html": "<h1 id=\"title\">title</h1>\n<p>some text</p>",
+      "title": "Lukasz Walczak",
+      "id": 14
     }
   ]
 }

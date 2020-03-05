@@ -9,7 +9,7 @@ import Posts from "./components/Posts";
 function App() {
   return (
     <Router>
-      <div className="App">
+      <main className="App">
         <nav>
           <ul>
             <li>
@@ -28,7 +28,7 @@ function App() {
             <Posts />
           </Route>
         </Switch>
-      </div>
+      </main>
     </Router>
   );
 }

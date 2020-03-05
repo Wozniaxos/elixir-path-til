@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import Post from "./Post";
 import "../App.css";
 
 const Posts = props => {
@@ -13,26 +15,20 @@ const Posts = props => {
       "http://localhost:5000/posts?_sort=id&_order=DESC"
     );
     const body = await response.json();
-    console.log({ body });
-    const postsHtml = body.map(postObject => postObject.html);
+    const postsHtml = body.map(postObject => ({
+      html: postObject.html,
+      title: postObject.title
+    }));
     setPosts(postsHtml);
   };
 
-  const createMarkup = html => {
-    return { __html: html };
-  };
-
-  const postsList = posts.map(html => {
-    return (
-      <div>
-        <hr />
-        <div className="post" dangerouslySetInnerHTML={createMarkup(html)} />
-        <hr />
-      </div>
-    );
-  });
-
-  return <div className="posts">{postsList}</div>;
+  return (
+    <div className="posts">
+      {posts.map(postObject => (
+        <Post {...postObject} />
+      ))}
+    </div>
+  );
 };
 
 export default Posts;

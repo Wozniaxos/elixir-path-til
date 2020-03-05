@@ -43,6 +43,10 @@
     {
       "html": "<p><strong>still works</strong></p>",
       "id": 11
+    },
+    {
+      "html": "<h1 id=\"checkingagain\">checking again</h1>\n<p><strong>works like a charm</strong></p>",
+      "id": 12
     }
   ]
 }

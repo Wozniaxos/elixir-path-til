@@ -33,9 +33,9 @@ const AddPost = props => {
     postData("http://localhost:5000/posts", JSON.stringify(htmlObject));
   };
 
-  const handleChange = string => {
-    setValue(string);
-    if (value) setButtonState(false);
+  const handleChange = input => {
+    setValue(input);
+    if (input.length) setButtonState(false);
     else setButtonState(true);
   };
 

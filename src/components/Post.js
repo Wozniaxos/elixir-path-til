@@ -1,11 +1,8 @@
 import React from "react";
 
-const Post = ({ html, title }) => {
-  const createMarkup = html => {
-    return { __html: html };
-  };
-  console.log(html);
+import { createMarkup } from "../utils";
 
+const Post = ({ html, title }) => {
   return (
     <section>
       <article>

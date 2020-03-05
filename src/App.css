@@ -25,11 +25,22 @@ nav li {
   margin: 0 20px;
   list-style: none;
 }
+
+.noShow {
+  display: none !important;
+}
+
 .post {
   margin-top: 15px;
-  padding: 15px;
+  ūpadding: 15px;
 }
 .posts {
   width: 90%;
   margin: auto;
+}
+
+.preview {
+  min-height: 200px;
+  border: 1px solid #c8ccd0;
+  padding: 10px;
 }

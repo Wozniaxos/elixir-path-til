@@ -1,58 +1,59 @@
 {
   "posts": [
     {
-      "html": "<p><strong>Hello world!!!</strong></p>",
-      "title": "Title",
-      "id": 1
+      "markdown": "fdfdfd",
+      "title": "",
+      "id": 19
     },
     {
-      "html": "<p><strong>Hello world!!!</strong>fgsfg</p>",
-      "title": "example",
-      "id": 2
+      "markdown": "hdodjflsf",
+      "title": "",
+      "id": 20
     },
     {
-      "html": "<p>dfdfaee</p>",
-      "title": "Another title",
-      "id": 3
+      "markdown": "``` \nthis is javascript function () {\nreturn everything\n}",
+      "title": "some tittle",
+      "id": 21
     },
     {
-      "html": "<p><strong>Hello world!!!</strong></p>\n<p>where is my </p>\n<p>line break???</p>",
-      "title": "Hiya",
-      "id": 4
+      "markdown": "dfdddsa",
+      "title": "3333",
+      "id": 22
     },
     {
-      "html": "<p><strong>Hello world!!!</strong></p>\n<p>no line breakk</p>\n<p>for heaven sake!</p>\n<pre><code>this is \n   code, man\n</code></pre>",
-      "id": 5
+      "markdown": "addfessefsasasfd",
+      "title": "",
+      "id": 23
     },
     {
-      "html": "<p><strong>Hello world!!!</strong></p>\n<h1 id=\"headerhere\">header here</h1>\n<p><strong>bold</strong></p>\n<p><em>italic</em></p>\n<p><del> line-through</del></p>\n<p><code>single line of code</code> normal text</p>",
-      "title": "dfdf",
-      "id": 6
+      "markdown": " ```\n const postData = async (url = \"\", data) => {\n    const response = await fetch(url, {\n      method: \"POST\",\n      credentials: \"same-origin\",\n      headers: {\n        \"Content-Type\": \"application/json\"\n      },\n      body: data\n    });\n    return response.ok;\n  };\n```",
+      "title": "",
+      "id": 24
     },
     {
-      "html": "<p>some code picture</p>\n<p><img src=\"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80\" alt=\"\" /></p>",
-      "title": "dfdf",
-      "id": 7
+      "markdown": " ```js \ndef \nend\n const postData = async (url = \"\", data) => {\n    const response = await fetch(url, {\n      method: \"POST\",\n      credentials: \"same-origin\",\n      headers: {\n        \"Content-Type\": \"application/json\"\n      },\n      body: data\n    });\n    return response.ok;\n  };\n```",
+      "title": "",
+      "id": 25
     },
     {
-      "html": "<p><strong>Hello world!!!</strong></p>\n<pre><code class=\"java language-java\">java code\n</code></pre>",
-      "title": "dfdf",
-      "id": 8
+      "markdown": "dfdffde\n\n ```js\n const postData = async (url = \"\", data) => {\n    const response = await fetch(url, {\n      method: \"POST\",\n      credentials: \"same-origin\",\n      headers: {\n        \"Content-Type\": \"application/json\"\n      },\n      body: data\n    });\n    return response.ok;\n  };\n```",
+      "title": "122",
+      "id": 26
     },
     {
-      "html": "<p>hkh</p>",
-      "title": "Łukasz Walczak",
-      "id": 12
+      "markdown": "```ruby \nmodule Internal\n  module Dashboard\n    class StatisticsController < Sinatra::Base\n      include Serial::RailsHelpers\n\n      use Rack::Auth::Basic, 'Protected Area' do |username, password|\n        username == App.config.internal_basic_auth_name &&\n          password == App.config.internal_basic_auth_password\n      end\n\n      get '/', provides: :json do\n        statistics = InternalStatistics.new(year: params[:year], month: params[:month])\n\n        serialize(statistics).to_json\n      end\n\n      private\n\n      def view_context\n        Rails.application.routes.url_helpers\n      end\n    end\n  end\nend\n```",
+      "title": "",
+      "id": 27
     },
     {
-      "html": "<p>dffdf</p>",
-      "title": "dfef",
-      "id": 13
+      "markdown": "# this is ruby\n\n```ruby\nmodule Internal\n  module Dashboard\n    class StatisticsController < Sinatra::Base\n      include Serial::RailsHelpers\n\n      use Rack::Auth::Basic, 'Protected Area' do |username, password|\n        username == App.config.internal_basic_auth_name &&\n          password == App.config.internal_basic_auth_password\n      end\n\n      get '/', provides: :json do\n        statistics = InternalStatistics.new(year: params[:year], month: params[:month])\n\n        serialize(statistics).to_json\n      end\n\n      private\n\n      def view_context\n        Rails.application.routes.url_helpers\n      end\n    end\n  end\nend\n```",
+      "title": "what is ruby?",
+      "id": 28
     },
     {
-      "html": "<h1 id=\"title\">title</h1>\n<p>some text</p>",
-      "title": "Lukasz Walczak",
-      "id": 14
+      "markdown": "# h1\n\n*still in business*",
+      "title": "",
+      "id": 29
     }
   ]
 }

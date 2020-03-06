@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import Markdown from "./components/Markdown";
 import "./App.css";
 
 import AddPost from "./components/AddPost";
@@ -9,6 +10,7 @@ import Posts from "./components/Posts";
 function App() {
   return (
     <Router>
+      <Markdown />
       <main className="App">
         <nav>
           <ul>

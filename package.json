@@ -8,10 +8,12 @@
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-highlight.js": "^1.0.7",
+    "react-markdown": "^4.3.1",
     "react-mde": "^8.1.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "showdown": "^1.9.1"
+    "react-syntax-highlighter": "^12.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -14,18 +14,14 @@ const Posts = props => {
     const response = await fetch(
       "http://localhost:5000/posts?_sort=id&_order=DESC"
     );
-    const body = await response.json();
-    const postsHtml = body.map(postObject => ({
-      html: postObject.html,
-      title: postObject.title
-    }));
-    setPosts(postsHtml);
+    const fetchedPosts = await response.json();
+    setPosts(fetchedPosts);
   };
 
   return (
     <div className="posts">
       {posts.map(postObject => (
-        <Post {...postObject} />
+        <Post key={postObject.id} {...postObject} />
       ))}
     </div>
   );

@@ -7,9 +7,9 @@
   margin: 20px;
 }
 
-code {
+/* code {
   background-color: aqua;
-}
+} */
 
 .container {
   width: 90%;
@@ -32,7 +32,7 @@ nav li {
 
 .post {
   margin-top: 15px;
-  ūpadding: 15px;
+  padding: 15px;
 }
 .posts {
   width: 90%;

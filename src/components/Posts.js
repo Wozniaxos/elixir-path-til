@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Post from "./Post";
 import "../App.css";
 
 const Posts = props => {
@@ -9,27 +10,26 @@ const Posts = props => {
   }, []);
 
   const fetchPosts = async () => {
-    const response = await fetch("http://localhost:5000/posts/");
-    const body = await response.json();
-    const postsHtml = body.map(postObject => postObject.html);
-    setPosts(postsHtml);
+    const response = await fetch(
+      "http://localhost:5000/posts?_sort=id&_order=DESC"
+    ).catch(error => console.error("Error:", error));
+
+    if (!response) {
+      return;
+    }
+
+    const fetchedPosts = await response.json();
+
+    setPosts(fetchedPosts);
   };
 
-  const createMarkup = html => {
-    return { __html: html };
-  };
-
-  const postsList = posts.map(html => {
-    return (
-      <div>
-        <hr />
-        <div className="post" dangerouslySetInnerHTML={createMarkup(html)} />
-        <hr />
-      </div>
-    );
-  });
-
-  return <div className="posts">{postsList}</div>;
+  return (
+    <div className="posts">
+      {posts.map(postObject => (
+        <Post key={postObject.id} {...postObject} />
+      ))}
+    </div>
+  );
 };
 
 export default Posts;

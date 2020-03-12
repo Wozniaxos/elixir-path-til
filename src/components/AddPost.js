@@ -1,61 +1,53 @@
 import React, { useState } from "react";
 import ReactMde from "react-mde";
-import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
+import { useHistory } from "react-router-dom";
+import Markdown from "./Markdown";
+import { postData } from "../utils";
 
 const AddPost = props => {
-  const [value, setValue] = useState("");
   const [buttonState, setButtonState] = useState(true);
-  const [selectedTab, setSelectedTab] = useState("write");
-
-  const converter = new Showdown.Converter({
-    tables: true,
-    simplifiedAutoLink: true,
-    strikethrough: true,
-    tasklists: true
-  });
-
-  const postData = async (url = "", data) => {
-    const response = await fetch(url, {
-      method: "POST",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: data
-    });
-    return await response.json();
-  };
+  const history = useHistory();
+  const [markdown, setMarkdown] = useState("");
+  const [title, setTitle] = useState("");
 
   const savePost = () => {
-    const html = converter.makeHtml(value);
-    const htmlObject = { html };
-    postData("http://localhost:5000/posts", JSON.stringify(htmlObject));
+    const markdownPost = { markdown, title };
+    const savePost = postData(
+      "http://localhost:5000/posts",
+      JSON.stringify(markdownPost)
+    );
+    if (savePost) history.push("/posts");
   };
 
-  const handleChange = string => {
-    setValue(string);
-    if (value) setButtonState(false);
+  const handleInput = input => {
+    setMarkdown(input);
+    if (input.length) setButtonState(false);
     else setButtonState(true);
   };
 
+  const handleTitle = event => setTitle(event.target.value);
+
   return (
-    <>
-      <div className="container">
-        <ReactMde
-          value={value}
-          onChange={handleChange}
-          selectedTab={selectedTab}
-          onTabChange={setSelectedTab}
-          generateMarkdownPreview={markdown =>
-            Promise.resolve(converter.makeHtml(markdown))
-          }
-        />
-        <button className="add-post" disabled={buttonState} onClick={savePost}>
-          Save Post If You're Happy With It :)
-        </button>
+    <div className="container">
+      <form className="add-post-title">
+        <label>
+          Title:
+          <input type="text" name="name" value={title} onChange={handleTitle} />
+        </label>
+      </form>
+      <ReactMde
+        classes={{ toolbar: "noShow" }}
+        onChange={handleInput}
+        value={markdown}
+      />
+      <button className="add-post" disabled={buttonState} onClick={savePost}>
+        Save Post If You're Happy With It :)
+      </button>
+      <div className="preview">
+        <Markdown source={markdown} />
       </div>
-    </>
+    </div>
   );
 };
 

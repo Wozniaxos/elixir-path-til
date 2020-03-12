@@ -1,4 +1,4 @@
-export const postData = async (url = "", data) => {
+export const postData = async (url, data) => {
   const response = await fetch(url, {
     method: "POST",
     credentials: "same-origin",
@@ -7,5 +7,6 @@ export const postData = async (url = "", data) => {
     },
     body: data
   });
+
   return response.ok;
 };

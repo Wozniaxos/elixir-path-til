@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import Post from "./Post";
 import "../App.css";
 
@@ -13,8 +12,14 @@ const Posts = props => {
   const fetchPosts = async () => {
     const response = await fetch(
       "http://localhost:5000/posts?_sort=id&_order=DESC"
-    );
+    ).catch(error => console.error("Error:", error));
+
+    if (!response) {
+      return;
+    }
+
     const fetchedPosts = await response.json();
+
     setPosts(fetchedPosts);
   };
 

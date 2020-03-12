@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :til,
-  ecto_repos: [Til.Repo]
+  ecto_repos: [Til.Repo],
+  frontend_host: System.get_env("FRONTEND_HOST")
 
 # Configures the endpoint
 config :til, TilWeb.Endpoint,
@@ -22,6 +23,24 @@ config :til, TilWeb.Endpoint,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+config :ueberauth, Ueberauth,
+  providers: [
+    google: {Ueberauth.Strategy.Google, []}
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
+# Configure the authentication plug pipeline
+config :til, TilWeb.Plug.AuthAccessPipeline,
+  module: Til.Guardian,
+  error_handler: TilWeb.Plug.AuthErrorHandler
+
+config :til, Til.Guardian,
+  issuer: "til",
+  secret_key: System.get_env("GUARDIAN_SECRET")
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason

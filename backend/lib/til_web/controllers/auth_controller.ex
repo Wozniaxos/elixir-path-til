@@ -33,7 +33,7 @@ defmodule TilWeb.AuthController do
     conn
     |> put_resp_header("authorization", "Bearer #{jwt}")
     |> redirect(
-      external: "#{Application.get_env(:til, :frontend_host)}"
+      external: "#{Application.get_env(:til, :frontend_host)}/auth?auth_token=#{jwt}"
     )
   end
 

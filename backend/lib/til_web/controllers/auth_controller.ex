@@ -16,19 +16,18 @@ defmodule TilWeb.AuthController do
       }
     } = conn, _
   ) do
-    case Accounts.get_user_by(email: email) do
+    {:ok, user} = case Accounts.get_user_by(email: email) do
       nil ->
-        {:ok, user} =
-          Accounts.create_user(%{
-            email: email,
-            first_name: first_name,
-            last_name: last_name,
-            image: image
-          })
-      user ->
+        Accounts.create_user(%{
+          email: email,
+          first_name: first_name,
+          last_name: last_name,
+          image: image
+        })
+      user -> {:ok, user}
     end
 
-    {:ok, jwt, _} = jwt_handler().encode_and_sign(email)
+    {:ok, jwt, _} = jwt_handler().encode_and_sign(user.uuid)
 
     conn
     |> put_resp_header("authorization", "Bearer #{jwt}")

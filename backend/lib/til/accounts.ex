@@ -1,5 +1,5 @@
 defmodule Til.Accounts do
-  import Ecto.Query, warn: false
+  import Ecto, warn: false
   alias Til.Repo
   alias Til.Accounts.User
 
@@ -9,7 +9,7 @@ defmodule Til.Accounts do
 
   def create_user(attrs \\ %{}) do
     %User{}
-    |> User.changeset(attrs)
+    |> User.changeset(attrs |> Map.merge(%{uuid: Ecto.UUID.generate}))
     |> Repo.insert()
   end
 end

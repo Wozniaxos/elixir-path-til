@@ -1,8 +1,6 @@
 defmodule TilWeb.AuthControllerTest do
   use TilWeb.ConnCase
-
   alias Til.Accounts
-  alias Til.Accounts.User
 
   describe "/api/auth/:provider/callback" do
     test "user gets created when requested email is NOT persisted in the database", %{conn: conn} do
@@ -27,6 +25,7 @@ defmodule TilWeb.AuthControllerTest do
       assert created_user.first_name == "Peter"
       assert created_user.last_name == "Parker"
       assert created_user.image == "some_image"
+      assert not is_nil created_user.uuid
     end
 
     test "returns 200 OK status with json containing token and user information", %{conn: conn} do
@@ -44,9 +43,9 @@ defmodule TilWeb.AuthControllerTest do
 
       assert conn.status == 302
 
-      assert String.match?(
+      assert String.contains?(
         conn.resp_body,
-        ~r/localhost:3000\/auth\?auth_token=/
+        "localhost:3000/auth?auth_token="
       )
     end
   end

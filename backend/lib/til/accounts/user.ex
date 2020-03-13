@@ -7,13 +7,14 @@ defmodule Til.Accounts.User do
     field :first_name, :string
     field :last_name, :string
     field :image, :string
+    field :uuid, :string
   end
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:email, :first_name, :last_name, :image])
+    |> cast(params, [:uuid, :email, :first_name, :last_name, :image])
     |> validate_format(:email, ~r/@/)
-    |> validate_required([:email])
+    |> validate_required([:email, :uuid])
     |> unique_constraint(:email)
   end
 end

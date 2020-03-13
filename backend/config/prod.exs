@@ -10,8 +10,14 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :til, TilWeb.Endpoint,
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  http: [port: {:system, "PORT"}],
+  url: [host: "selleo-til-api.herokuapp.com", port: 443],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]]
+
+config :hello, Til.Repo,
+  ssl: true,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 # Do not print debug messages in production
 config :logger, level: :info

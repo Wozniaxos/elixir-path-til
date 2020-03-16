@@ -10,24 +10,27 @@ const Posts = props => {
   }, []);
 
   const fetchPosts = async () => {
-    const response = await fetch(
-      "http://localhost:5000/posts?_sort=id&_order=DESC"
-    ).catch(error => console.error("Error:", error));
+    const response = await fetch("/api/posts")
+      .catch(error =>
+        console.error("Error:", error)
+      );
 
     if (!response) {
       return;
     }
-
     const fetchedPosts = await response.json();
 
-    setPosts(fetchedPosts);
+    // TODO  setPosts(fetchedPosts);
   };
 
   return (
     <div className="posts">
-      {posts.map(postObject => (
-        <Post key={postObject.id} {...postObject} />
-      ))}
+      <>
+        <p>posts listed here</p>
+        {posts.map(post => (
+          <Post key={post.id} {...post} />
+        ))}
+      </>
     </div>
   );
 };

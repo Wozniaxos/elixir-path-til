@@ -10,6 +10,6 @@ defmodule Til.Repo.Migrations.CreateUsers do
       add :uuid, :string
     end
 
-    unique_index(:users, :email)
+    unique_index(:users, :email, :uuid)
   end
 end

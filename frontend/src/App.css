@@ -1,24 +1,15 @@
-.add-post {
-  margin: 20px auto;
-  display: block;
+* {
+  padding: 5px;
 }
 
-.App {
-  margin: 20px;
+.side-nav-bar {
+  border: 1px solid #000000;
+  width: 200px;
 }
 
-.container {
-  width: 90%;
-  margin: auto;
-}
-
-nav ul {
+.side-nav-bar-list {
   display: flex;
-  justify-content: center;
-}
-
-nav li {
-  margin: 0 20px;
+  flex-direction: column;
   list-style: none;
 }
 
@@ -31,12 +22,12 @@ nav li {
   padding: 15px;
 }
 .posts {
-  width: 90%;
   margin: auto;
+  width: 90%;
 }
 
 .preview {
-  min-height: 200px;
   border: 1px solid #c8ccd0;
+  min-height: 200px;
   padding: 10px;
 }

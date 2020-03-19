@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+const localStorageKey = 'til_token'
 
 export const postData = async (url, data) => {
   const response = await fetch(url, {
@@ -20,12 +21,12 @@ export const useQuery = () => {
 };
 
 export const isAuthenticated = () => {
-  const token = window.localStorage.getItem("til_token");
+  const token = window.localStorage.getItem(localStorageKey);
   if (token) return true;
 
   return false;
 };
 
 export const deleteToken = () => {
-  window.localStorage.removeItem("til_token");
+  window.localStorage.removeItem(localStorageKey);
 };

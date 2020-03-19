@@ -7,7 +7,7 @@ const SideBar = props => {
       <p>this will go on the side like selleo til</p>
       <ul className="side-nav-bar-list">
         <li>
-          <a href="http://localhost:4000/auth/google"> login</a>
+          <a href="http://localhost:4000/auth/google">login</a>
         </li>
         <li>link to search </li>
         <li>

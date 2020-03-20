@@ -1,16 +1,14 @@
 import React from "react";
-import { deleteToken } from "../utils";
+import Logout from "./Logout";
+import { Link } from "react-router-dom";
 
 const AdminPanel = ({ setIsLoggedIn }) => {
-  const logOut = () => {
-    setIsLoggedIn(false);
-    deleteToken();
-  };
-
   return (
-    <div>
-      <button onClick={logOut}>log out</button>
-      <p>AdminPanel here</p>
+    <div className="admin-panel">
+      <Logout setIsLoggedIn={setIsLoggedIn} />
+      <Link to="/add-post">
+        <p>add post</p>
+      </Link>
     </div>
   );
 };

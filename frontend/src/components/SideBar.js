@@ -4,17 +4,22 @@ import { Link } from "react-router-dom";
 const SideBar = props => {
   return (
     <nav className="side-nav-bar">
-      <p>this will go on the side like selleo til</p>
       <ul className="side-nav-bar-list">
         <li>
           <a href="http://localhost:4000/auth/google">login</a>
         </li>
-        <li>link to search </li>
         <li>
-          <Link to="/stats">link to stats</Link>
+          <Link to="/">home</Link>
+        </li>
+        <li> search </li>
+        <li>
+          <Link to="/stats"> stats</Link>
         </li>
         <li>
-          <Link to="/random-post">link to random</Link>
+          <Link to="/random-post"> random</Link>
+        </li>
+        <li>
+          <Link to="/categories"> categories</Link>
         </li>
       </ul>
     </nav>

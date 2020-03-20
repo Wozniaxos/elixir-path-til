@@ -3,6 +3,8 @@ import { Switch, Route } from "react-router-dom";
 import RandomPost from "../components/RandomPost";
 import Stats from "../components/Stats";
 import Posts from "../components/Posts";
+import DisplayPost from "../components/DisplayPost";
+import Categories from "./Categories";
 
 const MainRoutes = () => {
   return (
@@ -15,6 +17,12 @@ const MainRoutes = () => {
       </Route>
       <Route path="/stats">
         <Stats />
+      </Route>
+      <Route path="/categories">
+        <Categories />
+      </Route>
+      <Route path="/posts/:id">
+        <DisplayPost />
       </Route>
     </Switch>
   );

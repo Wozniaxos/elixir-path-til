@@ -42,7 +42,7 @@ const AddPost = props => {
         value={markdown}
       />
       <button className="add-post" disabled={buttonState} onClick={savePost}>
-        Save Post If You're Happy With It :)
+        Save Post If You're Happy With It
       </button>
       <div className="preview">
         <Markdown source={markdown} />

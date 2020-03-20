@@ -14,5 +14,9 @@ config :til, TilWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: "xxx",
+  client_secret: "xxx"
+
 # Print only warnings and errors during test
 config :logger, level: :warn

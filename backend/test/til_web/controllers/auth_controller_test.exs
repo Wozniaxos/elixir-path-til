@@ -2,7 +2,7 @@ defmodule TilWeb.AuthControllerTest do
   use TilWeb.ConnCase
   alias Til.Accounts
 
-  describe "/api/auth/:provider/callback" do
+  describe "/auth/:provider/callback" do
     test "user gets created when requested email is NOT persisted in the database", %{conn: conn} do
       subject_email = "peter@parker.com"
 

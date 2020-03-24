@@ -42,7 +42,8 @@ defmodule Til.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:ueberauth_google, "~> 0.8"},
-      {:guardian, "~> 2.0"}
+      {:guardian, "~> 2.0"},
+      {:ex_machina, "~> 2.3", only: :test}
     ]
   end
 

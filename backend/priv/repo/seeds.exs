@@ -1,11 +1,15 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Til.Repo.insert!(%Til.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+alias Til.ShareableContent.Category
+alias Til.Repo
+
+categories = [
+  "android", "angular", "aws", "chrome", "commandline", "crystal", "css", "docker", "elasticsearch",
+  "elixir", "ember", "emberjs", "erlang", "flutter", "general", "git", "heroku", "html", "javascript", "k8s",
+  "linux", "markdown", "meetup", "mongodb", "nodejs", "osx", "phoenix", "rails", "react", "react-native", "redis",
+  "ruby", "rust", "sql", "terraform", "vault"
+]
+
+Enum.map(categories, fn category ->
+  Repo.insert! %Category{
+    name: category
+  }
+end)

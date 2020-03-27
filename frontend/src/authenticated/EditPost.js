@@ -14,11 +14,17 @@ import Select from "react-select";
 const EditPost = props => {
   const [buttonState, setButtonState] = useState(true);
   const [markdown, setMarkdown] = useState("");
-  const [categories, setCategories] = useState([]);
   const [title, setTitle] = useState("");
-  const categoriesOptions = useSelector(state =>
-    convertToSelectOptions(state.categories)
+  // user categories but with Ids only
+  const [categoriesIds, setCategoriesIds] = useState([]);
+  // select friendly categories used to pass to select options
+  const [categoriesOptions, setCategoriesOptions] = useState("");
+  // select friendly user options
+  const [userCategoriesOptions, setUserCategoriesOptions] = useState(
+    []
   );
+  // allCategories from redux in form {id: 1, name: "java"}
+  const allCategories = useSelector(state => state.categories);
   const history = useHistory();
   const { id } = useParams();
 
@@ -28,16 +34,32 @@ const EditPost = props => {
 
       setMarkdown(post.body);
       setTitle(post.title);
+      setCategoriesIds(post.categoriesIds);
     };
 
     fetchPost();
   }, [id]);
 
+  useEffect(() => {
+    setCategoriesOptions(convertToSelectOptions(allCategories));
+  }, [allCategories]);
+
+  useEffect(() => {
+    const userCategories = allCategories.filter(category =>
+      categoriesIds.includes(category.id)
+    );
+    const userCategoriesOptions = convertToSelectOptions(
+      userCategories
+    );
+
+    setUserCategoriesOptions(userCategoriesOptions);
+  }, [allCategories, categoriesIds]);
+
   const updatePost = () => {
     const markdownPost = {
       body: markdown,
       title: title,
-      categoriesIds: categories
+      categoriesIds: categoriesIds
     };
     const post = updateData(
       "/api/posts/" + id,
@@ -58,17 +80,23 @@ const EditPost = props => {
   };
 
   const handleTitle = event => {
+    setButtonState(false);
+
     setTitle(event.target.value);
   };
 
   const handleSelect = selectedOptions => {
+    setButtonState(false);
+
     if (!selectedOptions) {
+      setCategoriesIds([]);
+
       return;
     }
 
     const categories = selectedOptions.map(obj => obj.value);
 
-    setCategories(categories);
+    setCategoriesIds(categories);
   };
 
   return (
@@ -86,6 +114,7 @@ const EditPost = props => {
         <Select
           isMulti
           name="colors"
+          value={userCategoriesOptions}
           options={categoriesOptions}
           onChange={handleSelect}
           className="basic-multi-select"

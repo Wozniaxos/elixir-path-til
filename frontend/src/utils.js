@@ -57,6 +57,25 @@ export const deleteData = async (url, data) => {
   return response.ok;
 };
 
+// LIKES
+export const handleLike = async (postId, method) => {
+  const response = await fetch(`api/posts/${postId}/likes`, {
+    method: `${method}`,
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
+  });
+
+  return response.ok;
+};
+
+export const checkHasLiked = (likes, userId) => {
+  const likesArray = likes.map(like => like.user_uuid);
+
+  return likesArray.includes(userId);
+};
+
 // AUTHENTICATION
 export const isAuthenticated = () => {
   const token = getToken();
@@ -89,17 +108,4 @@ export const useQuery = () => {
 
 export const convertToSelectOptions = data => {
   return data.map(el => ({ value: el.id, label: el.name }));
-};
-
-export const getUserCategories = (
-  userCategoriesIds,
-  categoriesArray
-) => {
-  const userCategoriesOptions = [];
-  userCategoriesIds.forEach(categoryId => {
-    categoriesArray.forEach(obj => {
-      if (obj.value === categoryId) userCategoriesOptions.push(obj);
-    });
-  });
-  return userCategoriesOptions;
 };

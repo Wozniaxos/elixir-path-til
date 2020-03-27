@@ -11,7 +11,6 @@ const getAllCategories = categories => {
 export const saveAllCategories = () => {
   return async dispatch => {
     const categoriesArray = await fetchData("/api/categories");
-
     dispatch(getAllCategories(categoriesArray));
   };
 };

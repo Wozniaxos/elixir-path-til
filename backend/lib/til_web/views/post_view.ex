@@ -19,6 +19,7 @@ defmodule TilWeb.PostView do
       body: post.body,
       isPublic: post.is_public,
       likesCount: post.likes_count,
+      likes: render(TilWeb.LikeView, "index.json", likes: post.likes),
       author: render(TilWeb.UserView, "show.json", user: post.author),
       categoriesIds: Enum.map(post.categories, & &1.id)
     }

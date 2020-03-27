@@ -27,6 +27,68 @@ defmodule TilWeb.PostControllerTest do
       assert first_post["categoriesIds"] == [first_category.id, second_category.id]
       assert second_post["categoriesIds"] == [first_category.id]
     end
+
+    test "returns all existing posts with proper like count", %{conn: conn} do
+      first_user = insert(:user)
+      second_user = insert(:user)
+
+      first_post = insert(:post)
+      second_post = insert(:post)
+
+      first_like = insert(:like, user_id: first_user.id, post_id: first_post.id)
+      second_like = insert(:like, user_id: second_user.id, post_id: first_post.id)
+      third_like = insert(:like, user_id: first_user.id, post_id: second_post.id)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      [first_responded_post, second_responded_post] = parsed_response_body
+
+      assert first_responded_post["likesCount"] == 2
+      assert second_responded_post["likesCount"] == 1
+    end
+
+    test "returns all existing posts with proper likes", %{conn: conn} do
+      first_user = insert(:user)
+      second_user = insert(:user)
+
+      first_post = insert(:post)
+      second_post = insert(:post)
+
+      first_like = insert(:like, user_id: first_user.id, post_id: first_post.id)
+      second_like = insert(:like, user_id: second_user.id, post_id: first_post.id)
+      third_like = insert(:like, user_id: first_user.id, post_id: second_post.id)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      [first_responded_post, second_responded_post] = parsed_response_body
+
+      [first_responded_like, second_responded_like] = first_responded_post["likes"]
+      [third_responded_like] = second_responded_post["likes"]
+
+      assert first_responded_like["user_uuid"] == first_user.uuid
+      assert first_responded_like["post_id"] == first_post.id
+      assert first_responded_like["user_id"] == nil
+
+      assert second_responded_like["user_uuid"] == second_user.uuid
+      assert second_responded_like["post_id"] == first_post.id
+      assert second_responded_like["user_id"] == nil
+
+      assert third_responded_like["user_uuid"] == first_user.uuid
+      assert third_responded_like["post_id"] == second_post.id
+      assert third_responded_like["user_id"] == nil
+    end
   end
 
   describe "GET /api/posts/:id" do
@@ -47,6 +109,54 @@ defmodule TilWeb.PostControllerTest do
 
       assert parsed_response_body["title"] == post_title
       assert parsed_response_body["categoriesIds"] == [first_category.id, second_category.id]
+    end
+
+    test "returns particular post with proper likes count", %{conn: conn} do
+      first_user = insert(:user)
+      second_user = insert(:user)
+
+      post = insert(:post)
+
+      first_like = insert(:like, user_id: first_user.id, post_id: post.id)
+      second_like = insert(:like, user_id: second_user.id, post_id: post.id)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["likesCount"] == 2
+    end
+
+    test "returns particular post with proper likes data", %{conn: conn} do
+      first_user = insert(:user)
+      second_user = insert(:user)
+
+      post = insert(:post)
+
+      first_like = insert(:like, user_id: first_user.id, post_id: post.id)
+      second_like = insert(:like, user_id: second_user.id, post_id: post.id)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      [first_responded_like, second_responded_like] = parsed_response_body["likes"]
+
+      assert first_responded_like["user_uuid"] == first_user.uuid
+      assert first_responded_like["post_id"] == post.id
+      assert first_responded_like["user_id"] == nil
+
+      assert second_responded_like["user_uuid"] == second_user.uuid
+      assert second_responded_like["post_id"] == post.id
+      assert second_responded_like["user_id"] == nil
     end
   end
 

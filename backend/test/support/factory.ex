@@ -3,6 +3,7 @@ defmodule Til.Factory do
   import Ecto
   alias Til.Accounts.User
   alias Til.ShareableContent.{Author, Post, Category}
+  alias Til.Activities.Like
 
   def user_factory do
     %User{
@@ -28,5 +29,9 @@ defmodule Til.Factory do
     %Category{
       name: sequence(:name, &"name-#{&1}")
     }
+  end
+
+  def like_factory do
+    %Like{}
   end
 end

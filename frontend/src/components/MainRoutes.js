@@ -5,6 +5,7 @@ import Stats from "../components/Stats";
 import Posts from "../components/Posts";
 import DisplayPost from "../components/DisplayPost";
 import Categories from "./Categories";
+import UserPosts from "./UsersPosts";
 
 const MainRoutes = () => {
   return (
@@ -23,6 +24,9 @@ const MainRoutes = () => {
       </Route>
       <Route path="/posts/:id">
         <DisplayPost />
+      </Route>
+      <Route path="/user-posts/:id">
+        <UserPosts />
       </Route>
     </Switch>
   );

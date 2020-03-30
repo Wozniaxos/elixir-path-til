@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import Post from "./Post";
-import { fetchData } from "../utils";
 import "../App.css";
 
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const posts = await fetchData("/api/posts");
-
-      setPosts(posts);
-    };
-
-    fetchPosts();
-  }, []);
+  const posts = useSelector(state => state.posts);
 
   return (
     <div className="posts">

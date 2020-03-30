@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { isAuthenticated } from "../utils";
 
 const SideBar = props => {
+  const [isLoggedIn, setIsLoggedIn] = useState("");
+
+  useEffect(() => {
+    setIsLoggedIn(isAuthenticated());
+  }, []);
+
   return (
     <nav className="side-nav-bar">
       <ul className="side-nav-bar-list">
-        <li>
-          <a href="http://localhost:4000/auth/google">login</a>
-        </li>
+        {!isLoggedIn && (
+          <li>
+            <a href="http://localhost:4000/auth/google">login</a>
+          </li>
+        )}
         <li>
           <Link to="/">home</Link>
         </li>

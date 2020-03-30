@@ -6,7 +6,12 @@ import AuthHandler from "./components/AuthHandler";
 import AuthenticatedApp from "./authenticated";
 import { isAuthenticated } from "./utils";
 import NonAuthenticatedApp from "./nonAuthenticated";
-import { saveAllCategories } from "./store/actions/actions";
+import {
+  saveAllCategories,
+  saveCurrentUser,
+  saveAllUsers,
+  saveAllPosts
+} from "./store/actions/actions";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,7 +19,10 @@ function App() {
 
   useEffect(() => {
     setIsLoggedIn(isAuthenticated());
+    dispatch(saveAllPosts());
+    dispatch(saveCurrentUser());
     dispatch(saveAllCategories());
+    dispatch(saveAllUsers());
   }, [dispatch]);
 
   const renderApp = isLoggedIn ? (

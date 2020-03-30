@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 const localStorageKey = "til_token";
 
-// FETCHING POSTS
+// FETCH POSTS
 export const fetchData = async url => {
   const response = await fetch(url);
   const data = response.json();
@@ -57,6 +57,19 @@ export const deleteData = async (url, data) => {
   return response.ok;
 };
 
+// FETCH USERS POSTS
+export const fetchUserPosts = async (url, id) => {
+  try {
+    const response = await fetch(url + id);
+    const user = await response.json();
+    const userPosts = user.posts;
+
+    return userPosts;
+  } catch (error) {
+    console.warn(error);
+  }
+};
+
 // LIKES
 export const handleLike = async (postId, method) => {
   const response = await fetch(`api/posts/${postId}/likes`, {
@@ -104,8 +117,20 @@ export const useQuery = () => {
   return new URLSearchParams(queryString);
 };
 
-// HELPERS
+// FETCH USER
+export const fetchUser = async url => {
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
+  });
 
+  return response.json();
+};
+
+// HELPERS
 export const convertToSelectOptions = data => {
   return data.map(el => ({ value: el.id, label: el.name }));
 };

@@ -4,7 +4,9 @@ import { useSelector } from "react-redux";
 const Categories = props => {
   const categories = useSelector(state => state.categories);
 
-  return categories.map(categorie => <p>{categorie.name}</p>);
+  return categories.map(category => (
+    <p key={category.id}>{category.name}</p>
+  ));
 };
 
 export default Categories;

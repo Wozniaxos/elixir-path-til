@@ -1,1 +1,4 @@
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
+export const GET_CURRENT_USER = "GET_CURRENT_USER";
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const GET_ALL_POSTS = "GET_ALL_POSTS";

@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { handleLike, checkHasLiked } from "../utils";
 
 const Likes = props => {
   const { likesCount, id, likes } = props.post;
+  const userId = useSelector(state => {
+    if (!state.currentUser) {
+      return null;
+    } else {
+      return state.currentUser.uuid;
+    }
+  });
   const [likesNumber, setLikesNumber] = useState(likesCount);
   const [hasLiked, setHasLiked] = useState(null);
 
   useEffect(() => {
-    /* TODO fetch user uuid */
-    const userId = "0cacc9b0-a114-40e2-8f47-838b3eb92c78";
     const didLike = checkHasLiked(likes, userId);
 
     setHasLiked(didLike);
-  }, [likes]);
+  }, [likes, userId]);
 
   const toggleLike = async () => {
     if (hasLiked) {

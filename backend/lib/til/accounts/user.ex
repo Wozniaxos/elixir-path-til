@@ -1,6 +1,7 @@
 defmodule Til.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Til.ShareableContent.Post
 
   schema "users" do
     field :email, :string
@@ -8,6 +9,8 @@ defmodule Til.Accounts.User do
     field :last_name, :string
     field :image, :string
     field :uuid, :string
+
+    has_many :posts, Post, foreign_key: :author_id
   end
 
   def changeset(struct, params) do

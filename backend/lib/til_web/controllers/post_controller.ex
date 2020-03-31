@@ -6,13 +6,13 @@ defmodule TilWeb.PostController do
   def index(conn, _) do
     conn
       |> put_status(:ok)
-      |> render("index.json", posts: ShareableContent.get_posts)
+      |> render("index_with_nested.json", posts: ShareableContent.get_posts)
   end
 
   def show(conn, %{"id" => id}) do
     conn
       |> put_status(:ok)
-      |> render("show.json", post: ShareableContent.get_post(id))
+      |> render("show_with_nested.json", post: ShareableContent.get_post(id))
   end
 
   def create(conn, params) do
@@ -23,7 +23,7 @@ defmodule TilWeb.PostController do
       {:ok, post} ->
         conn
         |> put_status(:created)
-        |> render("show.json", post: ShareableContent.get_post(post.id))
+        |> render("show_with_nested.json", post: ShareableContent.get_post(post.id))
 
       {:error, %Ecto.Changeset{errors: _} = changeset} ->
         render_changeset_error(conn, changeset)
@@ -38,7 +38,7 @@ defmodule TilWeb.PostController do
       {:ok, post} ->
         conn
         |> put_status(:ok)
-        |> render("show.json", post: ShareableContent.get_post(post.id))
+        |> render("show_with_nested.json", post: ShareableContent.get_post(post.id))
 
       {:error, %Ecto.Changeset{errors: _} = changeset} ->
         render_changeset_error(conn, changeset)

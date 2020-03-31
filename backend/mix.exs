@@ -43,7 +43,8 @@ defmodule Til.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:ueberauth_google, "~> 0.8"},
       {:guardian, "~> 2.0"},
-      {:ex_machina, "~> 2.3", only: :test}
+      {:ex_machina, "~> 2.3", only: :test},
+      {:bodyguard, "~> 2.4"}
     ]
   end
 

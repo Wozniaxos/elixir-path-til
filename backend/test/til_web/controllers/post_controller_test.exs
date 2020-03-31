@@ -265,7 +265,7 @@ defmodule TilWeb.PostControllerTest do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
 
-      post = insert(:post)
+      post = insert(:post, author: current_user)
 
       post_title = "Some updated post title"
       post_body = "Some updated post body"
@@ -302,7 +302,7 @@ defmodule TilWeb.PostControllerTest do
       second_category = insert(:category, name: "Javascript")
       third_category = insert(:category, name: "Machine Learning")
 
-      post = insert(:post, categories: [first_category, second_category])
+      post = insert(:post, author: current_user, categories: [first_category, second_category])
 
       response =
         conn
@@ -323,12 +323,33 @@ defmodule TilWeb.PostControllerTest do
       assert post_category.id == third_category.id
     end
 
+    test "throws error when not a post author", %{conn: conn} do
+      first_user = insert(:user)
+      second_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(first_user.uuid, %{})
+
+      post = insert(:post, author: second_user)
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> put(Routes.post_path(conn, :update, post.id), %{
+          title: "Some title",
+        })
+
+      assert response.status == 403
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body == %{"errors" => %{"detail" => "Forbidden"}}
+    end
+
     test "throws 400 error when lack of title", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
 
       post_body = "Some post body"
-      post = insert(:post)
+      post = insert(:post, author: current_user)
 
       response =
         conn
@@ -400,6 +421,25 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       assert length(Repo.all(Category)) == 2
+    end
+
+    test "throws error when not a post author", %{conn: conn} do
+      first_user = insert(:user)
+      second_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(first_user.uuid, %{})
+
+      post = insert(:post, author: second_user)
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> delete(Routes.post_path(conn, :delete, post.id))
+
+      assert response.status == 403
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body == %{"errors" => %{"detail" => "Forbidden"}}
     end
 
     test "throws 401 error when no authenticated", %{conn: conn} do

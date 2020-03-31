@@ -4,6 +4,7 @@ defmodule Til.ShareableContent.Post do
   alias Til.Accounts.User
   alias Til.ShareableContent.Category
   alias Til.Activities.Like
+  defdelegate authorize(action, user, params), to: Til.Policies.PostPolicy
 
   schema "posts" do
     field :title, :string

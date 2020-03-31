@@ -9,6 +9,10 @@ defmodule TilWeb.ErrorView do
     %{error: %{message: message}}
   end
 
+  def render("403.html", _assigns) do
+    "Forbidden"
+  end
+
   def template_not_found(template, _assigns) do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end

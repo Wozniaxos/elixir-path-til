@@ -24,6 +24,7 @@ defmodule TilWeb do
       import Plug.Conn
       import TilWeb.Gettext
       alias TilWeb.Router.Helpers, as: Routes
+      action_fallback TilWeb.FallbackController
     end
   end
 

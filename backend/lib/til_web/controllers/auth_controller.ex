@@ -3,6 +3,12 @@ defmodule TilWeb.AuthController do
   plug Ueberauth
   alias Til.Accounts
 
+  def me(%{private: %{:guardian_default_resource => current_user}} = conn, _) do
+    conn
+    |> put_view(TilWeb.UserView)
+    |> render("show.json", user: current_user)
+  end
+
   def request(conn, _), do: conn
 
   def callback(

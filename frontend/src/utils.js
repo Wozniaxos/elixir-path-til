@@ -134,3 +134,46 @@ export const fetchUser = async url => {
 export const convertToSelectOptions = data => {
   return data.map(el => ({ value: el.id, label: el.name }));
 };
+
+// REACTIONS
+export const handleReaction = async (postId, method, reaction) => {
+  let ending = "";
+
+  if (method === "DELETE") {
+    ending = `/${reaction}`;
+  }
+
+  const response = await fetch(
+    `api/posts/${postId}/reactions${ending}`,
+    {
+      method: `${method}`,
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ type: reaction })
+    }
+  );
+
+  return response.ok;
+};
+
+export const convertReactions = reactions => {
+  const reactionsType = ["like", "funny", "love", "surprised"];
+
+  let filteredReactions = [];
+
+  reactionsType.forEach(reaction => {
+    const result = reactions.filter(el => el.type === reaction);
+    const reactionObj = { type: reaction, whoReacted: result };
+    filteredReactions.push(reactionObj);
+  });
+
+  return filteredReactions;
+};
+
+export const checkHasReacted = (reaction, userId) => {
+  const reactionArray = reaction.map(reaction => reaction.user_uuid);
+
+  return reactionArray.includes(userId);
+};

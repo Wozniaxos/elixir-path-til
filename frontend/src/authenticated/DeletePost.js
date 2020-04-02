@@ -16,10 +16,13 @@ const DeletePost = ({ postId }) => {
     setIsOpenModal(!isModalOpen);
   };
 
-  const deletePost = () => {
-    deleteData(`/api/posts/${postId}`);
-    dispatch(saveAllPosts());
-    dispatch(saveCurrentUserPosts(userId));
+  const deletePost = async () => {
+    const isDeleted = await deleteData(`/api/posts/${postId}`);
+
+    if (isDeleted) {
+      dispatch(saveAllPosts());
+      dispatch(saveCurrentUserPosts(userId));
+    }
   };
 
   return (

@@ -6,7 +6,8 @@ import {
   convertToSelectOptions
 } from "../utils";
 import { useHistory, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { saveAllPosts } from "../store/actions/actions";
 import Markdown from "../components/Markdown";
 import ReactMde from "react-mde";
 import Select from "react-select";
@@ -25,6 +26,7 @@ const EditPost = props => {
   );
   // allCategories from redux in form {id: 1, name: "java"}
   const allCategories = useSelector(state => state.categories);
+  const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
 
@@ -66,7 +68,10 @@ const EditPost = props => {
       JSON.stringify(markdownPost)
     );
 
-    if (post) history.push(`/posts/${id}`);
+    if (post) {
+      history.push(`/posts/${id}`);
+      dispatch(saveAllPosts());
+    }
   };
 
   const handleInput = input => {

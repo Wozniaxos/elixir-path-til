@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Post from "./Post";
 import "../App.css";
 
-const Posts = () => {
+const PostsList = () => {
   const posts = useSelector(state => state.posts);
 
   return (
@@ -15,4 +15,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default PostsList;

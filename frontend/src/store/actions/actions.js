@@ -1,6 +1,7 @@
 import * as actionTypes from "../actionTypes";
-import { fetchUser, fetchData } from "../../utils";
+import { fetchUser, fetchUserPosts, fetchData } from "../../utils";
 
+// CATEGORIES
 const getAllCategories = categories => ({
   type: actionTypes.GET_ALL_CATEGORIES,
   categories
@@ -12,6 +13,7 @@ export const saveAllCategories = () => async dispatch => {
   dispatch(getAllCategories(categoriesArray));
 };
 
+// USER
 const getCurrentUser = currentUser => ({
   type: actionTypes.GET_CURRENT_USER,
   currentUser
@@ -23,16 +25,30 @@ export const saveCurrentUser = () => async dispatch => {
   dispatch(getCurrentUser(currentUser));
 };
 
-export const saveAllUsers = () => async dispatch => {
-  const allUsers = await fetchData("/api/users");
+export const getCurrentUserPosts = currentUserPosts => ({
+  type: actionTypes.GET_CURRENT_USER_POSTS,
+  currentUserPosts
+});
 
-  dispatch(getAllUsers(allUsers));
+export const saveCurrentUserPosts = id => async dispatch => {
+  const posts = await fetchUserPosts("/api/users/", id);
+
+  dispatch(getCurrentUserPosts(posts));
 };
+
+// ALL USERS
 const getAllUsers = users => ({
   type: actionTypes.GET_ALL_USERS,
   users
 });
 
+export const saveAllUsers = () => async dispatch => {
+  const allUsers = await fetchData("/api/users");
+
+  dispatch(getAllUsers(allUsers));
+};
+
+// POSTS
 const getPosts = posts => ({
   type: actionTypes.GET_ALL_POSTS,
   posts

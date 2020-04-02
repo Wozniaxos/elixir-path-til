@@ -4,6 +4,9 @@
 # congfig
 .prettierrc
 
+# testing
+dummyData.js
+
 # dependencies
 /node_modules
 /.pnp

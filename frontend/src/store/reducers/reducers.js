@@ -21,6 +21,12 @@ const rootReducer = (state = initialState, action) => {
         currentUser: action.currentUser
       };
 
+    case actionTypes.GET_CURRENT_USER_POSTS:
+      return {
+        ...state,
+        currentUserPosts: action.currentUserPosts
+      };
+
     case actionTypes.GET_ALL_USERS:
       return {
         ...state,

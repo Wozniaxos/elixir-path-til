@@ -9,6 +9,9 @@ const AdminPanel = ({ setIsLoggedIn }) => {
       <Link to="/add-post">
         <p>add post</p>
       </Link>
+      <Link to="/profile">
+        <p>profile</p>
+      </Link>
     </div>
   );
 };

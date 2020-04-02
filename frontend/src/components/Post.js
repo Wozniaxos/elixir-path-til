@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Markdown from "./Markdown";
 import CopyPostURL from "./CopyURL";
-import DeletePost from "../authenticated/DeletePost";
-import Likes from "./Likes";
 
 const Post = props => {
   const { post } = props;
@@ -17,11 +15,6 @@ const Post = props => {
         <Markdown source={post.body} />
       </article>
       <CopyPostURL postId={post.id} />
-      <Link to={`/edit-post/${post.id}`}>
-        <button>edit</button>
-      </Link>
-      <DeletePost postId={post.id} />
-      <Likes post={post} />
     </section>
   );
 };

@@ -1,17 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { deleteData } from "../utils";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  saveAllPosts,
+  saveCurrentUserPosts
+} from "../store/actions/actions";
+import DeleteModal from "./DeleteModal";
 
 const DeletePost = ({ postId }) => {
-  const deletePost = () => {
-    const confirmed = window.confirm("U sure?");
+  const dispatch = useDispatch();
+  const [isModalOpen, setIsOpenModal] = useState(false);
+  const userId = useSelector(state => state.currentUser.uuid);
 
-    if (confirmed) {
-      deleteData(`/api/posts/${postId}`);
-    }
-    /* TODO refetch query after post deletion */
+  const toggleModal = () => {
+    setIsOpenModal(!isModalOpen);
   };
 
-  return <button onClick={deletePost}>delete</button>;
+  const deletePost = () => {
+    deleteData(`/api/posts/${postId}`);
+    dispatch(saveAllPosts());
+    dispatch(saveCurrentUserPosts(userId));
+  };
+
+  return (
+    <>
+      <button onClick={toggleModal}>delete</button>
+      {isModalOpen && (
+        <DeleteModal
+          deletePost={deletePost}
+          toggleModal={toggleModal}
+        />
+      )}
+    </>
+  );
 };
 
 export default DeletePost;

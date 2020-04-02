@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import { postData, convertToSelectOptions } from "../utils";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { saveAllPosts } from "../store/actions/actions";
 import Markdown from "../components/Markdown";
 import ReactMde from "react-mde";
 import Select from "react-select";
@@ -13,6 +14,7 @@ const AddPost = props => {
   const [markdown, setMarkdown] = useState("");
   const [title, setTitle] = useState("");
   const history = useHistory();
+  const dispatch = useDispatch();
   const categoriesOptions = useSelector(state =>
     convertToSelectOptions(state.categories)
   );
@@ -30,6 +32,7 @@ const AddPost = props => {
 
     if (savePost) {
       history.push("/");
+      dispatch(saveAllPosts());
     }
   };
 

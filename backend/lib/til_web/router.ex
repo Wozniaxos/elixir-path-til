@@ -24,8 +24,8 @@ defmodule TilWeb.Router do
     get "/me", AuthController, :me
 
     resources "/posts", PostController, only: [:create, :update, :delete] do
-      post "/likes", Posts.LikeController, :like
-      delete "/likes", Posts.LikeController, :unlike
+      post "/reactions", Posts.ReactionController, :react
+      delete "/reactions/:type", Posts.ReactionController, :unreact
     end
   end
 end

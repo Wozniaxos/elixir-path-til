@@ -23,7 +23,7 @@ const AddPost = props => {
     const post = {
       body: markdown,
       title: title,
-      categoriesIds: userCategories
+      categoryIds: userCategories
     };
     const savePost = await postData(
       "/api/posts",

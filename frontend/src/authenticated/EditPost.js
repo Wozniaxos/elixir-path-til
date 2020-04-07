@@ -17,7 +17,7 @@ const EditPost = props => {
   const [markdown, setMarkdown] = useState("");
   const [title, setTitle] = useState("");
   // user categories but with Ids only
-  const [categoriesIds, setCategoriesIds] = useState([]);
+  const [categoryIds, setCategoryIds] = useState([]);
   // select friendly categories used to pass to select options
   const [categoriesOptions, setCategoriesOptions] = useState("");
   // select friendly user options
@@ -36,7 +36,7 @@ const EditPost = props => {
 
       setMarkdown(post.body);
       setTitle(post.title);
-      setCategoriesIds(post.categoriesIds);
+      setCategoryIds(post.categoryIds);
     };
 
     fetchPost();
@@ -48,20 +48,20 @@ const EditPost = props => {
 
   useEffect(() => {
     const userCategories = allCategories.filter(category =>
-      categoriesIds.includes(category.id)
+      categoryIds.includes(category.id)
     );
     const userCategoriesOptions = convertToSelectOptions(
       userCategories
     );
 
     setUserCategoriesOptions(userCategoriesOptions);
-  }, [allCategories, categoriesIds]);
+  }, [allCategories, categoryIds]);
 
   const updatePost = () => {
     const markdownPost = {
       body: markdown,
       title: title,
-      categoriesIds: categoriesIds
+      categoryIds: categoryIds
     };
     const post = updateData(
       "/api/posts/" + id,
@@ -94,14 +94,14 @@ const EditPost = props => {
     setButtonState(false);
 
     if (!selectedOptions) {
-      setCategoriesIds([]);
+      setCategoryIds([]);
 
       return;
     }
 
     const categories = selectedOptions.map(obj => obj.value);
 
-    setCategoriesIds(categories);
+    setCategoryIds(categories);
   };
 
   return (

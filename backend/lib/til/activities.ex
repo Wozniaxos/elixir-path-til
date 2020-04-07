@@ -1,36 +1,32 @@
 defmodule Til.Activities do
   import Ecto.Query, warn: false
   alias Til.Repo
-  alias Til.Activities.Like
+  alias Til.Activities.Reaction
 
-  def get_user_like_for_post(post_id, user_id) do
-    user_like_for_post_query =
-      from l in Like,
-        where: l.post_id == ^post_id and l.user_id == ^user_id
+  def get_user_reaction_for_post(post_id, user_id, type) do
+    user_reaction_for_post_query =
+      from r in Reaction,
+        where: r.post_id == ^post_id and r.user_id == ^user_id and r.type == ^type
 
-    Repo.one(user_like_for_post_query)
+    Repo.one(user_reaction_for_post_query)
   end
 
-  def like_post(post_id, user_id) do
-    %Like{}
-    |> Like.changeset(%{user_id: user_id, post_id: post_id})
+  def react_to_post(post_id, user_id, type) do
+    %Reaction{}
+    |> Reaction.changeset(%{user_id: user_id, post_id: post_id, type: type})
     |> Repo.insert()
   end
 
-  def unlike_post(post_id, user_id) do
-    case get_user_like_for_post(post_id, user_id) do
-      %Like{} = like -> delete_like(like)
+  def unreact_to_post(post_id, user_id, type) do
+    case get_user_reaction_for_post(post_id, user_id, type) do
+      %Reaction{} = reaction -> delete_reaction(reaction)
       _ -> {:error, %{message: "not found"}}
     end
   end
 
   # private
 
-  defp create_like(post_id, user_id) do
-
-  end
-
-  defp delete_like(like) do
-    Repo.delete(like)
+  defp delete_reaction(reaction) do
+    Repo.delete(reaction)
   end
 end

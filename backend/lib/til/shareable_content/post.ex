@@ -3,17 +3,17 @@ defmodule Til.ShareableContent.Post do
   import Ecto.Changeset
   alias Til.Accounts.User
   alias Til.ShareableContent.Category
-  alias Til.Activities.Like
+  alias Til.Activities.Reaction
   defdelegate authorize(action, user, params), to: Til.Policies.PostPolicy
 
   schema "posts" do
     field :title, :string
     field :body, :string
     field :is_public, :boolean
-    field :likes_count, :integer, virtual: true
+    field :reaction_count, :integer, virtual: true
 
     belongs_to :author, User
-    has_many(:likes, Like)
+    has_many :reactions, Reaction, on_delete: :delete_all
     many_to_many :categories, Category, join_through: "posts_categories", on_replace: :delete, on_delete: :delete_all
     timestamps()
   end
@@ -30,7 +30,7 @@ defmodule Til.ShareableContent.Post do
     |> unique_constraint(:title)
   end
 
-  def populate_likes_count(post) do
-    %{post | likes_count: length(post.likes)}
+  def populate_reaction_count(post) do
+    %{post | reaction_count: length(post.reactions)}
   end
 end

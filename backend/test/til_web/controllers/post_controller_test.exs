@@ -24,20 +24,20 @@ defmodule TilWeb.PostControllerTest do
 
       [first_post, second_post] = parsed_response_body
 
-      assert first_post["categoriesIds"] == [first_category.id, second_category.id]
-      assert second_post["categoriesIds"] == [first_category.id]
+      assert first_post["categoryIds"] == [first_category.id, second_category.id]
+      assert second_post["categoryIds"] == [first_category.id]
     end
 
-    test "returns all existing posts with proper like count", %{conn: conn} do
+    test "returns all existing posts with proper reaction count", %{conn: conn} do
       first_user = insert(:user)
       second_user = insert(:user)
 
       first_post = insert(:post)
       second_post = insert(:post)
 
-      first_like = insert(:like, user_id: first_user.id, post_id: first_post.id)
-      second_like = insert(:like, user_id: second_user.id, post_id: first_post.id)
-      third_like = insert(:like, user_id: first_user.id, post_id: second_post.id)
+      first_reaction = insert(:reaction, user_id: first_user.id, post_id: first_post.id)
+      second_reaction = insert(:reaction, user_id: second_user.id, post_id: first_post.id)
+      third_reaction = insert(:reaction, user_id: first_user.id, post_id: second_post.id)
 
       response =
         conn
@@ -49,20 +49,20 @@ defmodule TilWeb.PostControllerTest do
 
       [first_responded_post, second_responded_post] = parsed_response_body
 
-      assert first_responded_post["likesCount"] == 2
-      assert second_responded_post["likesCount"] == 1
+      assert first_responded_post["reactionCount"] == 2
+      assert second_responded_post["reactionCount"] == 1
     end
 
-    test "returns all existing posts with proper likes", %{conn: conn} do
+    test "returns all existing posts with proper reactions", %{conn: conn} do
       first_user = insert(:user)
       second_user = insert(:user)
 
       first_post = insert(:post)
       second_post = insert(:post)
 
-      first_like = insert(:like, user_id: first_user.id, post_id: first_post.id)
-      second_like = insert(:like, user_id: second_user.id, post_id: first_post.id)
-      third_like = insert(:like, user_id: first_user.id, post_id: second_post.id)
+      first_reaction = insert(:reaction, user_id: first_user.id, post_id: first_post.id)
+      second_reaction = insert(:reaction, user_id: second_user.id, post_id: first_post.id)
+      third_reaction = insert(:reaction, user_id: first_user.id, post_id: second_post.id)
 
       response =
         conn
@@ -74,20 +74,20 @@ defmodule TilWeb.PostControllerTest do
 
       [first_responded_post, second_responded_post] = parsed_response_body
 
-      [first_responded_like, second_responded_like] = first_responded_post["likes"]
-      [third_responded_like] = second_responded_post["likes"]
+      [first_responded_reaction, second_responded_reaction] = first_responded_post["reactions"]
+      [third_responded_reaction] = second_responded_post["reactions"]
 
-      assert first_responded_like["user_uuid"] == first_user.uuid
-      assert first_responded_like["post_id"] == first_post.id
-      assert first_responded_like["user_id"] == nil
+      assert first_responded_reaction["user_uuid"] == first_user.uuid
+      assert first_responded_reaction["post_id"] == first_post.id
+      assert first_responded_reaction["user_id"] == nil
 
-      assert second_responded_like["user_uuid"] == second_user.uuid
-      assert second_responded_like["post_id"] == first_post.id
-      assert second_responded_like["user_id"] == nil
+      assert second_responded_reaction["user_uuid"] == second_user.uuid
+      assert second_responded_reaction["post_id"] == first_post.id
+      assert second_responded_reaction["user_id"] == nil
 
-      assert third_responded_like["user_uuid"] == first_user.uuid
-      assert third_responded_like["post_id"] == second_post.id
-      assert third_responded_like["user_id"] == nil
+      assert third_responded_reaction["user_uuid"] == first_user.uuid
+      assert third_responded_reaction["post_id"] == second_post.id
+      assert third_responded_reaction["user_id"] == nil
     end
   end
 
@@ -108,17 +108,17 @@ defmodule TilWeb.PostControllerTest do
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
       assert parsed_response_body["title"] == post_title
-      assert parsed_response_body["categoriesIds"] == [first_category.id, second_category.id]
+      assert parsed_response_body["categoryIds"] == [first_category.id, second_category.id]
     end
 
-    test "returns particular post with proper likes count", %{conn: conn} do
+    test "returns particular post with proper reaction count", %{conn: conn} do
       first_user = insert(:user)
       second_user = insert(:user)
 
       post = insert(:post)
 
-      first_like = insert(:like, user_id: first_user.id, post_id: post.id)
-      second_like = insert(:like, user_id: second_user.id, post_id: post.id)
+      first_reaction = insert(:reaction, user_id: first_user.id, post_id: post.id)
+      second_reaction = insert(:reaction, user_id: second_user.id, post_id: post.id)
 
       response =
         conn
@@ -128,17 +128,17 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body["likesCount"] == 2
+      assert parsed_response_body["reactionCount"] == 2
     end
 
-    test "returns particular post with proper likes data", %{conn: conn} do
+    test "returns particular post with proper reactions data", %{conn: conn} do
       first_user = insert(:user)
       second_user = insert(:user)
 
       post = insert(:post)
 
-      first_like = insert(:like, user_id: first_user.id, post_id: post.id)
-      second_like = insert(:like, user_id: second_user.id, post_id: post.id)
+      first_reaction = insert(:reaction, user_id: first_user.id, post_id: post.id, type: "like")
+      second_reaction = insert(:reaction, user_id: second_user.id, post_id: post.id, type: "love")
 
       response =
         conn
@@ -148,15 +148,17 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      [first_responded_like, second_responded_like] = parsed_response_body["likes"]
+      [first_responded_reaction, second_responded_reaction] = parsed_response_body["reactions"]
 
-      assert first_responded_like["user_uuid"] == first_user.uuid
-      assert first_responded_like["post_id"] == post.id
-      assert first_responded_like["user_id"] == nil
+      assert first_responded_reaction["user_uuid"] == first_user.uuid
+      assert first_responded_reaction["post_id"] == post.id
+      assert first_responded_reaction["user_id"] == nil
+      assert first_responded_reaction["type"] == "like"
 
-      assert second_responded_like["user_uuid"] == second_user.uuid
-      assert second_responded_like["post_id"] == post.id
-      assert second_responded_like["user_id"] == nil
+      assert second_responded_reaction["user_uuid"] == second_user.uuid
+      assert second_responded_reaction["post_id"] == post.id
+      assert second_responded_reaction["user_id"] == nil
+      assert second_responded_reaction["type"] == "love"
     end
   end
 
@@ -174,7 +176,7 @@ defmodule TilWeb.PostControllerTest do
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
           body: post_body,
-          categoriesIds: []
+          categoryIds: []
         })
 
       assert response.status == 201
@@ -206,7 +208,7 @@ defmodule TilWeb.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
-          categoriesIds: [first_category.id, second_category.id]
+          categoryIds: [first_category.id, second_category.id]
         })
 
       assert response.status == 201
@@ -309,7 +311,7 @@ defmodule TilWeb.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> put(Routes.post_path(conn, :update, post.id), %{
           title: post_title,
-          categoriesIds: [third_category.id]
+          categoryIds: [third_category.id]
         })
 
       assert response.status == 200
@@ -393,6 +395,24 @@ defmodule TilWeb.PostControllerTest do
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
 
       post = insert(:post, author: current_user)
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> delete(Routes.post_path(conn, :delete, post.id))
+
+      assert response.status == 200
+
+      assert length(Repo.all(Post)) == 0
+    end
+
+    test "deletes post containing rections properly", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      post = insert(:post, author: current_user)
+      insert(:reaction, user_id: current_user.id, post_id: post.id, type: "love")
+      insert(:reaction, user_id: current_user.id, post_id: post.id, type: "funny")
 
       response =
         conn

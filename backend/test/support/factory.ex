@@ -3,7 +3,7 @@ defmodule Til.Factory do
   import Ecto
   alias Til.Accounts.User
   alias Til.ShareableContent.{Author, Post, Category}
-  alias Til.Activities.Like
+  alias Til.Activities.Reaction
 
   def user_factory do
     %User{
@@ -20,7 +20,7 @@ defmodule Til.Factory do
       title: sequence(:title, &"post-title-#{&1}"),
       body: "some body",
       is_public: true,
-      likes_count: 1,
+      reaction_count: 1,
       author: build(:user)
     }
   end
@@ -31,7 +31,7 @@ defmodule Til.Factory do
     }
   end
 
-  def like_factory do
-    %Like{}
+  def reaction_factory do
+    %Reaction{}
   end
 end

@@ -19,7 +19,7 @@ In order to run this project you will need to have installed
 
 - go to project -> `cd backend`
 
-- setup environments base on `.env.template` - ask for needed secrets
+- setup environments base on `.env.template` or `.env.template.docker` when you want to run app with docker - ask for needed secrets
 
 ##### Run with Docker
 
@@ -28,6 +28,8 @@ In order to run this project you will need to have installed
 - run -> `docker-compose up`
 
 ##### Development setup
+
+- export environments `source .env`
 
 - download dependencies -> `mix deps.get`
 

@@ -10,6 +10,7 @@ categories = [
 
 Enum.map(categories, fn category ->
   Repo.insert! %Category{
-    name: category
+    name: category,
+    official: true
   }
 end)

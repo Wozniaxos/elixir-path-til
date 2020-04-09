@@ -27,7 +27,8 @@ defmodule Til.Factory do
 
   def category_factory do
     %Category{
-      name: sequence(:name, &"name-#{&1}")
+      name: sequence(:name, &"name-#{&1}"),
+      official: true
     }
   end
 

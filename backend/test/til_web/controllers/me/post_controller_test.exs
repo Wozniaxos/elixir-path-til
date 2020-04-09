@@ -54,7 +54,7 @@ defmodule TilWeb.Me.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> put(Routes.post_path(conn, :update, post.id), %{
           title: post_title,
-          category_ids: [third_category.id]
+          categories: [third_category.name]
         })
 
       assert response.status == 200
@@ -66,6 +66,33 @@ defmodule TilWeb.Me.PostControllerTest do
       [post_category] = categories
 
       assert post_category.id == third_category.id
+    end
+
+    test "creates new categories as unofficial during post update", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+      first_category = insert(:category, name: "Elixir")
+      second_category = insert(:category, name: "Javascript")
+      post = insert(:post, author: current_user, categories: [first_category, second_category])
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> put(Routes.post_path(conn, :update, post.id), %{
+          title: "Some post title",
+          categories: ["ML", "Vue"]
+        })
+
+      assert response.status == 200
+
+      %{categories: categories} = Repo.get!(Post, post.id) |> Repo.preload([:categories])
+      assert length(categories) == 2
+      [first_post_category, second_post_category] = categories
+      assert first_post_category.name == "ML"
+      assert second_post_category.name == "Vue"
+      assert first_post_category.official == false
+      assert second_post_category.official == false
+      assert length(Repo.all(Category)) == 4
     end
 
     test "throws error when not a post author", %{conn: conn} do
@@ -122,7 +149,7 @@ defmodule TilWeb.Me.PostControllerTest do
         |> put(Routes.post_path(conn, :update, post.id), %{
           title: "",
           body: post_body,
-          categories_ids: []
+          categories: []
         })
 
       assert response.status == 400
@@ -141,7 +168,7 @@ defmodule TilWeb.Me.PostControllerTest do
         |> put(Routes.post_path(conn, :update, post.id), %{
           title: "",
           body: post_body,
-          categories_ids: []
+          categories: []
         })
 
       assert response.status == 401

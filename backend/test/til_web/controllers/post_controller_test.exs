@@ -3,7 +3,7 @@ defmodule TilWeb.PostControllerTest do
   import Til.Guardian
   import Til.Factory
   alias Til.Repo
-  alias Til.ShareableContent.Post
+  alias Til.ShareableContent.{Post, Category}
 
   describe "GET /api/posts" do
     test "returns only public and reviewed posts for unauthenticated users", %{conn: conn} do
@@ -63,8 +63,8 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       [first_post, second_post] = parsed_response_body
-      assert first_post["categoryIds"] == [first_category.id, second_category.id]
-      assert second_post["categoryIds"] == [first_category.id]
+      assert first_post["categories"] == [first_category.name, second_category.name]
+      assert second_post["categories"] == [first_category.name]
     end
 
     test "returns all existing posts with proper reaction count", %{conn: conn} do
@@ -173,7 +173,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       assert parsed_response_body["title"] == post_title
-      assert parsed_response_body["categoryIds"] == [first_category.id, second_category.id]
+      assert parsed_response_body["categories"] == [first_category.name, second_category.name]
     end
 
     test "returns particular post with proper reaction count", %{conn: conn} do
@@ -270,7 +270,7 @@ defmodule TilWeb.PostControllerTest do
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
           body: post_body,
-          category_ids: []
+          categories: []
         })
 
       assert response.status == 201
@@ -302,7 +302,7 @@ defmodule TilWeb.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
-          category_ids: [first_category.id, second_category.id]
+          categories: [first_category.name, second_category.name]
         })
 
       assert response.status == 201
@@ -315,6 +315,34 @@ defmodule TilWeb.PostControllerTest do
 
       assert post_first_category.id == first_category.id
       assert post_last_category.id == second_category.id
+    end
+
+    test "creates new categories as unofficial during post creation", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+      first_category = insert(:category, name: "Elixir")
+      second_category = insert(:category, name: "Javascript")
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> post(Routes.post_path(conn, :create), %{
+          title: "Some post title",
+          categories: [first_category.name, second_category.name, "ML", "Vue"]
+        })
+
+      assert response.status == 201
+
+      %{categories: categories} = Repo.get_by(Post, title: "Some post title") |> Repo.preload([:categories])
+      assert length(categories) == 4
+      [post_first_category, post_second_category, post_third_category, post_fourth_category] = categories
+      assert post_first_category.id == first_category.id
+      assert post_second_category.id == second_category.id
+      assert post_third_category.name == "ML"
+      assert post_third_category.official == false
+      assert post_fourth_category.name == "Vue"
+      assert post_fourth_category.official == false
+      assert length(Repo.all(Category)) == 4
     end
 
     test "throws error while creating public and reviewed post", %{conn: conn} do
@@ -336,29 +364,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       assert parsed_response_body == %{"error" => %{"message" => "can't create public reviewed post"}}
-
       assert length(Repo.all(Post)) == 0
-    end
-
-    test "throws 400 error when lack of title", %{conn: conn} do
-      current_user = insert(:user)
-      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
-
-      post_body = "Some post body"
-
-      response =
-        conn
-        |> put_req_header("authorization", "bearer: " <> token)
-        |> post(Routes.post_path(conn, :create), %{
-          body: post_body,
-          categories_ids: []
-        })
-
-      assert response.status == 400
-
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert not is_nil parsed_response_body["errors"]
     end
 
     test "throws 401 error when not authenticated", %{conn: conn} do
@@ -368,14 +374,14 @@ defmodule TilWeb.PostControllerTest do
         conn
         |> post(Routes.post_path(conn, :create), %{
           body: post_body,
-          categories_ids: []
+          categories: []
         })
 
       assert response.status == 401
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body["message"] == "unauthenticated"
+      assert not is_nil parsed_response_body["message"] == "unauthenticated"
     end
   end
 end

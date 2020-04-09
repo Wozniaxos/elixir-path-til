@@ -11,7 +11,9 @@ In order to run this project you will need to have installed
 
 ### Setup
 
-`git clone <this repo>`
+- `git clone <this repo>`
+
+- `cd til`
 
 #### Backend
 

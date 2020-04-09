@@ -20,7 +20,7 @@ defmodule Til.MixProject do
   def application do
     [
       mod: {Til.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth_google]
+      extra_applications: [:logger, :runtime_tools, :ueberauth_google, :httpoison]
     ]
   end
 
@@ -44,7 +44,8 @@ defmodule Til.MixProject do
       {:ueberauth_google, "~> 0.8"},
       {:guardian, "~> 2.0"},
       {:ex_machina, "~> 2.3", only: :test},
-      {:bodyguard, "~> 2.4"}
+      {:bodyguard, "~> 2.4"},
+      {:httpoison, "~> 1.6"}
     ]
   end
 

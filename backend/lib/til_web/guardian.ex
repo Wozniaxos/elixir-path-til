@@ -7,17 +7,9 @@ defmodule Til.Guardian do
     {:ok, sub}
   end
 
-  def subject_for_token(_, _) do
-    {:error, :reason_for_error}
-  end
-
   def resource_from_claims(claims) do
     uuid = claims["sub"]
-    resource = Accounts.get_user_by(uuid: uuid)
+    resource = Accounts.get_user(uuid)
     {:ok,  resource}
-  end
-
-  def resource_from_claims(_claims) do
-    {:error, :reason_for_error}
   end
 end

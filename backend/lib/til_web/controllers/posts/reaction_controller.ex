@@ -2,9 +2,8 @@ defmodule TilWeb.Posts.ReactionController do
   use TilWeb, :controller
   alias Til.Activities
 
-  def react(conn, %{"post_id" => id, "type" => type}) do
-    current_user_uuid = conn.private.guardian_default_resource.uuid
-    user = Til.Accounts.get_user_by(uuid: current_user_uuid)
+  def react(%{private: %{:guardian_default_resource => current_user}} = conn, %{"post_id" => id, "type" => type}) do
+    user = Til.Accounts.get_user(current_user.uuid)
     {post_id, ""} = Integer.parse(id)
 
     case Activities.react_to_post(post_id, user.id, type) do
@@ -21,9 +20,8 @@ defmodule TilWeb.Posts.ReactionController do
     end
   end
 
-  def unreact(conn, %{"post_id" => post_id, "type" => type}) do
-    current_user_uuid = conn.private.guardian_default_resource.uuid
-    user = Til.Accounts.get_user_by(uuid: current_user_uuid)
+  def unreact(%{private: %{:guardian_default_resource => current_user}} = conn, %{"post_id" => post_id, "type" => type}) do
+    user = Til.Accounts.get_user(current_user.uuid)
 
     case Activities.unreact_to_post(post_id, user.id, type) do
       {:ok, _} ->

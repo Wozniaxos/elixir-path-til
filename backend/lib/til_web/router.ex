@@ -3,6 +3,7 @@ defmodule TilWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug TilWeb.Plug.AuthInfoPipeline
   end
 
   pipeline :authenticated do
@@ -21,11 +22,15 @@ defmodule TilWeb.Router do
     resources "/categories", CategoryController, only: [:index]
 
     pipe_through :authenticated
-    get "/me", AuthController, :me
+    get "/me", MeController, :index do
+      resources "/me/posts", Me.PostController, only: [:update, :delete]
+    end
 
     resources "/posts", PostController, only: [:create, :update, :delete] do
       post "/reactions", Posts.ReactionController, :react
       delete "/reactions/:type", Posts.ReactionController, :unreact
+      get "/review", Posts.ReviewController, :show
+      put "/review", Posts.ReviewController, :publish
     end
   end
 end

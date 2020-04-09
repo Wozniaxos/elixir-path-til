@@ -9,7 +9,10 @@ use Mix.Config
 
 config :til,
   ecto_repos: [Til.Repo],
-  frontend_host: System.get_env("FRONTEND_HOST")
+  frontend_host: System.get_env("FRONTEND_HOST"),
+  slack_review_hook: System.get_env("SLACK_REVIEW_HOOK"),
+  slack_feed_hook: System.get_env("SLACK_FEED_HOOK"),
+  http_adapter: HTTPoison
 
 # Configures the endpoint
 config :til, TilWeb.Endpoint,
@@ -26,7 +29,7 @@ config :logger, :console,
 
 config :ueberauth, Ueberauth,
   providers: [
-    google: {Ueberauth.Strategy.Google, []}
+    google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]}
   ]
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
@@ -35,6 +38,10 @@ config :ueberauth, Ueberauth.Strategy.Google.OAuth,
 
 # Configure the authentication plug pipeline
 config :til, TilWeb.Plug.AuthAccessPipeline,
+  module: Til.Guardian,
+  error_handler: TilWeb.Plug.AuthErrorHandler
+
+config :til, TilWeb.Plug.AuthInfoPipeline,
   module: Til.Guardian,
   error_handler: TilWeb.Plug.AuthErrorHandler
 

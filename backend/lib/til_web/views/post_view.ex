@@ -1,6 +1,5 @@
 defmodule TilWeb.PostView do
   use TilWeb, :view
-  alias Til.Repo
 
   def render("index.json", %{posts: posts}) do
     posts

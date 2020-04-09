@@ -1,6 +1,5 @@
 defmodule TilWeb.ReactionView do
   use TilWeb, :view
-  alias Til.Repo
 
   def render("index.json", %{reactions: reactions}) do
     reactions

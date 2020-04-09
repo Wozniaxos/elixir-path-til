@@ -3,12 +3,6 @@ defmodule TilWeb.AuthController do
   plug Ueberauth
   alias Til.Accounts
 
-  def me(%{private: %{:guardian_default_resource => current_user}} = conn, _) do
-    conn
-    |> put_view(TilWeb.UserView)
-    |> render("show.json", user: current_user)
-  end
-
   def request(conn, _), do: conn
 
   def callback(
@@ -16,8 +10,8 @@ defmodule TilWeb.AuthController do
       assigns: %{
         ueberauth_auth: %{
           info: %{email: email, first_name: first_name, last_name: last_name, image: image},
-          credentials: %{token: token},
-          uid: uid
+          credentials: %{token: _},
+          uid: _
         }
       }
     } = conn, _

@@ -10,6 +10,7 @@ defmodule Til.ShareableContent.Post do
     field :title, :string
     field :body, :string
     field :is_public, :boolean
+    field :reviewed, :boolean
     field :reaction_count, :integer, virtual: true
 
     belongs_to :author, User
@@ -24,7 +25,8 @@ defmodule Til.ShareableContent.Post do
       :title,
       :body,
       :author_id,
-      :is_public
+      :is_public,
+      :reviewed
     ])
     |> validate_required([:title])
     |> unique_constraint(:title)

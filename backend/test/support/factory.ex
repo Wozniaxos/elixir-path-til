@@ -1,8 +1,7 @@
 defmodule Til.Factory do
   use ExMachina.Ecto, repo: Til.Repo
-  import Ecto
   alias Til.Accounts.User
-  alias Til.ShareableContent.{Author, Post, Category}
+  alias Til.ShareableContent.{Post, Category}
   alias Til.Activities.Reaction
 
   def user_factory do
@@ -20,6 +19,7 @@ defmodule Til.Factory do
       title: sequence(:title, &"post-title-#{&1}"),
       body: "some body",
       is_public: true,
+      reviewed: false,
       reaction_count: 1,
       author: build(:user)
     }

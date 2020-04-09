@@ -29,10 +29,10 @@ defmodule TilWeb.UserControllerTest do
   end
 
   describe "GET /api/users/:id" do
-    test "returns particular user with posts", %{conn: conn} do
+    test "returns particular user with public posts", %{conn: conn} do
       user = insert(:user)
-      insert(:post, author: user)
-      insert(:post, author: user)
+      insert(:post, title: "public post", author: user, is_public: true)
+      insert(:post, author: user, is_public: false)
 
       response =
         conn
@@ -47,7 +47,11 @@ defmodule TilWeb.UserControllerTest do
       assert parsed_response_body["email"] == user.email
       assert parsed_response_body["lastName"] == user.last_name
 
-      assert length(parsed_response_body["posts"]) == 2
+      assert length(parsed_response_body["posts"]) == 1
+
+      [post] = parsed_response_body["posts"]
+
+      assert post["title"] == "public post"
     end
   end
 end

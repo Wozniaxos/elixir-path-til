@@ -14,6 +14,9 @@ config :til, TilWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+config :til,
+  http_adapter: Til.HTTPoisonMock
+
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
   client_id: "xxx",
   client_secret: "xxx"

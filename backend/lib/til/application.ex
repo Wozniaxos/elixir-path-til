@@ -11,9 +11,10 @@ defmodule Til.Application do
       # Start the Ecto repository
       Til.Repo,
       # Start the endpoint when the application starts
-      TilWeb.Endpoint
+      TilWeb.Endpoint,
       # Starts a worker by calling: Til.Worker.start_link(arg)
       # {Til.Worker, arg},
+      {Til.Notifications.NotificationSupervisor, strategy: :one_for_one, name: Til.Notifications.NotificationSupervisor},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -3,15 +3,56 @@ defmodule TilWeb.PostControllerTest do
   import Til.Guardian
   import Til.Factory
   alias Til.Repo
-  alias Til.ShareableContent.{Post, Category}
+  alias Til.ShareableContent.Post
 
   describe "GET /api/posts" do
-    test "returns all existing posts with categories as public", %{conn: conn} do
+    test "returns only public and reviewed posts for unauthenticated users", %{conn: conn} do
+      insert(:post, title: "public post", is_public: true, reviewed: true)
+      insert(:post, is_public: false, reviewed: false)
+      insert(:post, is_public: false, reviewed: true)
+      insert(:post, is_public: true, reviewed: false)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert length(parsed_response_body) == 1
+      [post] = parsed_response_body
+      assert post["title"] == "public post"
+    end
+
+    test "returns only reviewed posts for authenticated users", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      insert(:post, title: "public reviewed post", is_public: true, reviewed: true)
+      insert(:post, title: "internal reviewed post", is_public: false, reviewed: true)
+      insert(:post, is_public: true, reviewed: false)
+      insert(:post, is_public: false, reviewed: false)
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> get(Routes.post_path(conn, :index))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert length(parsed_response_body) == 2
+      [first_post, second_post] = parsed_response_body
+      assert first_post["title"] == "public reviewed post"
+      assert second_post["title"] == "internal reviewed post"
+    end
+
+    test "returns posts with categories", %{conn: conn} do
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
 
-      insert(:post, categories: [first_category, second_category])
-      insert(:post, categories: [first_category])
+      insert(:post, reviewed: true, categories: [first_category, second_category])
+      insert(:post, reviewed: true, categories: [first_category])
 
       response =
         conn
@@ -21,9 +62,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
       [first_post, second_post] = parsed_response_body
-
       assert first_post["categoryIds"] == [first_category.id, second_category.id]
       assert second_post["categoryIds"] == [first_category.id]
     end
@@ -32,12 +71,12 @@ defmodule TilWeb.PostControllerTest do
       first_user = insert(:user)
       second_user = insert(:user)
 
-      first_post = insert(:post)
-      second_post = insert(:post)
+      first_post = insert(:post, reviewed: true, is_public: true)
+      second_post = insert(:post, reviewed: true, is_public: true)
 
-      first_reaction = insert(:reaction, user_id: first_user.id, post_id: first_post.id)
-      second_reaction = insert(:reaction, user_id: second_user.id, post_id: first_post.id)
-      third_reaction = insert(:reaction, user_id: first_user.id, post_id: second_post.id)
+      insert(:reaction, user_id: first_user.id, post_id: first_post.id)
+      insert(:reaction, user_id: second_user.id, post_id: first_post.id)
+      insert(:reaction, user_id: first_user.id, post_id: second_post.id)
 
       response =
         conn
@@ -46,9 +85,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
       [first_responded_post, second_responded_post] = parsed_response_body
-
       assert first_responded_post["reactionCount"] == 2
       assert second_responded_post["reactionCount"] == 1
     end
@@ -57,12 +94,12 @@ defmodule TilWeb.PostControllerTest do
       first_user = insert(:user)
       second_user = insert(:user)
 
-      first_post = insert(:post)
-      second_post = insert(:post)
+      first_post = insert(:post, reviewed: true)
+      second_post = insert(:post, reviewed: true)
 
-      first_reaction = insert(:reaction, user_id: first_user.id, post_id: first_post.id)
-      second_reaction = insert(:reaction, user_id: second_user.id, post_id: first_post.id)
-      third_reaction = insert(:reaction, user_id: first_user.id, post_id: second_post.id)
+      insert(:reaction, user_id: first_user.id, post_id: first_post.id)
+      insert(:reaction, user_id: second_user.id, post_id: first_post.id)
+      insert(:reaction, user_id: first_user.id, post_id: second_post.id)
 
       response =
         conn
@@ -92,12 +129,8 @@ defmodule TilWeb.PostControllerTest do
   end
 
   describe "GET /api/posts/:id" do
-    test "returns particular post with categories as public", %{conn: conn} do
-      first_category = insert(:category, name: "Elixir")
-      second_category = insert(:category, name: "Javascript")
-      post_title = "Some post"
-
-      post = insert(:post, title: post_title, categories: [first_category, second_category])
+    test "returns particular post if public and reviewed for unauthenticated user", %{conn: conn} do
+      post = insert(:post, reviewed: true, is_public: true, title: "public post")
 
       response =
         conn
@@ -106,7 +139,39 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert parsed_response_body["title"] == "public post"
+    end
 
+    test "returns particular post if only reviewed for authenticated user", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+      post = insert(:post, reviewed: true, is_public: false, title: "internal reviewed post")
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert parsed_response_body["title"] == "internal reviewed post"
+    end
+
+    test "returns particular post with categories", %{conn: conn} do
+      first_category = insert(:category, name: "Elixir")
+      second_category = insert(:category, name: "Javascript")
+      post_title = "Some post"
+
+      post = insert(:post, reviewed: true, title: post_title, categories: [first_category, second_category])
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       assert parsed_response_body["title"] == post_title
       assert parsed_response_body["categoryIds"] == [first_category.id, second_category.id]
     end
@@ -115,10 +180,10 @@ defmodule TilWeb.PostControllerTest do
       first_user = insert(:user)
       second_user = insert(:user)
 
-      post = insert(:post)
+      post = insert(:post, reviewed: true)
 
-      first_reaction = insert(:reaction, user_id: first_user.id, post_id: post.id)
-      second_reaction = insert(:reaction, user_id: second_user.id, post_id: post.id)
+      insert(:reaction, user_id: first_user.id, post_id: post.id)
+      insert(:reaction, user_id: second_user.id, post_id: post.id)
 
       response =
         conn
@@ -127,7 +192,6 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
       assert parsed_response_body["reactionCount"] == 2
     end
 
@@ -135,10 +199,10 @@ defmodule TilWeb.PostControllerTest do
       first_user = insert(:user)
       second_user = insert(:user)
 
-      post = insert(:post)
+      post = insert(:post, reviewed: true)
 
-      first_reaction = insert(:reaction, user_id: first_user.id, post_id: post.id, type: "like")
-      second_reaction = insert(:reaction, user_id: second_user.id, post_id: post.id, type: "love")
+      insert(:reaction, user_id: first_user.id, post_id: post.id, type: "like")
+      insert(:reaction, user_id: second_user.id, post_id: post.id, type: "love")
 
       response =
         conn
@@ -160,6 +224,36 @@ defmodule TilWeb.PostControllerTest do
       assert second_responded_reaction["user_id"] == nil
       assert second_responded_reaction["type"] == "love"
     end
+
+    test "does not return particular post if not public for unauthenticated users", %{conn: conn} do
+      post = insert(:post, is_public: false, reviewed: true)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert response.status == 400
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert parsed_response_body == %{"error" => %{"message" => "not found"}}
+    end
+
+    test "does not return particular post if not reviewed for authenticated users", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      post = insert(:post, is_public: false, reviewed: false)
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert response.status == 400
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert parsed_response_body == %{"error" => %{"message" => "not found"}}
+    end
   end
 
   describe "POST /api/posts" do
@@ -176,7 +270,7 @@ defmodule TilWeb.PostControllerTest do
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
           body: post_body,
-          categoryIds: []
+          category_ids: []
         })
 
       assert response.status == 201
@@ -208,7 +302,7 @@ defmodule TilWeb.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
-          categoryIds: [first_category.id, second_category.id]
+          category_ids: [first_category.id, second_category.id]
         })
 
       assert response.status == 201
@@ -221,6 +315,29 @@ defmodule TilWeb.PostControllerTest do
 
       assert post_first_category.id == first_category.id
       assert post_last_category.id == second_category.id
+    end
+
+    test "throws error while creating public and reviewed post", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      insert(:category, name: "Machine Learning")
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> post(Routes.post_path(conn, :create), %{
+          title: "Some post title",
+          is_public: true,
+          reviewed: true
+        })
+
+      assert response.status == 400
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert parsed_response_body == %{"error" => %{"message" => "can't create public reviewed post"}}
+
+      assert length(Repo.all(Post)) == 0
     end
 
     test "throws 400 error when lack of title", %{conn: conn} do
@@ -258,222 +375,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert not is_nil parsed_response_body["message"] == "unauthenticated"
-    end
-  end
-
-  describe "PUT /api/posts" do
-    test "updates post and returns 200 status with updated post", %{conn: conn} do
-      current_user = insert(:user)
-      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
-
-      post = insert(:post, author: current_user)
-
-      post_title = "Some updated post title"
-      post_body = "Some updated post body"
-
-      response =
-        conn
-        |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.post_path(conn, :update, post.id), %{
-          title: post_title,
-          body: post_body
-        })
-
-      assert response.status == 200
-
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      updated_post = Repo.get!(Post, post.id)
-
-      assert updated_post.title == post_title
-      assert updated_post.body == post_body
-
-      assert parsed_response_body["title"] == post_title
-      assert parsed_response_body["body"] == post_body
-      assert parsed_response_body["author"]["email"] == post.author.email
-    end
-
-    test "updates post with proper categories", %{conn: conn} do
-      current_user = insert(:user)
-      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
-
-      post_title = "Some post title"
-
-      first_category = insert(:category, name: "Elixir")
-      second_category = insert(:category, name: "Javascript")
-      third_category = insert(:category, name: "Machine Learning")
-
-      post = insert(:post, author: current_user, categories: [first_category, second_category])
-
-      response =
-        conn
-        |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.post_path(conn, :update, post.id), %{
-          title: post_title,
-          categoryIds: [third_category.id]
-        })
-
-      assert response.status == 200
-
-      %{categories: categories} = Repo.get!(Post, post.id) |> Repo.preload([:categories])
-
-      assert length(categories) == 1
-
-      [post_category] = categories
-
-      assert post_category.id == third_category.id
-    end
-
-    test "throws error when not a post author", %{conn: conn} do
-      first_user = insert(:user)
-      second_user = insert(:user)
-      {:ok, token, _} = encode_and_sign(first_user.uuid, %{})
-
-      post = insert(:post, author: second_user)
-
-      response =
-        conn
-        |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.post_path(conn, :update, post.id), %{
-          title: "Some title",
-        })
-
-      assert response.status == 403
-
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert parsed_response_body == %{"errors" => %{"detail" => "Forbidden"}}
-    end
-
-    test "throws 400 error when lack of title", %{conn: conn} do
-      current_user = insert(:user)
-      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
-
-      post_body = "Some post body"
-      post = insert(:post, author: current_user)
-
-      response =
-        conn
-        |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.post_path(conn, :update, post.id), %{
-          title: "",
-          body: post_body,
-          categories_ids: []
-        })
-
-      assert response.status == 400
-
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert not is_nil parsed_response_body["errors"]
-    end
-
-    test "throws 401 error when no authenticated", %{conn: conn} do
-      post_body = "Some post body"
-      post = insert(:post)
-
-      response =
-        conn
-        |> put(Routes.post_path(conn, :update, post.id), %{
-          title: "",
-          body: post_body,
-          categories_ids: []
-        })
-
-      assert response.status == 401
-
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert not is_nil parsed_response_body["message"] == "unauthenticated"
-    end
-  end
-
-  describe "DELETE /api/posts" do
-    test "deletes post properly", %{conn: conn} do
-      current_user = insert(:user)
-      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
-
-      post = insert(:post, author: current_user)
-
-      response =
-        conn
-        |> put_req_header("authorization", "bearer: " <> token)
-        |> delete(Routes.post_path(conn, :delete, post.id))
-
-      assert response.status == 200
-
-      assert length(Repo.all(Post)) == 0
-    end
-
-    test "deletes post containing rections properly", %{conn: conn} do
-      current_user = insert(:user)
-      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
-
-      post = insert(:post, author: current_user)
-      insert(:reaction, user_id: current_user.id, post_id: post.id, type: "love")
-      insert(:reaction, user_id: current_user.id, post_id: post.id, type: "funny")
-
-      response =
-        conn
-        |> put_req_header("authorization", "bearer: " <> token)
-        |> delete(Routes.post_path(conn, :delete, post.id))
-
-      assert response.status == 200
-
-      assert length(Repo.all(Post)) == 0
-    end
-
-    test "deletes post without deleting categories", %{conn: conn} do
-      current_user = insert(:user)
-      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
-
-      first_category = insert(:category, name: "Elixir")
-      second_category = insert(:category, name: "Javascript")
-
-      post = insert(:post, author: current_user, categories: [first_category, second_category])
-
-      response =
-        conn
-        |> put_req_header("authorization", "bearer: " <> token)
-        |> delete(Routes.post_path(conn, :delete, post.id))
-
-      assert response.status == 200
-
-      assert length(Repo.all(Category)) == 2
-    end
-
-    test "throws error when not a post author", %{conn: conn} do
-      first_user = insert(:user)
-      second_user = insert(:user)
-      {:ok, token, _} = encode_and_sign(first_user.uuid, %{})
-
-      post = insert(:post, author: second_user)
-
-      response =
-        conn
-        |> put_req_header("authorization", "bearer: " <> token)
-        |> delete(Routes.post_path(conn, :delete, post.id))
-
-      assert response.status == 403
-
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert parsed_response_body == %{"errors" => %{"detail" => "Forbidden"}}
-    end
-
-    test "throws 401 error when no authenticated", %{conn: conn} do
-      post = insert(:post)
-
-      response =
-        conn
-        |> delete(Routes.post_path(conn, :delete, post.id))
-
-      assert response.status == 401
-
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert not is_nil parsed_response_body["message"] == "unauthenticated"
+      assert parsed_response_body["message"] == "unauthenticated"
     end
   end
 end

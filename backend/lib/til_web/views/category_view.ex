@@ -1,6 +1,5 @@
 defmodule TilWeb.CategoryView do
   use TilWeb, :view
-  alias Til.Repo
 
   def render("index.json", %{categories: categories}) do
     categories

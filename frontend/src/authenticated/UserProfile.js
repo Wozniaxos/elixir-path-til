@@ -1,18 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProfilePosts from "./ProfilePosts";
-import { saveCurrentUserPosts } from "../store/actions/actions";
 
 const UserProfile = props => {
+  const [userPosts, setUserPosts] = useState(null);
   const user = useSelector(state => state.currentUser);
-  const userPosts = useSelector(state => state.currentUserPosts);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (user) {
-      dispatch(saveCurrentUserPosts(user.uuid));
+      setUserPosts(user.posts);
     }
-  }, [dispatch, user]);
+  }, [user]);
 
   return (
     <>

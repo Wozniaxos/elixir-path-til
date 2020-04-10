@@ -3,17 +3,63 @@ const localStorageKey = "til_token";
 
 // FETCH POSTS
 export const fetchData = async url => {
-  const response = await fetch(url);
-  const data = response.json();
+  let optionsToken = null;
+
+  if (getToken()) {
+    optionsToken = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json"
+      }
+    };
+  }
+
+  const response = await fetch(url, optionsToken);
+  const data = await response.json();
 
   return data;
 };
 
 export const fetchSinglePost = async (url, id) => {
-  const response = await fetch(url + id);
+  let optionsToken = null;
+
+  if (getToken()) {
+    optionsToken = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json"
+      }
+    };
+  }
+
+  const response = await fetch(url + id, optionsToken);
   const post = response.json();
 
   return post;
+};
+
+export const fetchReviewPost = async url => {
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
+  });
+
+  return response.json();
+};
+
+// APPROVE POST
+export const approvePost = async url => {
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
+  });
+
+  return response.ok;
 };
 
 // ADD POST

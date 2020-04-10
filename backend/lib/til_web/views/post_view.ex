@@ -30,6 +30,7 @@ defmodule TilWeb.PostView do
       reactionCount: post.reaction_count,
       reactions: render(TilWeb.ReactionView, "index.json", reactions: post.reactions),
       author: render(TilWeb.UserView, "show.json", user: post.author),
+      reviewed: post.reviewed,
       categories: Enum.map(post.categories, & &1.name)
     }
   end
@@ -40,6 +41,7 @@ defmodule TilWeb.PostView do
       title: post.title,
       body: post.body,
       isPublic: post.is_public,
+      reviewed: post.reviewed,
       reactionCount: post.reaction_count
     }
   end

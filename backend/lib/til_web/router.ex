@@ -30,7 +30,7 @@ defmodule TilWeb.Router do
       post "/reactions", Posts.ReactionController, :react
       delete "/reactions/:type", Posts.ReactionController, :unreact
       get "/review", Posts.ReviewController, :show
-      put "/review", Posts.ReviewController, :publish
+      put "/review", Posts.ReviewController, :approve
     end
   end
 end

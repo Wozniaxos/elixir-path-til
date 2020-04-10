@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "react-mde/lib/styles/css/react-mde-all.css";
-import { postData, convertToSelectOptions } from "../utils";
+import { request, convertToSelectOptions } from "../utils";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { saveAllPosts } from "../store/actions/actions";
 import Markdown from "../components/Markdown";
 import ReactMde from "react-mde";
-import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 
 const AddPost = props => {
   const [buttonState, setButtonState] = useState(true);
@@ -25,11 +25,12 @@ const AddPost = props => {
     const post = {
       body: markdown,
       title: title,
-      categoryIds: userCategories,
+      categories: userCategories,
       is_public: isPublic,
       reviewed: !isReviewNeeded
     };
-    const savePost = await postData(
+    const savePost = await request(
+      "POST",
       "/api/posts",
       JSON.stringify(post)
     );
@@ -57,10 +58,13 @@ const AddPost = props => {
   const handleSelect = selectedOptions => {
     if (!selectedOptions) {
       setUserCategories([]);
+
       return;
     }
 
-    const categories = selectedOptions.map(obj => obj.value);
+    const categories = selectedOptions.map(
+      categoryOption => categoryOption.label
+    );
 
     setUserCategories(categories);
   };
@@ -99,7 +103,7 @@ const AddPost = props => {
             onChange={handleTitle}
           />
         </label>
-        <Select
+        <CreatableSelect
           className="basic-multi-select"
           classNamePrefix="select"
           isMulti

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import {
-  updateData,
+  request,
   fetchSinglePost,
   convertToSelectOptions
 } from "../utils";
@@ -63,7 +63,8 @@ const EditPost = props => {
       title: title,
       categoryIds: categoryIds
     };
-    const post = updateData(
+    const post = request(
+      "PATCH",
       "/api/posts/" + id,
       JSON.stringify(markdownPost)
     );

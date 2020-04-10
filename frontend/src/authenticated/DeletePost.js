@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteData } from "../utils";
+import { request } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   saveAllPosts,
@@ -17,7 +17,10 @@ const DeletePost = ({ postId }) => {
   };
 
   const deletePost = async () => {
-    const isDeleted = await deleteData(`/api/posts/${postId}`);
+    const isDeleted = await request(
+      "DELETE",
+      `/api/me/posts/${postId}`
+    );
 
     if (isDeleted) {
       dispatch(saveAllPosts());

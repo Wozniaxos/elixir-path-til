@@ -18,6 +18,7 @@ const ReviewPost = props => {
     const fetchpost = async () => {
       const hash = query.get("hashed_id");
       const post = await fetchReviewPost(`/api/posts/${hash}/review`);
+
       setHash(hash);
       setPost(post);
     };

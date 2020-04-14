@@ -129,11 +129,11 @@ defmodule TilWeb.Me.PostControllerTest do
           reviewed: true,
         })
 
-      assert response.status == 400
+      assert response.status == 403
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body == %{"error" => %{ "message" => "post reviewed property can't be modified"}}
+      assert parsed_response_body == %{"errors" => %{"detail" => "Forbidden"}}
     end
 
     test "throws 400 error when lack of title", %{conn: conn} do
@@ -155,8 +155,7 @@ defmodule TilWeb.Me.PostControllerTest do
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert not is_nil parsed_response_body["errors"]
+      assert parsed_response_body == %{"errors" => %{"title" => ["can't be blank"]}}
     end
 
     test "throws 401 error when no authenticated", %{conn: conn} do
@@ -174,8 +173,7 @@ defmodule TilWeb.Me.PostControllerTest do
       assert response.status == 401
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert parsed_response_body["message"] == "unauthenticated"
+      assert parsed_response_body == %{"errors" => %{"detail" => "unauthenticated"}}
     end
   end
 
@@ -262,8 +260,7 @@ defmodule TilWeb.Me.PostControllerTest do
       assert response.status == 401
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert parsed_response_body["message"] == "unauthenticated"
+      assert parsed_response_body == %{"errors" => %{"detail" => "unauthenticated"}}
     end
   end
 end

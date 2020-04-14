@@ -6,7 +6,7 @@ defmodule TilWeb.ErrorView do
   end
 
   def render("400.json", %{message: message}) do
-    %{error: %{message: message}}
+    %{errors: %{detail: message}}
   end
 
   def render("403.html", _assigns) do

@@ -235,7 +235,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert parsed_response_body == %{"error" => %{"message" => "not found"}}
+      assert parsed_response_body == %{"errors" => %{"detail" => "not found"}}
     end
 
     test "does not return particular post if not reviewed for authenticated users", %{conn: conn} do
@@ -252,7 +252,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert parsed_response_body == %{"error" => %{"message" => "not found"}}
+      assert parsed_response_body == %{"errors" => %{"detail" => "not found"}}
     end
   end
 
@@ -363,7 +363,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert parsed_response_body == %{"error" => %{"message" => "can't create public reviewed post"}}
+      assert parsed_response_body == %{"errors" => %{"detail" => "can't create public reviewed post"}}
       assert length(Repo.all(Post)) == 0
     end
 
@@ -380,8 +380,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 401
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
-      assert not is_nil parsed_response_body["message"] == "unauthenticated"
+      assert parsed_response_body == %{"errors" => %{"detail" => "unauthenticated"}}
     end
   end
 end

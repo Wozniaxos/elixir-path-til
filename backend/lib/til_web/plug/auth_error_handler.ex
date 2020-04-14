@@ -8,7 +8,7 @@ defmodule TilWeb.Plug.AuthErrorHandler do
   def auth_error(conn, {type, _reason}, _opts) do
     conn
     |> put_status(401)
-    |> json(%{message: to_string(type)})
+    |> json(%{errors: %{detail: to_string(type)}})
     |> halt()
   end
 end

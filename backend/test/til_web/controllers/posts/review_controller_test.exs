@@ -2,8 +2,6 @@ defmodule TilWeb.Posts.ReviewControllerTest do
   use TilWeb.ConnCase
   import Til.Guardian
   import Til.Factory
-  alias Til.Repo
-  alias Til.ShareableContent.Post
 
   describe "GET /api/posts/:hashed_id/reviews" do
     test "returns post with hashed id", %{conn: conn} do
@@ -42,7 +40,7 @@ defmodule TilWeb.Posts.ReviewControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body == %{"error" => %{"message" => "not found"}}
+      assert parsed_response_body == %{"errors" => %{"detail" => "not found"}}
     end
 
     test "returns error when user is not authenticated", %{conn: conn} do
@@ -57,7 +55,7 @@ defmodule TilWeb.Posts.ReviewControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body == %{"message" => "unauthenticated"}
+      assert parsed_response_body == %{"errors" => %{"detail" => "unauthenticated"}}
     end
   end
 
@@ -97,7 +95,7 @@ defmodule TilWeb.Posts.ReviewControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body == %{"error" => %{"message" => "post is already approved"}}
+      assert parsed_response_body == %{"errors" => %{"detail" => "post is already approved"}}
     end
 
     test "returns error when invalid token", %{conn: conn} do
@@ -115,7 +113,7 @@ defmodule TilWeb.Posts.ReviewControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body == %{"error" => %{"message" => "not found"}}
+      assert parsed_response_body == %{"errors" => %{"detail" => "not found"}}
     end
 
     test "returns error when user is not authenticated", %{conn: conn} do
@@ -130,7 +128,7 @@ defmodule TilWeb.Posts.ReviewControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body == %{"message" => "unauthenticated"}
+      assert parsed_response_body == %{"errors" => %{"detail" => "unauthenticated"}}
     end
   end
 end

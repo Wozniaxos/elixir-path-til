@@ -47,7 +47,7 @@ defmodule TilWeb.Activities.ReactionControllerTest do
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert parsed_response_body["errors"] == %{"post_id" => ["has already been taken"]}
+      assert parsed_response_body == %{"errors" => %{"post_id" => ["has already been taken"]}}
 
       reactions = Repo.all(Reaction)
       assert length(reactions) == 1
@@ -69,7 +69,7 @@ defmodule TilWeb.Activities.ReactionControllerTest do
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert parsed_response_body["errors"] == %{"type" => ["is invalid"]}
+      assert parsed_response_body == %{"errors" => %{"type" => ["is invalid"]}}
 
       reactions = Repo.all(Reaction)
       assert length(reactions) == 0
@@ -89,7 +89,7 @@ defmodule TilWeb.Activities.ReactionControllerTest do
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert parsed_response_body["errors"] == %{"post_id" => ["does not exist"]}
+      assert parsed_response_body == %{"errors" => %{"post_id" => ["does not exist"]}}
     end
 
     test "throws error when user is not authenticated", %{conn: conn} do
@@ -102,7 +102,7 @@ defmodule TilWeb.Activities.ReactionControllerTest do
       assert response.status == 401
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert parsed_response_body["message"] == "unauthenticated"
+      assert parsed_response_body == %{"errors" => %{"detail" => "unauthenticated"}}
     end
   end
 
@@ -139,7 +139,7 @@ defmodule TilWeb.Activities.ReactionControllerTest do
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert parsed_response_body["error"]["message"] == "not found"
+      assert parsed_response_body == %{"errors" => %{"detail" => "not found"}}
     end
 
     test "throws error if user is not authenticated", %{conn: conn} do
@@ -152,7 +152,7 @@ defmodule TilWeb.Activities.ReactionControllerTest do
       assert response.status == 401
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert parsed_response_body["message"] == "unauthenticated"
+      assert parsed_response_body == %{"errors" => %{"detail" => "unauthenticated"}}
     end
   end
 end

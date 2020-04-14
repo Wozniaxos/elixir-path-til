@@ -37,7 +37,7 @@ defmodule TilWeb.MeControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body["message"] == "unauthenticated"
+      assert parsed_response_body == %{"errors" => %{"detail" => "unauthenticated"}}
     end
   end
 end

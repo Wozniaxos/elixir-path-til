@@ -12,15 +12,19 @@ defmodule Til.Activities do
   end
 
   def react_to_post(post_id, user_id, type) do
-    %Reaction{}
-    |> Reaction.changeset(%{user_id: user_id, post_id: post_id, type: type})
-    |> Repo.insert()
+    case %Reaction{}
+        |> Reaction.changeset(%{user_id: user_id, post_id: post_id, type: type})
+        |> Repo.insert()
+    do
+      {:error, %Ecto.Changeset{errors: _} = changeset} -> {:error, :changeset, changeset}
+      reaction -> {:ok, reaction}
+    end
   end
 
   def unreact_to_post(post_id, user_id, type) do
     case get_user_reaction_for_post(post_id, user_id, type) do
       %Reaction{} = reaction -> delete_reaction(reaction)
-      _ -> {:error, %{message: "not found"}}
+      _ -> {:error, :not_found}
     end
   end
 

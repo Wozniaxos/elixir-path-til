@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { fetchUserPosts } from "../utils";
 
 const UserPosts = props => {
   const [userPosts, setUserPosts] = useState([]);
   const { id } = useParams();
-  const user = useSelector(state => {
-    const user = state.users.find(user => user.uuid === id);
-
-    return user;
-  });
 
   useEffect(() => {
     const posts = async () => {
@@ -21,10 +15,6 @@ const UserPosts = props => {
 
     posts();
   }, [id]);
-
-  if (!user) {
-    return <p>loading</p>;
-  }
 
   return (
     <>

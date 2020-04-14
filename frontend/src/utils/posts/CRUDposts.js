@@ -37,7 +37,8 @@ export const fetchSinglePost = async (url, id) => {
 // FETCH USERS POSTS
 export const fetchUserPosts = async (url, id) => {
   try {
-    const response = await fetch(url + id);
+    let optionsToken = checkForToken();
+    const response = await fetch(url + id, optionsToken);
     const user = await response.json();
     const userPosts = user.posts;
 

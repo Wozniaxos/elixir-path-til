@@ -50,14 +50,14 @@ export const saveCurrentUserPosts = id => async dispatch => {
   dispatch(getCurrentUserPosts(posts));
 };
 
-// ALL USERS
+// ALL USERS WITH STATS
 const getAllUsers = users => ({
   type: actionTypes.GET_ALL_USERS,
   users
 });
 
 export const saveAllUsers = () => async dispatch => {
-  const allUsers = await fetchData("/api/users");
+  const allUsers = await fetchData("/api/statistics/users");
 
   dispatch(getAllUsers(allUsers));
 };

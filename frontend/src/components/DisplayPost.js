@@ -5,7 +5,7 @@ import PostCategories from "./PostCategories";
 import CopyPostURL from "./CopyURL";
 import Markdown from "./Markdown";
 
-const DisplayPost = props => {
+const DisplayPost = () => {
   const [post, setPost] = useState(null);
   const { id } = useParams();
 

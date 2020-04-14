@@ -3,7 +3,7 @@ import { request } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   saveAllPosts,
-  saveCurrentUserPosts
+  saveCurrentUser
 } from "../store/actions/actions";
 import DeleteModal from "./DeleteModal";
 
@@ -24,7 +24,7 @@ const DeletePost = ({ postId }) => {
 
     if (isDeleted) {
       dispatch(saveAllPosts());
-      dispatch(saveCurrentUserPosts(userId));
+      dispatch(saveCurrentUser());
     }
   };
 

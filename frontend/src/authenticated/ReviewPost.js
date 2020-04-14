@@ -17,13 +17,16 @@ const ReviewPost = props => {
   useEffect(() => {
     const fetchpost = async () => {
       const hash = query.get("hashed_id");
-      const post = await fetchReviewPost(`/api/posts/${hash}/review`);
+      const post = await fetchReviewPost(
+        `/api/posts/${hash}/review`
+      );
       setHash(hash);
       setPost(post);
     };
 
     fetchpost();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const approvePostHandler = () => {
     const response = approvePost(`/api/posts/${hash}/review`);
@@ -37,10 +40,16 @@ const ReviewPost = props => {
     return <p>...loading...</p>;
   }
 
+  if (post.errors.detail === "not found") {
+    return <p>post already approved</p>;
+  }
+
   return (
     <section className="post">
       <article>
-        <h1>{post.title}</h1>
+        <h1>
+          {post.title} {post.isPublic && "(public)"}
+        </h1>
         <Markdown source={post.body} />
       </article>
       <button onClick={approvePostHandler}>approve?</button>

@@ -70,21 +70,9 @@ const AddPost = props => {
   };
 
   const handlePublicCheckbox = () => {
-    if (isReviewNeeded && isPublic) {
-      setIsPublic(!isPublic);
-      setIsReviewNeeded(!isReviewNeeded);
-
-      return;
-    }
-
-    if (isReviewNeeded) {
-      setIsPublic(!isPublic);
-
-      return;
-    }
-
     setIsPublic(!isPublic);
-    setIsReviewNeeded(!isReviewNeeded);
+
+    (!isReviewNeeded || isPublic) && handleReviewCheckbox();
   };
 
   const handleReviewCheckbox = () => {

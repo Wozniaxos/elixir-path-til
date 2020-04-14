@@ -16,14 +16,15 @@ const EditPost = props => {
   const [buttonState, setButtonState] = useState(true);
   const [markdown, setMarkdown] = useState("");
   const [title, setTitle] = useState("");
-  // user categories but with Ids only
-  const [categoryIds, setCategoryIds] = useState([]);
+  // user categories as strings
+  const [categories, setCategories] = useState([]);
   // select friendly categories used to pass to select options
   const [categoriesOptions, setCategoriesOptions] = useState("");
   // select friendly user options
-  const [userCategoriesOptions, setUserCategoriesOptions] = useState(
-    []
-  );
+  const [
+    userCategoriesOptions,
+    setUserCategoriesOptions
+  ] = useState([]);
   // allCategories from redux in form {id: 1, name: "java"}
   const allCategories = useSelector(state => state.categories);
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const EditPost = props => {
 
       setMarkdown(post.body);
       setTitle(post.title);
-      setCategoryIds(post.categoryIds);
+      setCategories(post.categories);
     };
 
     fetchPost();
@@ -48,30 +49,30 @@ const EditPost = props => {
 
   useEffect(() => {
     const userCategories = allCategories.filter(category =>
-      categoryIds.includes(category.id)
+      categories.includes(category.name)
     );
     const userCategoriesOptions = convertToSelectOptions(
       userCategories
     );
 
     setUserCategoriesOptions(userCategoriesOptions);
-  }, [allCategories, categoryIds]);
+  }, [allCategories, categories]);
 
   const updatePost = () => {
     const markdownPost = {
       body: markdown,
       title: title,
-      categoryIds: categoryIds
+      categories: categories
     };
     const post = request(
       "PATCH",
-      "/api/posts/" + id,
+      "/api/me/posts/" + id,
       JSON.stringify(markdownPost)
     );
 
     if (post) {
-      history.push(`/posts/${id}`);
       dispatch(saveAllPosts());
+      history.push(`/posts/${id}`);
     }
   };
 
@@ -95,14 +96,14 @@ const EditPost = props => {
     setButtonState(false);
 
     if (!selectedOptions) {
-      setCategoryIds([]);
+      setCategories([]);
 
       return;
     }
 
-    const categories = selectedOptions.map(obj => obj.value);
+    const categories = selectedOptions.map(obj => obj.label);
 
-    setCategoryIds(categories);
+    setCategories(categories);
   };
 
   return (

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import AuthHandler from "./components/AuthHandler";
 import AuthenticatedApp from "./authenticated";
-import { isAuthenticated } from "./utils";
 import NonAuthenticatedApp from "./nonAuthenticated";
 import {
   saveAllCategories,
@@ -13,20 +12,19 @@ import {
   saveAllPosts
 } from "./store/actions/actions";
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const App = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.currentUser);
 
   useEffect(() => {
-    setIsLoggedIn(isAuthenticated());
     dispatch(saveAllPosts());
     dispatch(saveCurrentUser());
     dispatch(saveAllCategories());
     dispatch(saveAllUsers());
   }, [dispatch]);
 
-  const renderApp = isLoggedIn ? (
-    <AuthenticatedApp setIsLoggedIn={setIsLoggedIn} />
+  const renderApp = currentUser ? (
+    <AuthenticatedApp />
   ) : (
     <NonAuthenticatedApp />
   );
@@ -35,10 +33,10 @@ function App() {
     <Router>
       {renderApp}
       <Route path="/auth">
-        <AuthHandler setIsLoggedIn={setIsLoggedIn} />
+        <AuthHandler />
       </Route>
     </Router>
   );
-}
+};
 
 export default App;

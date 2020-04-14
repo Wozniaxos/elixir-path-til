@@ -9,12 +9,13 @@ export const getToken = () => {
   return window.localStorage.getItem(localStorageKey);
 };
 
-// AUTHENTICATION
-export const isAuthenticated = () => {
-  const token = getToken();
-  if (token) {
-    return true;
-  }
+export const checkForToken = () => {
+  const optionsToken = {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json"
+    }
+  };
 
-  return false;
+  return getToken() ? optionsToken : null;
 };

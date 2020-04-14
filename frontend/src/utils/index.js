@@ -20,4 +20,4 @@ export {
   checkHasReacted
 } from "./array/helpers";
 
-export { isAuthenticated, deleteToken } from "./auth";
+export { deleteToken } from "./auth";

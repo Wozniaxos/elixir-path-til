@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PostCategories from "./PostCategories";
 import Markdown from "./Markdown";
 import CopyPostURL from "./CopyURL";
 import ReactionBar from "./ReactionBar";
@@ -16,6 +17,7 @@ const Post = props => {
         <Markdown source={post.body} />
       </article>
       <CopyPostURL postId={post.id} />
+      <PostCategories categories={post.categories} />
       <ReactionBar post={post} />
     </section>
   );

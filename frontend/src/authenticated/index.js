@@ -8,10 +8,10 @@ import SideBar from "../components/SideBar";
 import UserProfile from "../authenticated/UserProfile";
 import ReviewPost from "./ReviewPost";
 
-const AuthenticatedApp = ({ setIsLoggedIn }) => {
+const AuthenticatedApp = () => {
   return (
     <>
-      <AdminPanel setIsLoggedIn={setIsLoggedIn} />
+      <AdminPanel />
       <SideBar />
       <MainRoutes />
       {/* authenticated user routes */}

@@ -13,7 +13,11 @@ const ReactionBar = ({ post }) => {
   if (!reactions) return null;
 
   return reactions.map(reaction => (
-    <Reaction post={post} reaction={reaction} />
+    <Reaction
+      post={post}
+      reaction={reaction}
+      key={reaction.type}
+    />
   ));
 };
 

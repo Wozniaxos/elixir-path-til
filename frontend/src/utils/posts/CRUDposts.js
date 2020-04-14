@@ -1,17 +1,8 @@
-import { getToken } from "../auth";
+import { checkForToken, getToken } from "../auth";
 
 // FETCH ALL POSTS
 export const fetchData = async url => {
-  let optionsToken = null;
-
-  if (getToken()) {
-    optionsToken = {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        "Content-Type": "application/json"
-      }
-    };
-  }
+  const optionsToken = checkForToken();
 
   const response = await fetch(url, optionsToken);
   const data = response.json();
@@ -35,7 +26,9 @@ export const request = async (action, url, data) => {
 
 // FETCH SINGLE POST
 export const fetchSinglePost = async (url, id) => {
-  const response = await fetch(url + id);
+  const optionsToken = checkForToken();
+
+  const response = await fetch(url + id, optionsToken);
   const post = response.json();
 
   return post;

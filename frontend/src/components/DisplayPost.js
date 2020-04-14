@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { fetchSinglePost } from "../utils";
 import { useParams } from "react-router-dom";
-import Markdown from "./Markdown";
+import PostCategories from "./PostCategories";
 import CopyPostURL from "./CopyURL";
+import Markdown from "./Markdown";
 
 const DisplayPost = props => {
   const [post, setPost] = useState(null);
@@ -27,6 +28,7 @@ const DisplayPost = props => {
         <Markdown source={post.body} />
       </article>
       <CopyPostURL />
+      <PostCategories categories={post.categories} />
     </section>
   );
 };

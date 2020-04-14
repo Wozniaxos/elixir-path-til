@@ -2,10 +2,10 @@ import React from "react";
 import Logout from "./Logout";
 import { Link } from "react-router-dom";
 
-const AdminPanel = ({ setIsLoggedIn }) => {
+const AdminPanel = () => {
   return (
     <div className="admin-panel">
-      <Logout setIsLoggedIn={setIsLoggedIn} />
+      <Logout />
       <Link to="/add-post">
         <p>add post</p>
       </Link>

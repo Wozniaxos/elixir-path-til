@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { isAuthenticated } from "../utils";
+import { useSelector } from "react-redux";
 
 const SideBar = props => {
-  const [isLoggedIn, setIsLoggedIn] = useState("");
-
-  useEffect(() => {
-    setIsLoggedIn(isAuthenticated());
-  }, []);
+  const user = useSelector(state => state.currentUser);
 
   return (
     <nav className="side-nav-bar">
       <ul className="side-nav-bar-list">
-        {!isLoggedIn && (
+        {!user && (
           <li>
             <a href="http://localhost:4000/auth/google">login</a>
           </li>

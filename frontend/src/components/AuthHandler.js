@@ -1,14 +1,17 @@
 import { useHistory } from "react-router-dom";
 import { useQuery } from "../utils";
+import { useDispatch } from "react-redux";
+import { saveCurrentUser } from "../store/actions/actions";
 
-const AuthHandler = ({ setIsLoggedIn }) => {
+const AuthHandler = () => {
   const query = useQuery();
   const token = query.get("auth_token");
   const history = useHistory();
+  const dispatch = useDispatch();
 
   window.localStorage.setItem("til_token", token);
 
-  if (token) setIsLoggedIn(true);
+  dispatch(saveCurrentUser());
   history.push("/");
 
   return null;

@@ -20,9 +20,23 @@ const getCurrentUser = currentUser => ({
 });
 
 export const saveCurrentUser = () => async dispatch => {
-  const currentUser = await fetchUser("/api/me");
+  let currentUser = await fetchUser("/api/me");
+
+  if (currentUser.errors) {
+    currentUser = false;
+  }
 
   dispatch(getCurrentUser(currentUser));
+};
+
+export const deleteCurrentUser = () => ({
+  type: actionTypes.DELETE_CURRENT_USER,
+  currentUser: false
+});
+
+export const logOut = () => dispatch => {
+  dispatch(deleteCurrentUser());
+  dispatch(saveAllPosts());
 };
 
 export const getCurrentUserPosts = currentUserPosts => ({

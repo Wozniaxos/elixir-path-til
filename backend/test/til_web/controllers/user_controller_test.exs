@@ -62,7 +62,7 @@ defmodule TilWeb.UserControllerTest do
       insert(:post, author: user, is_public: false, reviewed: true)
 
 
-      post = insert(:post, reviewed: true, is_public: false, title: "internal reviewed post")
+      insert(:post, reviewed: true, is_public: false, title: "internal reviewed post")
 
       response =
         conn

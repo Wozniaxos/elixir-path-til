@@ -1,6 +1,7 @@
 defmodule TilWeb.UserControllerTest do
   use TilWeb.ConnCase
   import Til.Factory
+  import Til.Guardian
 
   describe "GET /api/users" do
     test "returns all users as public", %{conn: conn} do
@@ -29,10 +30,10 @@ defmodule TilWeb.UserControllerTest do
   end
 
   describe "GET /api/users/:id" do
-    test "returns particular user with public posts", %{conn: conn} do
+    test "returns particular user with only public posts when no authenticated", %{conn: conn} do
       user = insert(:user)
-      insert(:post, title: "public post", author: user, is_public: true)
-      insert(:post, author: user, is_public: false)
+      insert(:post, title: "public post", author: user, is_public: true, reviewed: true)
+      insert(:post, author: user, is_public: false, reviewed: true)
 
       response =
         conn
@@ -52,6 +53,26 @@ defmodule TilWeb.UserControllerTest do
       [post] = parsed_response_body["posts"]
 
       assert post["title"] == "public post"
+    end
+
+    test "returns particular user with all reviewed posts when authenticated", %{conn: conn} do
+      user = insert(:user)
+      {:ok, token, _} = encode_and_sign(user.uuid, %{})
+      insert(:post, title: "public post", author: user, is_public: true, reviewed: true)
+      insert(:post, author: user, is_public: false, reviewed: true)
+
+
+      post = insert(:post, reviewed: true, is_public: false, title: "internal reviewed post")
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> get(Routes.user_path(conn, :show, user.uuid))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert length(parsed_response_body["posts"]) == 2
     end
   end
 end

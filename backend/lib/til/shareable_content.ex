@@ -67,7 +67,7 @@ defmodule Til.ShareableContent do
   def create_post(author, %{"reviewed" => true} = attrs) do
     case %Post{author_id: author.id} |> change_post(attrs) |> Repo.insert() do
       {:ok, post} ->
-        post = get_post(post.id)
+        {:ok, post} = get_post(post.id)
         Notifications.notify_post_published(post)
         {:ok, post}
       {:error, %Ecto.Changeset{errors: _} = changeset} ->

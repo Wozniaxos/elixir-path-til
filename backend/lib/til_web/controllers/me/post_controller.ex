@@ -5,7 +5,7 @@ defmodule TilWeb.Me.PostController do
   alias Til.ShareableContent
   alias Til.ShareableContent.Post
 
-  def update(conn, %{"reviewed" => _}) do
+  def update(_, %{"reviewed" => _}) do
     {:error, :unauthorized}
   end
 

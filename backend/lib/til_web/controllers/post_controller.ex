@@ -2,7 +2,6 @@ defmodule TilWeb.PostController do
   use TilWeb, :controller
   alias Til.Accounts
   alias Til.ShareableContent
-  alias Til.Notifications
 
   def index(%{private: %{:guardian_default_resource => _}} = conn, _) do
     posts = ShareableContent.get_approved_posts()

@@ -60,7 +60,7 @@ defmodule Til.ShareableContent do
     Repo.all(public_posts_query) |> preload_post_data() |> Enum.map(&Post.populate_reaction_count/1)
   end
 
-  def create_post(author, %{"is_public" => true, "reviewed" => true}) do
+  def create_post(_, %{"is_public" => true, "reviewed" => true}) do
     {:error, :public_reviewed_forbidden}
   end
 

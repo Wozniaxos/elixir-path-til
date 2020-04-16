@@ -32,7 +32,7 @@ defmodule Til.ShareableContent do
 
   def get_hidden_post(hashed_id) do
     with {:ok, %{"sub" => id}} <- decode_post_id(hashed_id),
-         {:ok, post} <- get_post(id)
+         {:ok, post} <- get_post_by(id: id, reviewed: false)
     do
       {:ok, post}
     else

@@ -25,6 +25,25 @@ defmodule TilWeb.Posts.ReviewControllerTest do
       assert parsed_response_body["title"] == "hashed post"
     end
 
+    test "returns error when post is approved", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      post = insert(:post, title: "hashed post", is_public: false, reviewed: true)
+
+      {:ok, hashed_id, _} = encode_and_sign(post.id, %{})
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> get(Routes.post_review_path(conn, :show, hashed_id))
+
+      assert response.status == 400
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert parsed_response_body == %{"errors" => %{"detail" => "not found"}}
+    end
+
     test "returns error when invalid token", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})

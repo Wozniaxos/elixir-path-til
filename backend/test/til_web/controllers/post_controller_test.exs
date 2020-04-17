@@ -126,6 +126,46 @@ defmodule TilWeb.PostControllerTest do
       assert third_responded_reaction["post_id"] == second_post.id
       assert third_responded_reaction["user_id"] == nil
     end
+
+    test "searches properly with post title > author name > category name > post body priority", %{conn: conn} do
+      first_user = insert(:user, first_name: "Bruce", last_name: "Wayne")
+      second_user = insert(:user, first_name: "Peter", last_name: "Parker")
+      insert(:user, first_name: "Iron", last_name: "Man")
+
+      # No fit at all
+      insert(:post, title: "No fit title 5", body: "no fit body", author: second_user, reviewed: true)
+      # Only fit for post body
+      insert(:post, title: "No fit title 4", body: "Bruce post body", author: second_user, reviewed: true)
+      # Only fit for category name
+      first_category = insert(:category, name: "Bruce category")
+      second_category = insert(:category, name: "no fit category")
+      insert(:post,
+        title: "Not fit title 3",
+        body: "some not fit body",
+        author: first_user,
+        reviewed: true,
+        categories: [first_category, second_category]
+      )
+      # Only fit for author name
+      insert(:post, title: "Not fit title", body: "some not fit body", author: first_user, reviewed: true)
+      # Only fit for title
+      insert(:post, title: "Bruce post", body: "some not fit body", author: second_user, reviewed: true)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index), %{
+          q: "bruce"
+        })
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert length(parsed_response_body) == 4
+      [first_responded_post, _, _, fourth_responded_post] = parsed_response_body
+
+      assert first_responded_post["title"] == "Bruce post"
+      assert fourth_responded_post["body"] == "Bruce post body"
+    end
   end
 
   describe "GET /api/posts/:id" do

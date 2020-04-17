@@ -2,36 +2,38 @@ defmodule TilWeb.PostController do
   use TilWeb, :controller
   alias Til.Accounts
   alias Til.ShareableContent
+  alias Til.Notifications
 
-  def index(%{private: %{:guardian_default_resource => _}} = conn, _) do
-    posts = ShareableContent.get_approved_posts()
-
-    conn
-      |> put_status(:ok)
-      |> render("index_with_nested.json", posts: posts)
-  end
-
-  def index(conn, _) do
-    posts = ShareableContent.get_public_posts()
+  def index(conn, params) do
+    only_public = is_nil conn.private[:guardian_default_resource]
+    posts = ShareableContent.get_posts(only_public, params)
 
     conn
       |> put_status(:ok)
       |> render("index_with_nested.json", posts: posts)
   end
 
-  def show(%{private: %{:guardian_default_resource => _}} = conn, %{"id" => id}) do
-    with {:ok, post} <- ShareableContent.get_approved_post(id) do
+  def show(conn, %{"id" => id}) do
+    only_public = is_nil conn.private[:guardian_default_resource]
+
+    with {:ok, post} <- ShareableContent.get_post(id, only_public) do
       conn
       |> put_status(:ok)
       |> render("show_with_nested.json", post: post)
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    with {:ok, post} <- ShareableContent.get_public_post(id) do
+  def create(%{private: %{:guardian_default_resource => current_user}} = conn, %{"reviewed" => false} = params) do
+    author = Accounts.get_user(current_user.uuid)
+
+    with {:ok, post} <- ShareableContent.create_post(author, params),
+         {:ok, encoded_id} <- ShareableContent.encode_post_id(post.id)
+    do
+      Notifications.notify_post_created(post, encoded_id)
+
       conn
-      |> put_status(:ok)
-      |> render("show_with_nested.json", post: post)
+        |> put_status(:created)
+        |> render("show_with_nested.json", post: post)
     end
   end
 
@@ -39,6 +41,8 @@ defmodule TilWeb.PostController do
     author = Accounts.get_user(current_user.uuid)
 
     with {:ok, post} <- ShareableContent.create_post(author, params) do
+      Notifications.notify_post_published(post)
+
       conn
         |> put_status(:created)
         |> render("show_with_nested.json", post: post)

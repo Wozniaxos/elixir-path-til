@@ -7,6 +7,7 @@ export {
 
 export { approvePost } from "./reviewPost/approvePost";
 export { fetchReviewPost } from "./reviewPost/fetchReviewPost";
+export { fetchSearchedPosts } from "./posts/searchPosts";
 
 export { getCurrentURL, useQuery } from "./url/getURLparams";
 

@@ -14,6 +14,9 @@ const Post = props => {
         <Link to={`/posts/${post.id}`}>
           <h1>{post.title}</h1>
         </Link>
+        <p>
+          written by {post.author.firstName} {post.author.lastName}
+        </p>
         <Markdown source={post.body} />
       </article>
       <CopyPostURL postId={post.id} />

@@ -6,12 +6,19 @@ import PostsList from "../components/PostsList";
 import DisplayPost from "../components/DisplayPost";
 import Categories from "./Categories";
 import UserPosts from "./UsersPosts";
+import SearchedPosts from "./SearchedPosts";
+import { useSelector } from "react-redux";
 
 const MainRoutes = () => {
+  const posts = useSelector(state => state.posts);
+
   return (
     <Switch>
       <Route exact path="/">
-        <PostsList />
+        <PostsList posts={posts} />
+      </Route>
+      <Route path="/search">
+        <SearchedPosts />
       </Route>
       <Route path="/random-post">
         <RandomPost />

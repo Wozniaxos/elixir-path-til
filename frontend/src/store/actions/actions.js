@@ -1,5 +1,10 @@
 import * as actionTypes from "../actionTypes";
-import { fetchUser, fetchUserPosts, fetchData } from "../../utils";
+import {
+  fetchUser,
+  fetchUserPosts,
+  fetchData,
+  fetchSearchedPosts
+} from "../../utils";
 
 // CATEGORIES
 const getAllCategories = categories => ({
@@ -73,3 +78,21 @@ export const saveAllPosts = () => async dispatch => {
 
   dispatch(getPosts(allPosts));
 };
+
+// SEARCHED POSTS
+
+const getSerchedPosts = searchedPosts => ({
+  type: actionTypes.GET_SEARCHED_POSTS,
+  searchedPosts
+});
+
+export const saveSearchedPosts = query => async dispatch => {
+  const searchedPosts = await fetchSearchedPosts(query);
+
+  dispatch(getSerchedPosts(searchedPosts));
+};
+
+export const saveSearchedQuery = searchQuery => ({
+  type: actionTypes.SEARCH_QUERY,
+  searchQuery
+});

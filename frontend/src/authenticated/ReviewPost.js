@@ -40,8 +40,8 @@ const ReviewPost = props => {
     return <p>...loading...</p>;
   }
 
-  if (post.errors.detail === "not found") {
-    return <p>post already approved</p>;
+  if (post.errors) {
+    return <p>{post.errors.detail}</p>;
   }
 
   return (

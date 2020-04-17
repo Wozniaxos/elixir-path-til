@@ -4,7 +4,9 @@ const initialState = {
   categories: [],
   currentUser: null,
   users: [],
-  posts: []
+  posts: [],
+  searchedPosts: [],
+  searchQuery: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -43,6 +45,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: action.posts
+      };
+
+    case actionTypes.GET_SEARCHED_POSTS:
+      return {
+        ...state,
+        searchedPosts: action.searchedPosts
+      };
+
+    case actionTypes.SEARCH_QUERY:
+      return {
+        ...state,
+        searchQuery: action.searchQuery
       };
 
     default:

@@ -55,6 +55,10 @@
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
 
+mark {
+  padding: 0;
+}
+
 .noShow {
   /* needed for hiding toolbar in ReactMD */
   display: none !important;
@@ -90,4 +94,8 @@
   display: flex;
   justify-content: center;
   list-style: none;
+}
+
+span {
+  padding: 0;
 }

@@ -1,10 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import Post from "./Post";
 import "../App.css";
 
-const PostsList = () => {
-  const posts = useSelector(state => state.posts);
+const PostsList = ({ posts }) => {
+  if (!posts) {
+    return null;
+  }
 
   return (
     <div className="posts">

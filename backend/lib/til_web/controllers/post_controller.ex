@@ -27,7 +27,7 @@ defmodule TilWeb.PostController do
     author = Accounts.get_user(current_user.uuid)
 
     with {:ok, post} <- ShareableContent.create_post(author, params),
-         {:ok, encoded_id} <- ShareableContent.encode_post_id(post.id)
+         {:ok, encoded_id, _} <- ShareableContent.encode_post_id(post.id)
     do
       Notifications.notify_post_created(post, encoded_id)
 

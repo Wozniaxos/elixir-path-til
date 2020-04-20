@@ -67,7 +67,7 @@ defmodule Til.ShareableContent do
 
     results.rows
       |> Enum.map(&Repo.load(Post, {results.columns, &1}))
-      |> Repo.preload([:categories, :author, :reactions])
+      |> Repo.preload([:categories, :author, reactions: :user])
       |> Enum.map(&Post.populate_reaction_count/1)
   end
 

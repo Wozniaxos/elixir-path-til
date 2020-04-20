@@ -130,7 +130,6 @@ defmodule TilWeb.PostControllerTest do
     test "searches properly with post title > author name > category name > post body priority", %{conn: conn} do
       first_user = insert(:user, first_name: "Bruce", last_name: "Wayne")
       second_user = insert(:user, first_name: "Peter", last_name: "Parker")
-      insert(:user, first_name: "Iron", last_name: "Man")
 
       # No fit at all
       insert(:post, title: "No fit title 5", body: "no fit body", author: second_user, reviewed: true)
@@ -142,7 +141,7 @@ defmodule TilWeb.PostControllerTest do
       insert(:post,
         title: "Not fit title 3",
         body: "some not fit body",
-        author: first_user,
+        author: second_user,
         reviewed: true,
         categories: [first_category, second_category]
       )
@@ -160,11 +159,93 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert length(parsed_response_body) == 4
-      [first_responded_post, _, _, fourth_responded_post] = parsed_response_body
+      assert length(parsed_response_body) == 3
+      [first_responded_post, second_responded_post, third_responded_post] = parsed_response_body
 
       assert first_responded_post["title"] == "Bruce post"
-      assert fourth_responded_post["body"] == "Bruce post body"
+      assert second_responded_post["author"]["firstName"] == "Bruce"
+      assert third_responded_post["body"] == "Bruce post body"
+    end
+
+    test "searches properly when authenticated", %{conn: conn} do
+      first_user = insert(:user, first_name: "Bruce", last_name: "Wayne")
+      {:ok, token, _} = encode_and_sign(first_user.uuid, %{})
+
+      second_user = insert(:user, first_name: "Peter", last_name: "Parker")
+
+      # No fit at all
+      insert(:post, title: "No fit title 5", body: "no fit body", author: second_user, reviewed: true)
+      # Only fit for post body
+      insert(:post, title: "No fit title 4", body: "Bruce post body", author: second_user, reviewed: true)
+      # Only fit for category name
+      first_category = insert(:category, name: "Bruce category")
+      second_category = insert(:category, name: "no fit category")
+      insert(:post,
+        title: "Not fit title 3",
+        body: "some not fit body",
+        author: second_user,
+        reviewed: true,
+        categories: [first_category, second_category]
+      )
+      # Only fit for author name
+      insert(:post, title: "Not fit title", body: "some not fit body", author: first_user, reviewed: true, is_public: false)
+      # Only fit for title
+      insert(:post, title: "Bruce post", body: "some not fit body", author: second_user, reviewed: true, is_public: false)
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> get(Routes.post_path(conn, :index), %{
+          q: "bruce"
+        })
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert length(parsed_response_body) == 3
+      [first_responded_post, second_responded_post, third_responded_post] = parsed_response_body
+
+      assert first_responded_post["title"] == "Bruce post"
+      assert second_responded_post["author"]["firstName"] == "Bruce"
+      assert third_responded_post["body"] == "Bruce post body"
+    end
+
+    test "searches properly when not authenticated", %{conn: conn} do
+      first_user = insert(:user, first_name: "Bruce", last_name: "Wayne")
+      second_user = insert(:user, first_name: "Peter", last_name: "Parker")
+
+      # No fit at all
+      insert(:post, title: "No fit title 5", body: "no fit body", author: second_user, reviewed: true)
+      # Only fit for post body
+      insert(:post, title: "No fit title 4", body: "Bruce post body", author: second_user, reviewed: true)
+      # Only fit for category name
+      first_category = insert(:category, name: "Bruce category")
+      second_category = insert(:category, name: "no fit category")
+      insert(:post,
+        title: "Not fit title 3",
+        body: "some not fit body",
+        author: second_user,
+        reviewed: true,
+        categories: [first_category, second_category]
+      )
+      # Only fit for author name
+      insert(:post, title: "Not fit title", body: "some not fit body", author: first_user, reviewed: true, is_public: false)
+      # Only fit for title
+      insert(:post, title: "Bruce post", body: "some not fit body", author: second_user, reviewed: true, is_public: false)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index), %{
+          q: "bruce"
+        })
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert length(parsed_response_body) == 1
+      [responded_post] = parsed_response_body
+
+      assert responded_post["body"] == "Bruce post body"
     end
   end
 

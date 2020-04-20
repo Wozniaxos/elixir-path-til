@@ -41,7 +41,10 @@ defmodule Til.ShareableContent do
   end
 
   def get_post(id, only_public) do
-    get_post_by(id: id, reviewed: true, is_public: only_public)
+    case only_public do
+      true -> get_post_by(id: id, reviewed: true, is_public: true)
+      false -> get_post_by(id: id, reviewed: true)
+    end
   end
 
   def get_posts(only_public, %{"q" => search_query}) do

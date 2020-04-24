@@ -4,9 +4,11 @@ import { request, convertToSelectOptions } from "../utils";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { saveAllPosts } from "../store/actions/actions";
-import Markdown from "../components/Markdown";
-import ReactMde from "react-mde";
 import CreatableSelect from "react-select/creatable";
+import errorToast from "../utils/toasts/errorToast";
+import Markdown from "../components/Markdown";
+import postSuccessToast from "../utils/toasts/postSuccessToast";
+import ReactMde from "react-mde";
 
 const AddPost = props => {
   const [buttonState, setButtonState] = useState(true);
@@ -29,15 +31,21 @@ const AddPost = props => {
       is_public: isPublic,
       reviewed: !isReviewNeeded
     };
+
     const savePost = await request(
       "POST",
       "/api/posts",
       JSON.stringify(post)
     );
 
-    if (savePost) {
-      history.push("/");
+    if (savePost.ok) {
       dispatch(saveAllPosts());
+      postSuccessToast("Post added successfully!");
+      history.push("/");
+    } else {
+      const errors = await savePost.json();
+
+      errorToast(errors);
     }
   };
 

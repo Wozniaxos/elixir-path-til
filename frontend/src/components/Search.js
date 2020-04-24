@@ -5,14 +5,14 @@ import {
   saveSearchedPosts,
   saveSearchedQuery
 } from "../store/actions/actions";
-import { useRouteLeave } from "../utils/customHooks/onRouteLeave";
+import { useOnRouteLeave } from "../utils/customHooks/useOnRouteLeave";
 
 const Search = () => {
   const [input, setInput] = useState("");
   const [timeoutID, setTimeoutID] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
-  const hasLeavedRoute = useRouteLeave("/search");
+  const hasLeavedRoute = useOnRouteLeave("/search");
 
   useEffect(() => {
     if (hasLeavedRoute) {

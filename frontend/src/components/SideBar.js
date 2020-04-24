@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Search from "./Search";
+import useUser from "../utils/customHooks/useUser";
 
 const SideBar = props => {
-  const user = useSelector(state => state.currentUser);
+  const user = useUser();
 
   return (
     <nav className="side-nav-bar">

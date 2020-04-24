@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./App.css";
 import AuthHandler from "./components/AuthHandler";
 import AuthenticatedApp from "./authenticated";
 import NonAuthenticatedApp from "./nonAuthenticated";
+import useUser from "./utils/customHooks/useUser";
 import {
   saveAllCategories,
   saveCurrentUser,
@@ -14,7 +15,7 @@ import {
 
 const App = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.currentUser);
+  const currentUser = useUser();
 
   useEffect(() => {
     dispatch(saveAllPosts());

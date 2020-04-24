@@ -7,10 +7,13 @@ import MainRoutes from "../components/MainRoutes";
 import SideBar from "../components/SideBar";
 import UserProfile from "../authenticated/UserProfile";
 import ReviewPost from "./ReviewPost";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthenticatedApp = () => {
   return (
     <>
+      <ToastContainer />
       <AdminPanel />
       <SideBar />
       <MainRoutes />

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { request } from "../utils";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   saveAllPosts,
   saveCurrentUser
 } from "../store/actions/actions";
 import DeleteModal from "./DeleteModal";
+import postSuccessToast from "../utils/toasts/postSuccessToast";
 
 const DeletePost = ({ postId }) => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsOpenModal] = useState(false);
-  const userId = useSelector(state => state.currentUser.uuid);
 
   const toggleModal = () => {
     setIsOpenModal(!isModalOpen);
@@ -22,9 +22,10 @@ const DeletePost = ({ postId }) => {
       `/api/me/posts/${postId}`
     );
 
-    if (isDeleted) {
+    if (isDeleted.ok) {
       dispatch(saveAllPosts());
       dispatch(saveCurrentUser());
+      postSuccessToast("Post deleted successfully.");
     }
   };
 

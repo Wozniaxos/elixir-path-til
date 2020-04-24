@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import ProfilePosts from "./ProfilePosts";
+import useUser from "../utils/customHooks/useUser";
 
 const UserProfile = props => {
   const [userPosts, setUserPosts] = useState(null);
-  const user = useSelector(state => state.currentUser);
+  const user = useUser();
 
   useEffect(() => {
     if (user) {

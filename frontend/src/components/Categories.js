@@ -1,12 +1,10 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React from 'react'
+import { useSelector } from 'react-redux'
 
-const Categories = props => {
-  const categories = useSelector(state => state.categories);
+const Categories = () => {
+  const categories = useSelector(state => state.categories)
 
-  return categories.map(category => (
-    <p key={category.id}>{category.name}</p>
-  ));
-};
+  return categories.map(category => <p key={category.id}>{category.name}</p>)
+}
 
-export default Categories;
+export default Categories

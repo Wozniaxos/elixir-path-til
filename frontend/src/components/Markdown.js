@@ -1,23 +1,21 @@
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import CodeBlock from "./CodeBlock";
-import TextBlock from "./TextBlock";
-import { useSelector } from "react-redux";
+import React from 'react'
+import ReactMarkdown from 'react-markdown'
+import CodeBlock from './CodeBlock'
+import TextBlock from './TextBlock'
+import { useSelector } from 'react-redux'
 
 const Markdown = props => {
-  const searchQuery = useSelector(state => state.searchQuery);
+  const searchQuery = useSelector(state => state.searchQuery)
 
   const renderers = {
-    code: CodeBlock
-  };
-
-  if (searchQuery) {
-    renderers.text = TextBlock;
+    code: CodeBlock,
   }
 
-  return (
-    <ReactMarkdown source={props.source} renderers={renderers} />
-  );
-};
+  if (searchQuery) {
+    renderers.text = TextBlock
+  }
 
-export default Markdown;
+  return <ReactMarkdown source={props.source} renderers={renderers} />
+}
+
+export default Markdown

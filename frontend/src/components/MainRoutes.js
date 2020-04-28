@@ -1,42 +1,42 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import RandomPost from "../components/RandomPost";
-import Stats from "../components/Stats";
-import PostsList from "../components/PostsList";
-import DisplayPost from "../components/DisplayPost";
-import Categories from "./Categories";
-import UserPosts from "./UsersPosts";
-import SearchedPosts from "./SearchedPosts";
-import { useSelector } from "react-redux";
+import React from 'react'
+import { Switch, Route } from 'react-router-dom'
+import RandomPost from '../components/RandomPost'
+import Stats from '../components/Stats'
+import PostsList from '../components/PostsList'
+import DisplayPost from '../components/DisplayPost'
+import Categories from './Categories'
+import UserPosts from './UsersPosts'
+import SearchedPosts from './SearchedPosts'
+import { useSelector } from 'react-redux'
 
 const MainRoutes = () => {
-  const posts = useSelector(state => state.posts);
+  const posts = useSelector(state => state.posts)
 
   return (
     <Switch>
-      <Route exact path="/">
+      <Route exact path='/'>
         <PostsList posts={posts} />
       </Route>
-      <Route path="/search">
+      <Route path='/search'>
         <SearchedPosts />
       </Route>
-      <Route path="/random-post">
+      <Route path='/random-post'>
         <RandomPost />
       </Route>
-      <Route path="/stats">
+      <Route path='/stats'>
         <Stats />
       </Route>
-      <Route path="/categories">
+      <Route path='/categories'>
         <Categories />
       </Route>
-      <Route path="/posts/:id">
+      <Route path='/posts/:id'>
         <DisplayPost />
       </Route>
-      <Route path="/user-posts/:id">
+      <Route path='/user-posts/:id'>
         <UserPosts />
       </Route>
     </Switch>
-  );
-};
+  )
+}
 
-export default MainRoutes;
+export default MainRoutes

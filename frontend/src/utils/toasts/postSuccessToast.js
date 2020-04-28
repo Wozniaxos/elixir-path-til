@@ -1,13 +1,13 @@
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify'
 
 const postSuccessToast = displayMessage =>
   toast.success(displayMessage, {
-    position: "top-right",
+    position: 'top-right',
     autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: false,
-    draggable: true
-  });
+    draggable: true,
+  })
 
-export default postSuccessToast;
+export default postSuccessToast

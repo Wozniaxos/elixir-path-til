@@ -1,27 +1,25 @@
-import React, { useState } from "react";
-import "react-mde/lib/styles/css/react-mde-all.css";
-import { request, convertToSelectOptions } from "../utils";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { saveAllPosts } from "../store/actions/actions";
-import CreatableSelect from "react-select/creatable";
-import errorToast from "../utils/toasts/errorToast";
-import Markdown from "../components/Markdown";
-import postSuccessToast from "../utils/toasts/postSuccessToast";
-import ReactMde from "react-mde";
+import React, { useState } from 'react'
+import 'react-mde/lib/styles/css/react-mde-all.css'
+import { request, convertToSelectOptions } from '../utils'
+import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { saveAllPosts } from '../store/actions/actions'
+import CreatableSelect from 'react-select/creatable'
+import errorToast from '../utils/toasts/errorToast'
+import Markdown from '../components/Markdown'
+import postSuccessToast from '../utils/toasts/postSuccessToast'
+import ReactMde from 'react-mde'
 
-const AddPost = props => {
-  const [buttonState, setButtonState] = useState(true);
-  const [userCategories, setUserCategories] = useState([]);
-  const [markdown, setMarkdown] = useState("");
-  const [title, setTitle] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
-  const [isReviewNeeded, setIsReviewNeeded] = useState(false);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const categoriesOptions = useSelector(state =>
-    convertToSelectOptions(state.categories)
-  );
+const AddPost = () => {
+  const [buttonState, setButtonState] = useState(true)
+  const [userCategories, setUserCategories] = useState([])
+  const [markdown, setMarkdown] = useState('')
+  const [title, setTitle] = useState('')
+  const [isPublic, setIsPublic] = useState(false)
+  const [isReviewNeeded, setIsReviewNeeded] = useState(false)
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const categoriesOptions = useSelector(state => convertToSelectOptions(state.categories))
 
   const savePost = async () => {
     const post = {
@@ -29,121 +27,97 @@ const AddPost = props => {
       title: title,
       categories: userCategories,
       is_public: isPublic,
-      reviewed: !isReviewNeeded
-    };
+      reviewed: !isReviewNeeded,
+    }
 
-    const savePost = await request(
-      "POST",
-      "/api/posts",
-      JSON.stringify(post)
-    );
+    const savePost = await request('POST', '/api/posts', JSON.stringify(post))
 
     if (savePost.ok) {
-      dispatch(saveAllPosts());
-      postSuccessToast("Post added successfully!");
-      history.push("/");
+      dispatch(saveAllPosts())
+      postSuccessToast('Post added successfully!')
+      history.push('/')
     } else {
-      const errors = await savePost.json();
+      const errors = await savePost.json()
 
-      errorToast(errors);
+      errorToast(errors)
     }
-  };
+  }
 
   const handleInput = input => {
-    setMarkdown(input);
+    setMarkdown(input)
 
     if (input.length) {
-      setButtonState(false);
+      setButtonState(false)
     } else {
-      setButtonState(true);
+      setButtonState(true)
     }
-  };
+  }
 
   const handleTitle = event => {
-    setTitle(event.target.value);
-  };
+    setTitle(event.target.value)
+  }
 
   const handleSelect = selectedOptions => {
     if (!selectedOptions) {
-      setUserCategories([]);
+      setUserCategories([])
 
-      return;
+      return
     }
 
-    const categories = selectedOptions.map(
-      categoryOption => categoryOption.label
-    );
+    const categories = selectedOptions.map(categoryOption => categoryOption.label)
 
-    setUserCategories(categories);
-  };
+    setUserCategories(categories)
+  }
 
   const handlePublicCheckbox = () => {
-    setIsPublic(!isPublic);
-
-    (!isReviewNeeded || isPublic) && handleReviewCheckbox();
-  };
+    setIsPublic(!isPublic)
+    ;(!isReviewNeeded || isPublic) && handleReviewCheckbox()
+  }
 
   const handleReviewCheckbox = () => {
-    setIsReviewNeeded(!isReviewNeeded);
-  };
+    setIsReviewNeeded(!isReviewNeeded)
+  }
 
   return (
-    <div className="container">
-      <form className="add-post-title">
+    <div className='container'>
+      <form className='add-post-title'>
         <label>
           Title:
-          <input
-            type="text"
-            name="name"
-            value={title}
-            onChange={handleTitle}
-          />
+          <input type='text' name='name' value={title} onChange={handleTitle} />
         </label>
         <CreatableSelect
-          className="basic-multi-select"
-          classNamePrefix="select"
+          className='basic-multi-select'
+          classNamePrefix='select'
           isMulti
-          name="colors"
+          name='colors'
           onChange={handleSelect}
           options={categoriesOptions}
         />
       </form>
-      <ReactMde
-        classes={{ toolbar: "noShow" }}
-        onChange={handleInput}
-        value={markdown}
-      />
-      <div className="preview">
+      <ReactMde classes={{ toolbar: 'noShow' }} onChange={handleInput} value={markdown} />
+      <div className='preview'>
         <Markdown source={markdown} />
       </div>
       <hr />
       <div>
         <p>Make public?</p>
-        <input
-          type="checkbox"
-          onChange={handlePublicCheckbox}
-          checked={isPublic}
-        />
+        <input type='checkbox' onChange={handlePublicCheckbox} checked={isPublic} />
       </div>
       <div>
         <p>For review?</p>
         <input
-          type="checkbox"
+          type='checkbox'
           onChange={handleReviewCheckbox}
           checked={isReviewNeeded}
           disabled={isPublic}
         />
       </div>
       <hr />
-      <button
-        className="add-post"
-        disabled={buttonState}
-        onClick={savePost}
-      >
+      <button className='add-post' disabled={buttonState} onClick={savePost}>
         Save Post
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default AddPost;
+export default AddPost

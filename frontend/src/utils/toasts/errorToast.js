@@ -1,22 +1,22 @@
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify'
 
 const errorToast = data => {
-  let error;
+  let error
 
-  if (data.errors.hasOwnProperty("title")) {
-    error = `Title ${data.errors.title}.`;
+  if (Object.prototype.hasOwnProperty.call(data.errors, 'title')) {
+    error = `Title ${data.errors.title}.`
   } else {
-    error = "Something went wrong. Please try again later.";
+    error = 'Something went wrong. Please try again later.'
   }
 
   toast.error(error, {
-    position: "top-right",
+    position: 'top-right',
     autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: false,
-    draggable: true
-  });
-};
+    draggable: true,
+  })
+}
 
-export default errorToast;
+export default errorToast

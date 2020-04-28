@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux'
 
 const useUser = () => {
-  const user = useSelector(state => state.currentUser);
+  const user = useSelector(state => state.currentUser)
 
-  return user;
-};
+  return user
+}
 
-export default useUser;
+export default useUser

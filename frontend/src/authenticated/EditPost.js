@@ -1,152 +1,124 @@
-import React, { useState, useEffect } from "react";
-import "react-mde/lib/styles/css/react-mde-all.css";
-import {
-  request,
-  fetchSinglePost,
-  convertToSelectOptions
-} from "../utils";
-import { useHistory, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { saveAllPosts } from "../store/actions/actions";
-import Markdown from "../components/Markdown";
-import ReactMde from "react-mde";
-import Select from "react-select";
-import postSuccessToast from "../utils/toasts/postSuccessToast";
+import React, { useState, useEffect } from 'react'
+import 'react-mde/lib/styles/css/react-mde-all.css'
+import { request, fetchSinglePost, convertToSelectOptions } from '../utils'
+import { useHistory, useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { saveAllPosts } from '../store/actions/actions'
+import Markdown from '../components/Markdown'
+import ReactMde from 'react-mde'
+import Select from 'react-select'
+import postSuccessToast from '../utils/toasts/postSuccessToast'
 
-const EditPost = props => {
-  const [buttonState, setButtonState] = useState(true);
-  const [markdown, setMarkdown] = useState("");
-  const [title, setTitle] = useState("");
+const EditPost = () => {
+  const [buttonState, setButtonState] = useState(true)
+  const [markdown, setMarkdown] = useState('')
+  const [title, setTitle] = useState('')
   // user categories as strings
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([])
   // select friendly categories used to pass to select options
-  const [categoriesOptions, setCategoriesOptions] = useState("");
+  const [categoriesOptions, setCategoriesOptions] = useState('')
   // select friendly user options
-  const [
-    userCategoriesOptions,
-    setUserCategoriesOptions
-  ] = useState([]);
+  const [userCategoriesOptions, setUserCategoriesOptions] = useState([])
   // allCategories from redux in form {id: 1, name: "java"}
-  const allCategories = useSelector(state => state.categories);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const { id } = useParams();
+  const allCategories = useSelector(state => state.categories)
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const { id } = useParams()
 
   useEffect(() => {
     const fetchPost = async () => {
-      const post = await fetchSinglePost("/api/posts/", id);
+      const post = await fetchSinglePost('/api/posts/', id)
 
-      setMarkdown(post.body);
-      setTitle(post.title);
-      setCategories(post.categories);
-    };
+      setMarkdown(post.body)
+      setTitle(post.title)
+      setCategories(post.categories)
+    }
 
-    fetchPost();
-  }, [id]);
-
-  useEffect(() => {
-    setCategoriesOptions(convertToSelectOptions(allCategories));
-  }, [allCategories]);
+    fetchPost()
+  }, [id])
 
   useEffect(() => {
-    const userCategories = allCategories.filter(category =>
-      categories.includes(category.name)
-    );
-    const userCategoriesOptions = convertToSelectOptions(
-      userCategories
-    );
+    setCategoriesOptions(convertToSelectOptions(allCategories))
+  }, [allCategories])
 
-    setUserCategoriesOptions(userCategoriesOptions);
-  }, [allCategories, categories]);
+  useEffect(() => {
+    const userCategories = allCategories.filter(category => categories.includes(category.name))
+    const userCategoriesOptions = convertToSelectOptions(userCategories)
+
+    setUserCategoriesOptions(userCategoriesOptions)
+  }, [allCategories, categories])
 
   const updatePost = async () => {
     const markdownPost = {
       body: markdown,
       title: title,
-      categories: categories
-    };
-    const post = await request(
-      "PATCH",
-      "/api/me/posts/" + id,
-      JSON.stringify(markdownPost)
-    );
+      categories: categories,
+    }
+    const post = await request('PATCH', '/api/me/posts/' + id, JSON.stringify(markdownPost))
 
     if (post.ok) {
-      dispatch(saveAllPosts());
-      history.push(`/posts/${id}`);
-      postSuccessToast("Post updated successfully");
+      dispatch(saveAllPosts())
+      history.push(`/posts/${id}`)
+      postSuccessToast('Post updated successfully')
     }
-  };
+  }
 
   const handleInput = input => {
-    setMarkdown(input);
+    setMarkdown(input)
 
     if (input.length) {
-      setButtonState(false);
+      setButtonState(false)
     } else {
-      setButtonState(true);
+      setButtonState(true)
     }
-  };
+  }
 
   const handleTitle = event => {
-    setButtonState(false);
+    setButtonState(false)
 
-    setTitle(event.target.value);
-  };
+    setTitle(event.target.value)
+  }
 
   const handleSelect = selectedOptions => {
-    setButtonState(false);
+    setButtonState(false)
 
     if (!selectedOptions) {
-      setCategories([]);
+      setCategories([])
 
-      return;
+      return
     }
 
-    const categories = selectedOptions.map(obj => obj.label);
+    const categories = selectedOptions.map(obj => obj.label)
 
-    setCategories(categories);
-  };
+    setCategories(categories)
+  }
 
   return (
-    <div className="container">
-      <form className="add-post-title">
+    <div className='container'>
+      <form className='add-post-title'>
         <label>
           Title:
-          <input
-            type="text"
-            name="name"
-            value={title}
-            onChange={handleTitle}
-          />
+          <input type='text' name='name' value={title} onChange={handleTitle} />
         </label>
         <Select
           isMulti
-          name="colors"
+          name='colors'
           value={userCategoriesOptions}
           options={categoriesOptions}
           onChange={handleSelect}
-          className="basic-multi-select"
-          classNamePrefix="select"
+          className='basic-multi-select'
+          classNamePrefix='select'
         />
       </form>
-      <ReactMde
-        classes={{ toolbar: "noShow" }}
-        onChange={handleInput}
-        value={markdown}
-      />
-      <button
-        className="add-post"
-        disabled={buttonState}
-        onClick={updatePost}
-      >
+      <ReactMde classes={{ toolbar: 'noShow' }} onChange={handleInput} value={markdown} />
+      <button className='add-post' disabled={buttonState} onClick={updatePost}>
         update Post
       </button>
-      <div className="preview">
+      <div className='preview'>
         <Markdown source={markdown} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EditPost;
+export default EditPost

@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-const Stats = props => {
-  const usersStats = useSelector(state => state.users);
+const Stats = () => {
+  const usersStats = useSelector(state => state.users)
 
   return (
     <>
@@ -19,13 +19,11 @@ const Stats = props => {
           <p>Reaction like : {reactionsReceived.like} </p>
           <p>Reaction funny : {reactionsReceived.funny} </p>
           <p>Reaction love : {reactionsReceived.love} </p>
-          <p>
-            Reaction surprised : {reactionsReceived.surprised}{" "}
-          </p>
+          <p>Reaction surprised : {reactionsReceived.surprised} </p>
         </div>
       ))}
     </>
-  );
-};
+  )
+}
 
-export default Stats;
+export default Stats

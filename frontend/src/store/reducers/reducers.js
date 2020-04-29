@@ -7,6 +7,7 @@ const initialState = {
   posts: [],
   searchedPosts: [],
   searchQuery: [],
+  isDark: true,
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -57,6 +58,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         searchQuery: action.searchQuery,
+      }
+
+    case actionTypes.TOGGLE_THEME:
+      return {
+        ...state,
+        isDark: action.isDark,
       }
 
     default:

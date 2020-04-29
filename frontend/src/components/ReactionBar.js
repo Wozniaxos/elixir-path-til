@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Reaction from './Reaction'
 import { convertReactions } from '../utils'
+import Reaction from './Reaction'
 
 const ReactionBar = ({ post }) => {
   const [reactions, setReactions] = useState()
@@ -12,7 +12,13 @@ const ReactionBar = ({ post }) => {
 
   if (!reactions) return null
 
-  return reactions.map(reaction => <Reaction post={post} reaction={reaction} key={reaction.type} />)
+  return (
+    <div className="reactions">
+      {reactions.map(reaction => (
+        <Reaction post={post} reaction={reaction} key={reaction.type} />
+      ))}
+    </div>
+  )
 }
 
 export default ReactionBar

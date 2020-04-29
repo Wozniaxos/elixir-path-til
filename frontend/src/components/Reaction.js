@@ -6,7 +6,7 @@ import useUser from '../utils/customHooks/useUser'
 
 const Reaction = props => {
   const { id } = props.post
-  const { type, whoReacted } = props.reaction
+  const { type, whoReacted, Icon } = props.reaction
   const [hasReacted, setHasReacted] = useState(false)
   const [reactionNumber, setReactionNumber] = useState(0)
   const user = useUser()
@@ -44,9 +44,10 @@ const Reaction = props => {
   }
 
   return (
-    <p onClick={toggleReaction}>
-      {type}: {reactionNumber}
-    </p>
+    <div className="reaction" onClick={toggleReaction}>
+      <Icon width="28px" fill={hasReacted ? 'green' : '#8a8a8a'} />
+      <p>{reactionNumber}</p>
+    </div>
   )
 }
 

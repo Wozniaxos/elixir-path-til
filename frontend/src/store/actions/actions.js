@@ -1,5 +1,10 @@
 import * as actionTypes from '../actionTypes'
-import { fetchUser, fetchUserPosts, fetchData, fetchSearchedPosts } from '../../utils'
+import {
+  fetchUser,
+  fetchUserPosts,
+  fetchData,
+  fetchSearchedPosts,
+} from '../../utils'
 
 // CATEGORIES
 const getAllCategories = categories => ({
@@ -90,4 +95,11 @@ export const saveSearchedPosts = query => async dispatch => {
 export const saveSearchedQuery = searchQuery => ({
   type: actionTypes.SEARCH_QUERY,
   searchQuery,
+})
+
+// THEME
+
+export const toggleTheme = isDark => ({
+  type: actionTypes.TOGGLE_THEME,
+  isDark,
 })

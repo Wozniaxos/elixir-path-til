@@ -6,9 +6,16 @@
     "node": true,
     "jest": true
   },
-  "plugins": ["react", "react-hooks"],
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
   "parser": "babel-eslint",
-  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2018
@@ -19,7 +26,10 @@
     }
   },
   "rules": {
-    "linebreak-style": ["error", "unix"],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/prop-types": 0,
@@ -35,7 +45,10 @@
     "no-debugger": 2,
     "eqeqeq": 2,
     "keyword-spacing": 2,
-    "jsx-quotes": [2, "prefer-single"],
+    "jsx-quotes": [
+      2,
+      "prefer-double"
+    ],
     "comma-dangle": [
       2,
       {

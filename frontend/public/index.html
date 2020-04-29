@@ -29,17 +29,37 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <!-- FOR DEBUGGING PURPOSES -->
+  <button id="css-debug" class="debug-btn">css debug</button>
+
+  <!-- REACT ROOT ELEMENT -->
   <div id="root"></div>
-  <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+  <!-- FOR DEBUGGING PURPOSES -->
+  <script>
+    const debugBtn = document.getElementById('css-debug')
+    const app = document.getElementById("root")
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    debugBtn.addEventListener('click', () => {
+      app.classList.toggle("debug")
+    })
+  </script>
+
+  <style>
+    .debug-btn {
+      position: fixed;
+    }
+
+    .debug *:not(g):not(path) {
+      color: hsla(210, 100%, 100%, 0.9) !important;
+      /* background: hsla(210, 100%, 50%, 0.5) !important; */
+      outline: solid 0.25rem hsla(210, 100%, 100%, 0.5) !important;
+
+      box-shadow: none !important;
+      filter: none !important;
+    }
+  </style>
+
 </body>
 
 </html>

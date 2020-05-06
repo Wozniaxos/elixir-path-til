@@ -1,14 +1,14 @@
-import { getToken } from "../auth";
+import { getToken } from '../auth'
 
 // FETCH USER
 export const fetchUser = async url => {
   const response = await fetch(url, {
-    method: "GET",
+    method: 'GET',
     headers: {
       Authorization: `Bearer ${getToken()}`,
-      "Content-Type": "application/json"
-    }
-  });
+      'Content-Type': 'application/json',
+    },
+  })
 
-  return response.json();
-};
+  return response.json()
+}

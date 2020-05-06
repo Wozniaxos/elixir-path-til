@@ -1,18 +1,18 @@
-import React from "react";
-import { getCurrentURL } from "../utils";
+import React from 'react'
+import { getCurrentURL } from '../utils'
 
 const CopyPostURL = ({ postId }) => {
   const copyURL = () => {
-    let currentURL = getCurrentURL();
+    let currentURL = getCurrentURL()
 
     if (postId) {
-      currentURL = currentURL + `posts/${postId}`;
+      currentURL = currentURL + `posts/${postId}`
     }
 
-    navigator.clipboard.writeText(currentURL);
-  };
+    navigator.clipboard.writeText(currentURL)
+  }
 
-  return <button onClick={copyURL}>Copy post Url</button>;
-};
+  return <button onClick={copyURL}>Copy post Url</button>
+}
 
-export default CopyPostURL;
+export default CopyPostURL

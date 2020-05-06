@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 
-const RandomPost = props => {
+const RandomPost = () => {
   // TODO fetch random post
-  return <p>random post goes here</p>;
-};
+  return <p>random post goes here</p>
+}
 
-export default RandomPost;
+export default RandomPost

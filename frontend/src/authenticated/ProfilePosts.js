@@ -1,9 +1,9 @@
-import React from "react";
-import DeletePost from "./DeletePost";
-import { Link } from "react-router-dom";
+import React from 'react'
+import DeletePost from './DeletePost'
+import { Link } from 'react-router-dom'
 
 const ProfilePosts = props => {
-  const { post } = props;
+  const { post } = props
 
   return (
     <div>
@@ -13,7 +13,7 @@ const ProfilePosts = props => {
       </Link>
       <DeletePost postId={post.id} />
     </div>
-  );
-};
+  )
+}
 
-export default ProfilePosts;
+export default ProfilePosts

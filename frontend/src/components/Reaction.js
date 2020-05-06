@@ -1,56 +1,53 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { handleReaction, checkHasReacted } from "../utils";
-import {
-  saveAllPosts,
-  saveAllUsers
-} from "../store/actions/actions";
-import useUser from "../utils/customHooks/useUser";
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { handleReaction, checkHasReacted } from '../utils'
+import { saveAllPosts, saveAllUsers } from '../store/actions/actions'
+import useUser from '../utils/customHooks/useUser'
 
 const Reaction = props => {
-  const { id } = props.post;
-  const { type, whoReacted } = props.reaction;
-  const [hasReacted, setHasReacted] = useState(false);
-  const [reactionNumber, setReactionNumber] = useState(0);
-  const user = useUser();
-  const dispatch = useDispatch();
+  const { id } = props.post
+  const { type, whoReacted } = props.reaction
+  const [hasReacted, setHasReacted] = useState(false)
+  const [reactionNumber, setReactionNumber] = useState(0)
+  const user = useUser()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (user) {
-      const didReact = checkHasReacted(whoReacted, user.uuid);
+      const didReact = checkHasReacted(whoReacted, user.uuid)
 
-      setHasReacted(didReact);
-      setReactionNumber(whoReacted.length);
+      setHasReacted(didReact)
+      setReactionNumber(whoReacted.length)
     }
-  }, [user, whoReacted]);
+  }, [user, whoReacted])
 
   const toggleReaction = async () => {
     if (hasReacted) {
-      await handleReaction(id, "DELETE", type)
+      await handleReaction(id, 'DELETE', type)
         .then(() => {
-          setHasReacted(!hasReacted);
-          setReactionNumber(reactionNumber - 1);
-          dispatch(saveAllPosts());
-          dispatch(saveAllUsers());
+          setHasReacted(!hasReacted)
+          setReactionNumber(reactionNumber - 1)
+          dispatch(saveAllPosts())
+          dispatch(saveAllUsers())
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
     } else {
-      await handleReaction(id, "POST", type)
+      await handleReaction(id, 'POST', type)
         .then(() => {
-          setHasReacted(!hasReacted);
-          setReactionNumber(reactionNumber + 1);
-          dispatch(saveAllPosts());
-          dispatch(saveAllUsers());
+          setHasReacted(!hasReacted)
+          setReactionNumber(reactionNumber + 1)
+          dispatch(saveAllPosts())
+          dispatch(saveAllUsers())
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
     }
-  };
+  }
 
   return (
     <p onClick={toggleReaction}>
       {type}: {reactionNumber}
     </p>
-  );
-};
+  )
+}
 
-export default Reaction;
+export default Reaction

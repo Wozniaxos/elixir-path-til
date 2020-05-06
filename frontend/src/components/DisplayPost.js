@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { fetchSinglePost } from "../utils";
-import { useParams } from "react-router-dom";
-import PostCategories from "./PostCategories";
-import CopyPostURL from "./CopyURL";
-import Markdown from "./Markdown";
-import ReactionBar from "./ReactionBar";
+import React, { useState, useEffect } from 'react'
+import { fetchSinglePost } from '../utils'
+import { useParams } from 'react-router-dom'
+import PostCategories from './PostCategories'
+import CopyPostURL from './CopyURL'
+import Markdown from './Markdown'
+import ReactionBar from './ReactionBar'
 
 const DisplayPost = () => {
-  const [post, setPost] = useState(null);
-  const { id } = useParams();
+  const [post, setPost] = useState(null)
+  const { id } = useParams()
 
   useEffect(() => {
     const fetchPost = async () => {
-      const post = await fetchSinglePost("/api/posts/", id);
-      setPost(post);
-    };
-    fetchPost();
-  }, [id]);
+      const post = await fetchSinglePost('/api/posts/', id)
+      setPost(post)
+    }
+    fetchPost()
+  }, [id])
 
   if (!post) {
-    return <p>...loading...</p>;
+    return <p>...loading...</p>
   }
 
   return (
-    <section className="post">
+    <section className='post'>
       <article>
         <h1>{post.title}</h1>
         <p>
@@ -35,7 +35,7 @@ const DisplayPost = () => {
       <PostCategories categories={post.categories} />
       <ReactionBar post={post} />
     </section>
-  );
-};
+  )
+}
 
-export default DisplayPost;
+export default DisplayPost

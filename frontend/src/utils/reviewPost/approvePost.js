@@ -1,14 +1,14 @@
-import { getToken } from "../auth";
+import { getToken } from '../auth'
 
 // APPROVE POST
 export const approvePost = async url => {
   const response = await fetch(url, {
-    method: "PUT",
+    method: 'PUT',
     headers: {
       Authorization: `Bearer ${getToken()}`,
-      "Content-Type": "application/json"
-    }
-  });
+      'Content-Type': 'application/json',
+    },
+  })
 
-  return response.ok;
-};
+  return response.ok
+}

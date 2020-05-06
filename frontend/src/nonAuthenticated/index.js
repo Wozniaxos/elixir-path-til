@@ -1,6 +1,6 @@
-import React from "react";
-import MainRoutes from "../components/MainRoutes";
-import SideBar from "../components/SideBar";
+import React from 'react'
+import MainRoutes from '../components/MainRoutes'
+import SideBar from '../components/SideBar'
 
 const NonAuthenticatedApp = () => {
   return (
@@ -8,7 +8,7 @@ const NonAuthenticatedApp = () => {
       <SideBar />
       <MainRoutes />
     </>
-  );
-};
+  )
+}
 
-export default NonAuthenticatedApp;
+export default NonAuthenticatedApp

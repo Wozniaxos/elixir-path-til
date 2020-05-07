@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const StyledPostInfo = styled.div`
   align-items: center;
@@ -7,7 +7,6 @@ const StyledPostInfo = styled.div`
 
   .author {
     margin: 0;
-    font-size: 16px;
   }
 
   .author-info {
@@ -16,13 +15,15 @@ const StyledPostInfo = styled.div`
   }
 
   .date {
-    font-size: 16px;
     margin: 0;
   }
 
   .date-author {
     display: flex;
     flex-direction: column;
+    p {
+      font-size: 16px;
+    }
   }
 
   img {
@@ -30,6 +31,6 @@ const StyledPostInfo = styled.div`
     height: 50px;
     width: 50px;
   }
-`;
+`
 
-export default StyledPostInfo;
+export default StyledPostInfo

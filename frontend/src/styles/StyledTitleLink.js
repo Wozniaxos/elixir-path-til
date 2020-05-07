@@ -1,6 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 const StyledTitleLink = styled(Link)`
   font-family: Poppins;
@@ -9,8 +8,7 @@ const StyledTitleLink = styled(Link)`
   letter-spacing: 0.96px;
   color: #ffffff;
   opacity: 1;
-  color: white;
   text-decoration: none;
-`;
+`
 
-export default StyledTitleLink;
+export default StyledTitleLink

@@ -8,6 +8,7 @@ const PostCategories = ({ categories }) => {
   const slicedCategories = categories.slice(0, 3)
 
   let moreCategories = null
+
   if (categories.length > 3) {
     moreCategories = (
       <p className="more-categories">+ {categories.length - 3} more...</p>

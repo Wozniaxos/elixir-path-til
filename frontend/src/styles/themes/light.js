@@ -1,6 +1,6 @@
 const light = {
-  background: "white",
-  fontFamily: "Poppins",
-};
+  background: '#ffffff',
+  fontFamily: 'Poppins',
+}
 
-export default light;
+export default light

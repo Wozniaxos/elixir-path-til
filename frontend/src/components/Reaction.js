@@ -43,9 +43,11 @@ const Reaction = props => {
     }
   }
 
+  const iconFillColor = hasReacted ? 'green' : '#8a8a8a'
+
   return (
     <div className="reaction" onClick={toggleReaction}>
-      <Icon width="28px" fill={hasReacted ? 'green' : '#8a8a8a'} />
+      <Icon width="28px" fill={iconFillColor} />
       <p>{reactionNumber}</p>
     </div>
   )

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import AdminPanel from '../authenticated/AdminPanel'
 import Search from './Search'
+import StyledAppHeader from '../styles/StyledAppHeader'
 import { useDispatch } from 'react-redux'
 import { toggleTheme } from '../store/actions/actions'
 import useUser from '../utils/customHooks/useUser'
 
-const SideBar = props => {
+const AppHeader = () => {
   const user = useUser()
   const dispatch = useDispatch()
   const [isDark, setIsDark] = useState(false)
@@ -16,21 +18,12 @@ const SideBar = props => {
   }
 
   return (
-    <nav className="side-nav-bar">
-      <ul className="side-nav-bar-list">
-        {!user && (
-          <li>
-            <a href="http://localhost:4000/auth/google">login</a>
-          </li>
-        )}
+    <StyledAppHeader>
+      <ul>
         <li>
-          <Link to="/">home</Link>
-        </li>
-        <li>
-          <Link to="/stats"> stats</Link>
-        </li>
-        <li>
-          <Link to="/categories"> categories</Link>
+          <Link to="/" className="home">
+            todayilearned
+          </Link>
         </li>
         <li>
           <Search />
@@ -39,9 +32,16 @@ const SideBar = props => {
           {/* for testing purposes - will be implemented after rebase/merge */}
           <button onClick={themeToggler}>theme</button>
         </li>
+        {user ? (
+          <AdminPanel />
+        ) : (
+          <li>
+            <a href="http://localhost:4000/auth/google">login</a>
+          </li>
+        )}
       </ul>
-    </nav>
+    </StyledAppHeader>
   )
 }
 
-export default SideBar
+export default AppHeader

@@ -1,11 +1,11 @@
 import React from 'react'
 import MainRoutes from '../components/MainRoutes'
-import SideBar from '../components/SideBar'
+import AppHeader from '../components/AppHeader'
 
 const NonAuthenticatedApp = () => {
   return (
     <>
-      <SideBar />
+      <AppHeader />
       <MainRoutes />
     </>
   )

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
+import StyledSearch from '../styles/StyledSearch'
 
 const Search = () => {
   const [input, setInput] = useState('')
@@ -36,9 +37,12 @@ const Search = () => {
   }
 
   return (
-    <div>
-      <input type='text' placeholder='search' value={input} onChange={handleInput} />
-    </div>
+    <StyledSearch
+      type="text"
+      placeholder="search"
+      value={input}
+      onChange={handleInput}
+    />
   )
 }
 

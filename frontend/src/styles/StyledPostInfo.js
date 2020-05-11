@@ -21,6 +21,7 @@ const StyledPostInfo = styled.div`
   .date-author {
     display: flex;
     flex-direction: column;
+    margin-left: 10px;
     p {
       font-size: 16px;
     }

@@ -19,7 +19,9 @@ const AddPost = () => {
   const [isReviewNeeded, setIsReviewNeeded] = useState(false)
   const history = useHistory()
   const dispatch = useDispatch()
-  const categoriesOptions = useSelector(state => convertToSelectOptions(state.categories))
+  const categoriesOptions = useSelector(state =>
+    convertToSelectOptions(state.categories)
+  )
 
   const savePost = async () => {
     const post = {
@@ -64,7 +66,9 @@ const AddPost = () => {
       return
     }
 
-    const categories = selectedOptions.map(categoryOption => categoryOption.label)
+    const categories = selectedOptions.map(
+      categoryOption => categoryOption.label
+    )
 
     setUserCategories(categories)
   }
@@ -79,41 +83,49 @@ const AddPost = () => {
   }
 
   return (
-    <div className='container'>
-      <form className='add-post-title'>
+    <div className="container">
+      <form className="add-post-title">
         <label>
           Title:
-          <input type='text' name='name' value={title} onChange={handleTitle} />
+          <input type="text" name="name" value={title} onChange={handleTitle} />
         </label>
         <CreatableSelect
-          className='basic-multi-select'
-          classNamePrefix='select'
+          className="basic-multi-select"
+          classNamePrefix="select"
           isMulti
-          name='colors'
+          name="colors"
           onChange={handleSelect}
           options={categoriesOptions}
         />
       </form>
-      <ReactMde classes={{ toolbar: 'noShow' }} onChange={handleInput} value={markdown} />
-      <div className='preview'>
+      <ReactMde
+        classes={{ toolbar: 'noShow' }}
+        onChange={handleInput}
+        value={markdown}
+      />
+      <div className="preview">
         <Markdown source={markdown} />
       </div>
       <hr />
       <div>
         <p>Make public?</p>
-        <input type='checkbox' onChange={handlePublicCheckbox} checked={isPublic} />
+        <input
+          type="checkbox"
+          onChange={handlePublicCheckbox}
+          checked={isPublic}
+        />
       </div>
       <div>
         <p>For review?</p>
         <input
-          type='checkbox'
+          type="checkbox"
           onChange={handleReviewCheckbox}
           checked={isReviewNeeded}
           disabled={isPublic}
         />
       </div>
       <hr />
-      <button className='add-post' disabled={buttonState} onClick={savePost}>
+      <button className="add-post" disabled={buttonState} onClick={savePost}>
         Save Post
       </button>
     </div>

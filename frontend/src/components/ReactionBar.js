@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { convertReactions } from '../utils'
+import StyledReactionBar from '../styles/StyledReactionBar'
 import Reaction from './Reaction'
 
 const ReactionBar = ({ post }) => {
@@ -13,11 +14,11 @@ const ReactionBar = ({ post }) => {
   if (!reactions) return null
 
   return (
-    <div className="reactions">
+    <StyledReactionBar>
       {reactions.map(reaction => (
         <Reaction post={post} reaction={reaction} key={reaction.type} />
       ))}
-    </div>
+    </StyledReactionBar>
   )
 }
 

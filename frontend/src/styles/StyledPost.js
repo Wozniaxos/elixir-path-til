@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const StyledPost = styled.section`
   background: #343434 0% 0% no-repeat padding-box;
@@ -47,6 +47,11 @@ const StyledPost = styled.section`
   }
 
   .reaction {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    margin-left: 30px;
+    width: 25%;
     display: flex;
   }
 
@@ -59,6 +64,6 @@ const StyledPost = styled.section`
       padding: 12px;
     }
   }
-`;
+`
 
-export default StyledPost;
+export default StyledPost

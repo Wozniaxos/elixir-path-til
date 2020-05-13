@@ -15,13 +15,24 @@ const StyleSideNav = styled.div`
     flex-direction: column;
     list-style: none;
     padding: 0px 0px 80px 0;
-    border-bottom: 1px solid #707070;
+    position: relative;
 
     li {
       margin-top: 13px;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.28px;
+    }
+
+    &::after {
+      background: #343434;
+      content: '';
+      left: -32px;
+      width: 400px;
+      position: absolute;
+      right: 0;
+      top: 240px;
+      height: 1px;
     }
   }
 
@@ -33,10 +44,6 @@ const StyleSideNav = styled.div`
     text-transform: uppercase;
   }
 
-  /* .post-categories::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  } */
-
   .post-categories::-webkit-scrollbar {
     width: 3px;
   }
@@ -44,6 +51,32 @@ const StyleSideNav = styled.div`
   .post-categories::-webkit-scrollbar-thumb {
     background-color: darkgrey;
     outline: 1px solid slategrey;
+  }
+
+  .post-category {
+    display: flex;
+    margin-bottom: 22px;
+    align-items: center;
+  }
+
+  .post-category-name {
+    display: flex;
+    margin-left: 5px;
+  }
+
+  .search-box {
+    position: relative;
+  }
+
+  .search-box::before {
+    background: #343434;
+    content: '';
+    left: -55px;
+    width: 64px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 40px;
   }
 `
 export default StyleSideNav

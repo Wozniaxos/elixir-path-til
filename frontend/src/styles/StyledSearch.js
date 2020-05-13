@@ -9,6 +9,7 @@ const StyledSearch = styled.input`
   height: 40px;
   margin-bottom: 40px;
   opacity: 1;
+  outline: none;
   padding: 0 10px;
   width: 300px;
 `

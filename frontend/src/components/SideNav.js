@@ -7,7 +7,9 @@ const SideNav = () => (
   <StyledSideNav>
     <ul>
       <li>
-        <Search />
+        <div className="search-box">
+          <Search />
+        </div>
       </li>
       <li>Users</li>
       <li>Stats </li>

@@ -1,7 +1,9 @@
 // REACTIONS
 
+// todo import more icons when they are ready
 import { ReactComponent as Smile } from '../../assets/icons/smile.svg'
 
+// assign imported icons to reactions
 export const convertReactions = reactions => {
   const reactionsType = [
     { type: 'like', Icon: Smile },

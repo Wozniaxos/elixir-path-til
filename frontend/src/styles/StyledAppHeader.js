@@ -1,22 +1,30 @@
 import styled from 'styled-components'
 
 const StyledAppHeader = styled.div`
-  margin: auto;
-  height: 100px;
-  width: 1590px;
+  display: flex;
+  background: #343434;
+  justify-content: space-between;
+  position: fixed;
+  top: 0px;
+  width: 100%;
 
   .home {
-    color: white;
-    font-weight: 600;
-    margin-right: 20px;
-    text-decoration: none;
+    align-items: center;
+    background: #171717;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    padding-left: 32px;
+    width: 400px;
   }
 
-  ul {
-    align-items: center;
-    display: flex;
-    list-style: none;
-    padding: 0px;
+  .home-link {
+    color: white;
+    font-weight: 600;
+    /* todo: change font to Futura, Bold */
+    font-size: 32px;
+    text-decoration: none;
   }
 `
+
 export default StyledAppHeader

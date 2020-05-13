@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 
-const StyledAdminPanel = styled.li`
+const StyledAdminPanel = styled.div`
   align-items: center;
+  background: #343434;
   display: flex;
-  height: 40px;
-  justify-content: space-between;
-  margin-left: auto;
-  width: 500px;
+  height: 100px;
+  justify-content: flex-end;
 
   .add-post-btn {
     background-color: #fec92d;
@@ -47,8 +46,8 @@ const StyledAdminPanel = styled.li`
   img {
     border-radius: 50%;
     height: 40px;
-    margin-right: 10px;
     margin-left: 20px;
+    margin-right: 10px;
     transition: all 0.3s ease-in;
     width: 40px;
   }
@@ -73,6 +72,7 @@ const StyledAdminPanel = styled.li`
   .user-info {
     align-items: center;
     display: flex;
+    padding-right: 32px;
   }
 
   .user-name {

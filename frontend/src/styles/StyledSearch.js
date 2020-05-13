@@ -7,9 +7,10 @@ const StyledSearch = styled.input`
   color: white;
   font-size: 16px;
   height: 40px;
+  margin-bottom: 40px;
   opacity: 1;
   padding: 0 10px;
-  width: 390px;
+  width: 300px;
 `
 
 export default StyledSearch

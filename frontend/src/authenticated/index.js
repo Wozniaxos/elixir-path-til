@@ -6,6 +6,8 @@ import EditPost from '../authenticated/EditPost'
 import MainRoutes from '../components/MainRoutes'
 import UserProfile from '../authenticated/UserProfile'
 import ReviewPost from './ReviewPost'
+import SideNav from '../components/SideNav'
+import StyledApp from '../styles/StyledApp'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -13,23 +15,28 @@ const AuthenticatedApp = () => {
   return (
     <>
       <ToastContainer />
-      <AppHeader />
-      <MainRoutes />
-      {/* authenticated user routes */}
-      <Switch>
-        <Route exact path="/add-post">
-          <AddPost />
-        </Route>
-        <Route path="/edit-post/:id">
-          <EditPost />
-        </Route>
-        <Route path="/profile">
-          <UserProfile />
-        </Route>
-        <Route path="/review-posts">
-          <ReviewPost />
-        </Route>
-      </Switch>
+      <StyledApp>
+        <AppHeader />
+        <SideNav />
+        <div className="main-routes">
+          <MainRoutes />
+          {/* authenticated user routes */}
+          <Switch>
+            <Route exact path="/add-post">
+              <AddPost />
+            </Route>
+            <Route path="/edit-post/:id">
+              <EditPost />
+            </Route>
+            <Route path="/profile">
+              <UserProfile />
+            </Route>
+            <Route path="/review-posts">
+              <ReviewPost />
+            </Route>
+          </Switch>
+        </div>
+      </StyledApp>
     </>
   )
 }

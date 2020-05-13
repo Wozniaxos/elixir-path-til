@@ -48,7 +48,7 @@ const Reaction = props => {
   return (
     <div className="reaction" onClick={toggleReaction}>
       <Icon width="28px" fill={iconFillColor} />
-      <p>{reactionNumber}</p>
+      <div>{reactionNumber}</div>
     </div>
   )
 }

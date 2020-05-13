@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 
 const StyledPost = styled.section`
-  background: #343434 0% 0% no-repeat padding-box;
-  width: 1590px;
+  background: #1f1f1f;
+  min-width: 1290px;
+  max-width: 1600px;
   border-radius: 15px;
   opacity: 1;
   margin: 40px auto;
@@ -10,6 +11,7 @@ const StyledPost = styled.section`
 
   p {
     font-size: 26px;
+    margin-top: 8px;
   }
 
   .categories {
@@ -53,16 +55,6 @@ const StyledPost = styled.section`
     margin-left: 30px;
     width: 25%;
     display: flex;
-  }
-
-  .reactions {
-    display: flex;
-    justify-content: space-between;
-
-    p {
-      width: 30px;
-      padding: 12px;
-    }
   }
 `
 

@@ -12,6 +12,7 @@ const StyledPostInfo = styled.div`
   .author-info {
     display: flex;
     align-items: center;
+    margin-bottom: 8px;
   }
 
   .date {

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { deleteToken } from '../utils'
 import { logOut } from '../store/actions/actions'
+import StyledLogout from '../styles/StyledLogout'
 
 const Logout = () => {
   const dispatch = useDispatch()
@@ -14,7 +15,7 @@ const Logout = () => {
     history.push('/')
   }
 
-  return <button onClick={logOutHandler}>Log out</button>
+  return <StyledLogout onClick={logOutHandler}>Log out</StyledLogout>
 }
 
 export default Logout

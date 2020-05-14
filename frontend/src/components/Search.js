@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
+import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
 import StyledSearch from '../styles/StyledSearch'
 
 const Search = () => {
@@ -37,12 +38,15 @@ const Search = () => {
   }
 
   return (
-    <StyledSearch
-      type="text"
-      placeholder="search"
-      value={input}
-      onChange={handleInput}
-    />
+    <div>
+      <StyledSearch
+        type="text"
+        placeholder="Search"
+        value={input}
+        onChange={handleInput}
+      />
+      <SearchIcon className="search-icon" />
+    </div>
   )
 }
 

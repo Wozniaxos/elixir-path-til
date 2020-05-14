@@ -14,7 +14,13 @@ const AppHeader = () => {
           todayilearned
         </Link>
       </div>
-      {user ? <AdminPanel /> : <p>log in</p>}
+      {user ? (
+        <AdminPanel />
+      ) : (
+        <a className="login-link" href="http://localhost:4000/auth/google">
+          log in
+        </a>
+      )}
     </StyledAppHeader>
   )
 }

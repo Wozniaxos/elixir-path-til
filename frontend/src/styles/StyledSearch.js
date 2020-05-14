@@ -12,6 +12,11 @@ const StyledSearch = styled.input`
   outline: none;
   padding: 0 10px;
   width: 300px;
+  &&::placeholder {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.32px;
+  }
 `
 
 export default StyledSearch

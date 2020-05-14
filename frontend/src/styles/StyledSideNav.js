@@ -78,5 +78,11 @@ const StyleSideNav = styled.div`
     top: 0;
     height: 40px;
   }
+
+  .search-icon {
+    position: absolute;
+    right: 2px;
+    bottom: 35px;
+  }
 `
 export default StyleSideNav

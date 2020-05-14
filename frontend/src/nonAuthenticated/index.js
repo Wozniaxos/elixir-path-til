@@ -1,12 +1,19 @@
 import React from 'react'
-import MainRoutes from '../components/MainRoutes'
 import AppHeader from '../components/AppHeader'
+import SideNav from '../components/SideNav'
+import StyledApp from '../styles/StyledApp'
+import MainRoutes from '../components/MainRoutes'
 
 const NonAuthenticatedApp = () => {
   return (
     <>
-      <AppHeader />
-      <MainRoutes />
+      <StyledApp>
+        <AppHeader />
+        <SideNav />
+        <div className="main-routes">
+          <MainRoutes />
+        </div>
+      </StyledApp>
     </>
   )
 }

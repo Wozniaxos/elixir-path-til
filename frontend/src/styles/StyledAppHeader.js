@@ -10,12 +10,14 @@ const StyledAppHeader = styled.div`
   width: 100%;
 
   .login-link {
-    padding: 32px;
-    text-decoration: none;
+    align-items: center;
     color: white;
-    text-transform: uppercase;
+    display: flex;
     font-weight: 900;
     letter-spacing: 1px;
+    padding: 32px;
+    text-decoration: none;
+    text-transform: uppercase;
   }
 
   .home {

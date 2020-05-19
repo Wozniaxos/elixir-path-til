@@ -2,10 +2,9 @@ import styled from 'styled-components'
 
 const StyledAddPost = styled.div`
   display: flex;
-  margin-top: 150px;
 
   .add-post-main {
-    flex-basis: 40%;
+    flex-basis: 45%;
     margin-right: 72px;
   }
 

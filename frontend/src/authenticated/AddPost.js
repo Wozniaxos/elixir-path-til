@@ -7,6 +7,7 @@ import { saveAllPosts } from '../store/actions/actions'
 import CreatableSelect from 'react-select/creatable'
 import customStyles from '../styles/ReactSelectCustomStyles/customStyles'
 import errorToast from '../utils/toasts/errorToast'
+import Checkboxes from '../authenticated/Checkboxes'
 import Markdown from '../components/Markdown'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 import PostPreview from '../authenticated/PostPreview'
@@ -129,27 +130,13 @@ const AddPost = () => {
           onChange={handleInput}
           value={markdown}
         />
-        <div className="checkboxes">
-          <div className="checkbox">
-            <input
-              type="checkbox"
-              onChange={handlePublicCheckbox}
-              checked={isPublic}
-            />
-            <label>Make public?</label>
-          </div>
-          <div className="checkbox">
-            <input
-              type="checkbox"
-              onChange={handleReviewCheckbox}
-              checked={isReviewNeeded}
-              disabled={isPublic}
-            />
-            <label>For review?</label>
-          </div>
-        </div>
+        <Checkboxes
+          handlePublicCheckbox={handlePublicCheckbox}
+          isPublic={isPublic}
+          handleReviewCheckbox={handleReviewCheckbox}
+          isReviewNeeded={isReviewNeeded}
+        />
       </div>
-
       <PostPreview
         categories={userCategories}
         title={title || 'your title'}

@@ -6,7 +6,7 @@ const StyledApp = styled.div`
     background: #343434;
     height: 100%;
     margin-left: 400px;
-    margin-top: 100px;
+    margin-top: 99px;
   }
 `
 export default StyledApp

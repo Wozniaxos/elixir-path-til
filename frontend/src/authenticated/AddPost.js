@@ -5,10 +5,13 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { saveAllPosts } from '../store/actions/actions'
 import CreatableSelect from 'react-select/creatable'
+import customStyles from '../styles/ReactSelectCustomStyles/customStyles'
 import errorToast from '../utils/toasts/errorToast'
 import Markdown from '../components/Markdown'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
+import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
+import StyledAddPost from '../styles/StyledAddPost'
 
 const AddPost = () => {
   const [buttonState, setButtonState] = useState(true)
@@ -58,7 +61,6 @@ const AddPost = () => {
   const handleTitle = event => {
     setTitle(event.target.value)
   }
-
   const handleSelect = selectedOptions => {
     if (!selectedOptions) {
       setUserCategories([])
@@ -82,53 +84,82 @@ const AddPost = () => {
     setIsReviewNeeded(!isReviewNeeded)
   }
 
+  /*
+    style reactMDe using external classes
+    style react select - ask designer maybes
+      selecting categories can look as title
+      with placeholder "categories"
+    remove Markdown component
+      render Post comp instead
+      pass markdown, title and cats 
+
+  */
+
   return (
-    <div className="container">
-      <form className="add-post-title">
-        <label>
-          Title:
-          <input type="text" name="name" value={title} onChange={handleTitle} />
-        </label>
-        <CreatableSelect
-          className="basic-multi-select"
-          classNamePrefix="select"
-          isMulti
-          name="colors"
-          onChange={handleSelect}
-          options={categoriesOptions}
+    <StyledAddPost>
+      <div className="add-post-main">
+        <div className="add-post-header">Create a post</div>
+        <form>
+          <input
+            className="add-post-title"
+            type="text"
+            name="name"
+            placeholder="Title"
+            value={title}
+            onChange={handleTitle}
+          />
+          <CreatableSelect
+            className="basic-multi-select"
+            classNamePrefix="select"
+            isMulti
+            name="colors"
+            onChange={handleSelect}
+            options={categoriesOptions}
+            placeholder="Select categories"
+            styles={customStyles}
+          />
+        </form>
+        <ReactMde
+          classes={{
+            toolbar: 'no-show',
+            textArea: 'text-area',
+            reactMde: 'react-mde',
+            grip: 'grip',
+          }}
+          onChange={handleInput}
+          value={markdown}
         />
-      </form>
-      <ReactMde
-        classes={{ toolbar: 'noShow' }}
-        onChange={handleInput}
-        value={markdown}
+        <div className="checkboxes">
+          <div className="checkbox">
+            <input
+              type="checkbox"
+              onChange={handlePublicCheckbox}
+              checked={isPublic}
+            />
+            <label>Make public?</label>
+          </div>
+          <div className="checkbox">
+            <input
+              type="checkbox"
+              onChange={handleReviewCheckbox}
+              checked={isReviewNeeded}
+              disabled={isPublic}
+            />
+            <label>For review?</label>
+          </div>
+        </div>
+      </div>
+
+      <PostPreview
+        categories={userCategories}
+        title={title || 'your title'}
+        body={markdown || 'your content'}
       />
-      <div className="preview">
-        <Markdown source={markdown} />
-      </div>
-      <hr />
-      <div>
-        <p>Make public?</p>
-        <input
-          type="checkbox"
-          onChange={handlePublicCheckbox}
-          checked={isPublic}
-        />
-      </div>
-      <div>
-        <p>For review?</p>
-        <input
-          type="checkbox"
-          onChange={handleReviewCheckbox}
-          checked={isReviewNeeded}
-          disabled={isPublic}
-        />
-      </div>
-      <hr />
-      <button className="add-post" disabled={buttonState} onClick={savePost}>
-        Save Post
-      </button>
-    </div>
+
+      {/* <button className="add-post" disabled={buttonState} onClick={savePost}>
+        Save Post */}
+      {/* </button> */}
+    </StyledAddPost>
   )
 }
 

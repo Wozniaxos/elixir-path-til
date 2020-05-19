@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const StyledTitleLink = styled(Link)`
   font-family: Poppins;
   font-weight: 600;
-  font-size: 48px;
+  font-size: 38px;
   letter-spacing: 0.96px;
   color: #ffffff;
   opacity: 1;

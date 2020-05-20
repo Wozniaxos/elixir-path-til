@@ -99,53 +99,63 @@ const AddPost = () => {
   return (
     <StyledAddPost>
       <div className="add-post-main">
-        <div className="add-post-header">Create a post</div>
-        <form>
-          <input
-            className="add-post-title"
-            type="text"
-            name="name"
-            placeholder="Title"
-            value={title}
-            onChange={handleTitle}
+        {/* todo - name it :) */}
+        <div className="to-be-named">
+          <div className="add-post-header">Create a post</div>
+          <form>
+            <input
+              className="add-post-title"
+              type="text"
+              name="name"
+              placeholder="Title"
+              value={title}
+              onChange={handleTitle}
+            />
+            <CreatableSelect
+              className="basic-multi-select"
+              classNamePrefix="select"
+              isMulti
+              name="colors"
+              onChange={handleSelect}
+              options={categoriesOptions}
+              placeholder="Select categories"
+              styles={customStyles}
+            />
+          </form>
+          <ReactMde
+            classes={{
+              toolbar: 'no-show',
+              textArea: 'text-area',
+              reactMde: 'react-mde',
+              grip: 'grip',
+            }}
+            onChange={handleInput}
+            value={markdown}
           />
-          <CreatableSelect
-            className="basic-multi-select"
-            classNamePrefix="select"
-            isMulti
-            name="colors"
-            onChange={handleSelect}
-            options={categoriesOptions}
-            placeholder="Select categories"
-            styles={customStyles}
+          <Checkboxes
+            handlePublicCheckbox={handlePublicCheckbox}
+            isPublic={isPublic}
+            handleReviewCheckbox={handleReviewCheckbox}
+            isReviewNeeded={isReviewNeeded}
           />
-        </form>
-        <ReactMde
-          classes={{
-            toolbar: 'no-show',
-            textArea: 'text-area',
-            reactMde: 'react-mde',
-            grip: 'grip',
-          }}
-          onChange={handleInput}
-          value={markdown}
-        />
-        <Checkboxes
-          handlePublicCheckbox={handlePublicCheckbox}
-          isPublic={isPublic}
-          handleReviewCheckbox={handleReviewCheckbox}
-          isReviewNeeded={isReviewNeeded}
+        </div>
+        <PostPreview
+          categories={userCategories}
+          title={title || 'your title'}
+          body={markdown || 'your content'}
         />
       </div>
-      <PostPreview
-        categories={userCategories}
-        title={title || 'your title'}
-        body={markdown || 'your content'}
-      />
 
-      {/* <button className="add-post" disabled={buttonState} onClick={savePost}>
-        Save Post */}
-      {/* </button> */}
+      <div className="add-post-buttons">
+        <button
+          className="add-post-button"
+          disabled={buttonState}
+          onClick={savePost}
+        >
+          Save Post
+        </button>
+        <button className="cancel-post-button">Cancel</button>
+      </div>
     </StyledAddPost>
   )
 }

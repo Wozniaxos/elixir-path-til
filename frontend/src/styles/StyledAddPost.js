@@ -1,9 +1,45 @@
 import styled from 'styled-components'
 
 const StyledAddPost = styled.div`
-  display: flex;
-
   .add-post-main {
+    display: flex;
+  }
+
+  .add-post-button {
+    background-color: #fec92d;
+    border: none;
+    border-radius: 10px;
+    color: #1f1f1f;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    height: 48px;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 180px;
+  }
+
+  .add-post-button:disabled {
+    background: none;
+    border-radius: 10px;
+    border: 1px solid #8a8a8a;
+    color: #8a8a8a;
+    font-size: 16px;
+    font-weight: 500;
+    height: 48px;
+    text-transform: uppercase;
+    width: 180px;
+  }
+
+  .add-post-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 170px;
+  }
+
+  /* todo - name it :) */
+  .to-be-named {
     flex-basis: 45%;
     margin-right: 72px;
   }
@@ -43,6 +79,19 @@ const StyledAddPost = styled.div`
     label {
       margin-left: 16px;
     }
+  }
+
+  .cancel-post-button {
+    background: none;
+    border-radius: 10px;
+    border: 1px solid #8a8a8a;
+    color: #8a8a8a;
+    font-size: 16px;
+    font-weight: 500;
+    height: 48px;
+    margin-left: 80px;
+    text-transform: uppercase;
+    width: 180px;
   }
 
   input[type='text']::placeholder {

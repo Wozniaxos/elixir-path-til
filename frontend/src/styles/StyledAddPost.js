@@ -6,7 +6,7 @@ const StyledAddPost = styled.div`
   }
 
   .add-post-button {
-    background-color: #fec92d;
+    background-color: #f4cb00;
     border: none;
     border-radius: 10px;
     color: #1f1f1f;
@@ -17,6 +17,7 @@ const StyledAddPost = styled.div`
     padding: 10px;
     text-align: center;
     text-transform: uppercase;
+    outline: none;
     width: 180px;
   }
 
@@ -29,6 +30,7 @@ const StyledAddPost = styled.div`
     font-weight: 500;
     height: 48px;
     text-transform: uppercase;
+    outline: none;
     width: 180px;
   }
 
@@ -90,6 +92,7 @@ const StyledAddPost = styled.div`
     font-weight: 500;
     height: 48px;
     margin-left: 80px;
+    outline: none;
     text-transform: uppercase;
     width: 180px;
   }

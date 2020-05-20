@@ -34,6 +34,7 @@
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
 
+/* fix for search highlighting */
 mark {
     padding: 0;
 }
@@ -48,18 +49,20 @@ mark {
 }
 
 .text-area {
+    background-color: #343434;
+    border-radius: 20px;
+    caret-color: #8a8a8a;
     color: #8a8a8a;
     font-size: 16px;
-    background-color: #343434;
-    caret-color: #8a8a8a;
+    min-height: 200px;
     outline: none;
-    border-radius: 20px;
 }
 
 .react-mde {
     border: 1px solid #8A8A8A;
     border-radius: 10px;
     margin-top: 16px; 
+    min-height: 202px;
 }
 
 .grip {
@@ -71,37 +74,6 @@ mark {
  End React Mde Classes  
 */
 
-.post {
-    border: 1px solid #e39910;
-    border-radius: 10px;
-    margin: 15px auto;
-    padding: 15px;
-    width: 80%;
-}
-
-.posts {
-    margin: auto;
-    width: 100%;
-}
-
-.preview {
-    border: 1px solid #c8ccd0;
-    min-height: 200px;
-    padding: 10px;
-}
-
-.side-nav-bar {
-    border: 1px solid #910707;
-    border-radius: 10px;
-    margin: 10px auto;
-    width: 80%;
-}
-
-.side-nav-bar-list {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-}
 
 span {
     padding: 0;

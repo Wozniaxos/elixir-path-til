@@ -10,6 +10,7 @@ import useUser from '../utils/customHooks/useUser'
 
 const PostPreview = ({ body, title, categories }) => {
   const user = useUser()
+  console.log(categories)
 
   return (
     <StyledPreviewPost className="styled-post">
@@ -26,11 +27,11 @@ const PostPreview = ({ body, title, categories }) => {
           </div>
           <CopyPostURL postId="not-created-yet" />
         </StyledPostInfo>
-        <StyledTitleLink>{title}</StyledTitleLink>
+        <StyledTitleLink to="/not-yet">{title}</StyledTitleLink>
         <Markdown source={body} />
         <div className="post-footer">
           <PostCategories categories={categories} />
-          {/* what here?? fake post with zero reactions?? */}
+          {/* todo -  what here?? fake post with zero reactions?? */}
           {/* <ReactionBar post={null} /> */}
         </div>
       </article>

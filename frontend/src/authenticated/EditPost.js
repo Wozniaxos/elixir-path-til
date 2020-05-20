@@ -4,10 +4,11 @@ import { request, fetchSinglePost, convertToSelectOptions } from '../utils'
 import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { saveAllPosts } from '../store/actions/actions'
-import Markdown from '../components/Markdown'
+import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
 import Select from 'react-select'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
+import StyledAddPost from '../styles/StyledAddPost'
 
 const EditPost = () => {
   const [buttonState, setButtonState] = useState(true)
@@ -42,7 +43,9 @@ const EditPost = () => {
   }, [allCategories])
 
   useEffect(() => {
-    const userCategories = allCategories.filter(category => categories.includes(category.name))
+    const userCategories = allCategories.filter(category =>
+      categories.includes(category.name)
+    )
     const userCategoriesOptions = convertToSelectOptions(userCategories)
 
     setUserCategoriesOptions(userCategoriesOptions)
@@ -54,7 +57,11 @@ const EditPost = () => {
       title: title,
       categories: categories,
     }
-    const post = await request('PATCH', '/api/me/posts/' + id, JSON.stringify(markdownPost))
+    const post = await request(
+      'PATCH',
+      '/api/me/posts/' + id,
+      JSON.stringify(markdownPost)
+    )
 
     if (post.ok) {
       dispatch(saveAllPosts())
@@ -93,31 +100,65 @@ const EditPost = () => {
     setCategories(categories)
   }
 
+  const handleCancel = () => {
+    history.push('/')
+  }
+
   return (
-    <div className='container'>
-      <form className='add-post-title'>
-        <label>
-          Title:
-          <input type='text' name='name' value={title} onChange={handleTitle} />
-        </label>
-        <Select
-          isMulti
-          name='colors'
-          value={userCategoriesOptions}
-          options={categoriesOptions}
-          onChange={handleSelect}
-          className='basic-multi-select'
-          classNamePrefix='select'
+    <StyledAddPost>
+      <div className="add-post-main">
+        {/* todo - name it :) */}
+        <div className="to-be-named">
+          <div className="add-post-header">Update your post</div>
+          <form>
+            <input
+              className="add-post-title"
+              type="text"
+              name="name"
+              placeholder="Title"
+              value={title}
+              onChange={handleTitle}
+            />
+            <Select
+              isMulti
+              name="colors"
+              value={userCategoriesOptions}
+              options={categoriesOptions}
+              onChange={handleSelect}
+              className="basic-multi-select"
+              classNamePrefix="select"
+            />
+          </form>
+          <ReactMde
+            classes={{
+              toolbar: 'no-show',
+              textArea: 'text-area',
+              reactMde: 'react-mde',
+              grip: 'grip',
+            }}
+            onChange={handleInput}
+            value={markdown}
+          />
+        </div>
+        <PostPreview
+          categories={categories}
+          title={title || 'your title'}
+          body={markdown || 'your content'}
         />
-      </form>
-      <ReactMde classes={{ toolbar: 'noShow' }} onChange={handleInput} value={markdown} />
-      <button className='add-post' disabled={buttonState} onClick={updatePost}>
-        update Post
-      </button>
-      <div className='preview'>
-        <Markdown source={markdown} />
       </div>
-    </div>
+      <div className="add-post-buttons">
+        <button
+          className="add-post-button"
+          disabled={buttonState}
+          onClick={updatePost}
+        >
+          update Post
+        </button>
+        <button onClick={handleCancel} className="cancel-post-button">
+          Cancel
+        </button>
+      </div>
+    </StyledAddPost>
   )
 }
 

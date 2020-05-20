@@ -85,16 +85,9 @@ const AddPost = () => {
     setIsReviewNeeded(!isReviewNeeded)
   }
 
-  /*
-    style reactMDe using external classes
-    style react select - ask designer maybes
-      selecting categories can look as title
-      with placeholder "categories"
-    remove Markdown component
-      render Post comp instead
-      pass markdown, title and cats 
-
-  */
+  const handleCancel = () => {
+    history.push('/')
+  }
 
   return (
     <StyledAddPost>
@@ -154,7 +147,9 @@ const AddPost = () => {
         >
           Save Post
         </button>
-        <button className="cancel-post-button">Cancel</button>
+        <button onClick={handleCancel} className="cancel-post-button">
+          Cancel
+        </button>
       </div>
     </StyledAddPost>
   )

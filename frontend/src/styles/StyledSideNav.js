@@ -5,7 +5,7 @@ const StyleSideNav = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 32px 0px 0px 32px;
+  padding: 0 0px 0px 32px;
   position: fixed;
   width: 400px;
 
@@ -14,6 +14,7 @@ const StyleSideNav = styled.div`
     display: flex;
     flex-direction: column;
     list-style: none;
+    margin-top: 0px;
     padding: 0px 0px 80px 0;
     position: relative;
 

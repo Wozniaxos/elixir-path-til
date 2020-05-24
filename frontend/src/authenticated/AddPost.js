@@ -8,7 +8,6 @@ import CreatableSelect from 'react-select/creatable'
 import customStyles from '../styles/ReactSelectCustomStyles/customStyles'
 import errorToast from '../utils/toasts/errorToast'
 import Checkboxes from '../authenticated/Checkboxes'
-import Markdown from '../components/Markdown'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
@@ -51,7 +50,6 @@ const AddPost = () => {
 
   const handleInput = input => {
     setMarkdown(input)
-
     if (input.length) {
       setButtonState(false)
     } else {
@@ -113,6 +111,11 @@ const AddPost = () => {
               options={categoriesOptions}
               placeholder="Select categories"
               styles={customStyles}
+              // components={{
+              //   DropdownIndicator: () => {
+              //     return <p>hello</p>
+              //   },
+              // }}
             />
           </form>
           <ReactMde
@@ -123,6 +126,9 @@ const AddPost = () => {
               grip: 'grip',
             }}
             onChange={handleInput}
+            textAreaProps={{
+              placeholder: 'Write away...',
+            }}
             value={markdown}
           />
           <Checkboxes
@@ -134,8 +140,8 @@ const AddPost = () => {
         </div>
         <PostPreview
           categories={userCategories}
-          title={title || 'your title'}
-          body={markdown || 'your content'}
+          title={title || 'Title'}
+          body={markdown || 'Your content'}
         />
       </div>
 

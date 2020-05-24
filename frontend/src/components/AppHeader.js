@@ -4,7 +4,7 @@ import AdminPanel from '../authenticated/AdminPanel'
 import StyledAppHeader from '../styles/StyledAppHeader'
 import useUser from '../utils/customHooks/useUser'
 
-const AppHeader = () => {
+const AppHeader = props => {
   const user = useUser()
 
   return (

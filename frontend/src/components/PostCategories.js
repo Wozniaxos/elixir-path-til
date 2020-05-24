@@ -1,17 +1,25 @@
 import React from 'react'
 
-const PostCategories = ({ categories }) => {
+const PostCategories = ({ categories, preview }) => {
   if (!categories) {
     return null
   }
 
-  const slicedCategories = categories.slice(0, 3)
+  let howManyCategories = 3
+
+  if (preview) {
+    howManyCategories = 2
+  }
+
+  const slicedCategories = categories.slice(0, howManyCategories)
 
   let moreCategories = null
 
-  if (categories.length > 3) {
+  if (categories.length > howManyCategories) {
     moreCategories = (
-      <p className="more-categories">+ {categories.length - 3} more...</p>
+      <p className="more-categories">
+        + {categories.length - howManyCategories} more...
+      </p>
     )
   }
 

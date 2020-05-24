@@ -100,6 +100,8 @@ const StyledAddPost = styled.div`
   input[type='text']::placeholder {
     color: #8a8a8a;
     font-size: 16px;
+    font-family: Poppins;
+    font-weight: 500;
     letter-spacing: 0.48px;
     margin-left: 16px;
     opacity: 1;

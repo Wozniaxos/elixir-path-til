@@ -79,7 +79,9 @@ const StyledAddPost = styled.div`
     align-items: center;
     margin-top: 16px;
     label {
-      margin-left: 16px;
+      font-size: 16px;
+      margin-left: 4px;
+      margin-top: 4px;
     }
   }
 

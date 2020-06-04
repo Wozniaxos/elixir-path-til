@@ -38,13 +38,17 @@ const StyledCheckBoxes = styled.div`
   /* Create a custom checkbox */
   .checkmark {
     border-radius: 4px;
-    border: 1px solid #ffffff;
+    border: 1px solid #707070;
     cursor: pointer;
     height: 25px;
     left: 0;
     position: absolute;
     top: 4px;
     width: 25px;
+  }
+
+  .checkmark-active {
+    border: 1px solid #ffffff;
   }
 
   /* Create the checkmark/indicator (hidden when not checked) */

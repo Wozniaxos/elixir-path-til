@@ -41,17 +41,28 @@ const StyleSideNav = styled.div`
     overflow: auto;
     font-size: 14px;
     font-weight: 600;
+    margin-top: 55px;
     letter-spacing: 0.28px;
     text-transform: uppercase;
-  }
 
-  .post-categories::-webkit-scrollbar {
-    width: 3px;
-  }
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
 
-  .post-categories::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
+    &::-webkit-scrollbar-thumb {
+      background-color: #707070;
+      outline: 1px solid slategrey;
+    }
+
+    &::-webkit-scrollbar-track-piece:end {
+      background: transparent;
+      margin-bottom: 10px;
+    }
+
+    // &::-webkit-scrollbar-track-piece:start {
+    //   background: transparent;
+    //   margin-top: -10px;
+    // }
   }
 
   .post-category {

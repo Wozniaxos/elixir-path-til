@@ -11,9 +11,21 @@ const Checkboxes = ({
   const publicCheckboxClass = classNames({
     active: isPublic,
   })
+
   const reviewCheckboxClass = classNames({
     active: isReviewNeeded,
   })
+
+  const publicCheckmarkClass = classNames({
+    checkmark: true,
+    'checkmark-active': isPublic,
+  })
+
+  const reviewCheckmarkClass = classNames({
+    checkmark: true,
+    'checkmark-active': isReviewNeeded,
+  })
+
   return (
     <StyledCheckboxes>
       <div className="checkboxes">
@@ -25,7 +37,7 @@ const Checkboxes = ({
               onChange={handlePublicCheckbox}
               checked={isPublic}
             />
-            <span className="checkmark"></span>
+            <span className={publicCheckmarkClass}></span>
           </label>
         </div>
         <div className="checkbox">
@@ -37,7 +49,7 @@ const Checkboxes = ({
               checked={isReviewNeeded}
               disabled={isPublic}
             />
-            <span className="checkmark"></span>
+            <span className={reviewCheckmarkClass}></span>
           </label>
         </div>
       </div>

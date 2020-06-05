@@ -63,8 +63,8 @@ mark {
 
 .text-area input[type='text']::placeholder {
     color: #8a8a8a;
-    font-size: 16px;
     font-family: Poppins;
+    font-size: 16px;
     font-weight: 500;
     letter-spacing: 0.48px;
     margin-left: 16px;
@@ -84,11 +84,14 @@ mark {
 }
 
 
-/*
- End React Mde Classes  
+  /*
+   End React Mde Classes  
 */
-
-
+  
+/*
+  Search Hack - whitout it searched phrase is padded
+  and looks like two words
+*/
 span {
     padding: 0;
 }

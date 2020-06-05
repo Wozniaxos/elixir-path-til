@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
 
   pre {
     font-size: 20px;
+    border-radius: 10px;
   }
 
   body {

@@ -51,10 +51,10 @@ const StyledPost = styled.section`
   .reaction {
     align-items: center;
     display: flex;
+    display: flex;
     justify-content: space-between;
     margin-left: 30px;
     width: 25%;
-    display: flex;
   }
 `
 

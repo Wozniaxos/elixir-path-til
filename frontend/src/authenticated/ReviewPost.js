@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { saveAllPosts } from '../store/actions/actions'
+import Post from '../components/Post'
 import { useQuery, fetchReviewPost, approvePost } from '../utils'
-import Markdown from '../components/Markdown'
 
 const ReviewPost = () => {
   const history = useHistory()
@@ -43,15 +43,10 @@ const ReviewPost = () => {
   }
 
   return (
-    <section className='post'>
-      <article>
-        <h1>
-          {post.title} {post.isPublic && '(public)'}
-        </h1>
-        <Markdown source={post.body} />
-      </article>
+    <>
+      <Post post={post} />
       <button onClick={approvePostHandler}>approve?</button>
-    </section>
+    </>
   )
 }
 

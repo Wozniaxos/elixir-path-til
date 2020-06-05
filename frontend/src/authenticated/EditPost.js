@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import 'react-mde/lib/styles/css/react-mde-all.css'
-import {request, fetchSinglePost, convertToSelectOptions} from '../utils'
-import {useHistory, useParams} from 'react-router-dom'
-import {useSelector, useDispatch} from 'react-redux'
-import {saveAllPosts} from '../store/actions/actions'
+import { request, fetchSinglePost, convertToSelectOptions } from '../utils'
+import { useHistory, useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { saveCurrentUser, saveAllPosts } from '../store/actions/actions'
 import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
 import Select from 'react-select'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 import StyledAddPost from '../styles/StyledAddPost'
 
-const EditPost = props => {
+const EditPost = () => {
   const [buttonState, setButtonState] = useState(true)
   const [markdown, setMarkdown] = useState('')
   const [title, setTitle] = useState('')
@@ -24,7 +24,7 @@ const EditPost = props => {
   const allCategories = useSelector(state => state.categories)
   const dispatch = useDispatch()
   const history = useHistory()
-  const {id} = useParams();
+  const { id } = useParams()
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -65,6 +65,7 @@ const EditPost = props => {
 
     if (post.ok) {
       dispatch(saveAllPosts())
+      dispatch(saveCurrentUser())
       history.push(`/posts/${id}`)
       postSuccessToast('Post updated successfully')
     }

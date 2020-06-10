@@ -1,15 +1,17 @@
 // REACTIONS
 
-// todo import more icons when they are ready
-import { ReactComponent as Smile } from '../../assets/icons/smile.svg'
+import { ReactComponent as Like } from '../../assets/icons/reactions/like.svg'
+import { ReactComponent as Love } from '../../assets/icons/reactions/love.svg'
+import { ReactComponent as Funny } from '../../assets/icons/reactions/funny.svg'
+import { ReactComponent as Surprised } from '../../assets/icons/reactions/surprised.svg'
 
 // assign imported icons to reactions
 export const convertReactions = reactions => {
   const reactionsType = [
-    { type: 'like', Icon: Smile },
-    { type: 'funny', Icon: Smile },
-    { type: 'love', Icon: Smile },
-    { type: 'surprised', Icon: Smile },
+    { type: 'like', Icon: Like },
+    { type: 'funny', Icon: Funny },
+    { type: 'love', Icon: Love },
+    { type: 'surprised', Icon: Surprised },
   ]
 
   let filteredReactions = []

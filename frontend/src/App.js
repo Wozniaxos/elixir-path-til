@@ -18,7 +18,7 @@ import { ThemeProvider } from 'styled-components'
 // needed for styling that has not been changed yet
 import './App.css'
 
-const App = () => {
+const App = props => {
   const dispatch = useDispatch()
   const currentUser = useUser()
   const isDark = useSelector(state => state.isDark)

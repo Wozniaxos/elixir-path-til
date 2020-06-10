@@ -10,7 +10,11 @@ import useUser from '../utils/customHooks/useUser'
 
 const PostPreview = ({ body, title, categories }) => {
   const user = useUser()
-
+  function handleDrop(event) {
+    event.preventDefault()
+    const data = event.dataTransfer.getData('text/plain')
+    event.target.textContent = data
+  }
   return (
     <StyledPreviewPost className="styled-post">
       <article>

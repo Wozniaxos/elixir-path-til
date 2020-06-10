@@ -6,6 +6,7 @@ const StyledAdminPanel = styled.div`
   display: flex;
   height: 100px;
   justify-content: flex-end;
+  margin-right: 70px;
 
   .add-post-btn {
     background-color: #fec92d;
@@ -21,8 +22,9 @@ const StyledAdminPanel = styled.div`
     width: 160px;
   }
 
-  .bg-light {
-    background-color: #353535;
+  .bg-dark {
+    background: #1f1f1f;
+    box-shadow: 0px 3px 10px #1f1f1f;
   }
 
   .chevron {
@@ -38,7 +40,7 @@ const StyledAdminPanel = styled.div`
     flex-direction: column;
     position: absolute;
     padding-top: 40px;
-    padding-left: 20px;
+    padding-left: 24px;
     padding-bottom: 10px;
     width: 100%;
   }
@@ -57,11 +59,14 @@ const StyledAdminPanel = styled.div`
   }
 
   .hidden {
-    display: none;
+    visibility: hidden;
   }
 
   .profile {
+    margin-left: 18px;
     position: relative;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
 
   .profile-link {

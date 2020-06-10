@@ -14,7 +14,7 @@ const AdminPanel = () => {
 
   const toggleDropdown = () => {
     setIsHidden(!isHidden)
-    setBackgroundClass(backgroundClass === 'bg-light' ? '' : 'bg-light')
+    setBackgroundClass(backgroundClass === 'bg-dark' ? '' : 'bg-dark')
     setImgRotate(!imgRotate)
   }
 

@@ -14,6 +14,7 @@ const Checkboxes = ({
 
   const reviewCheckboxClass = classNames({
     active: isReviewNeeded,
+    grayout: isPublic,
   })
 
   const publicCheckmarkClass = classNames({

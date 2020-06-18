@@ -77,7 +77,7 @@ const StyledCheckBoxes = styled.div`
   }
 
   .grayout {
-    color: gray;
+    opacity: 0.5;
   }
 `
 

@@ -1,16 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import AdminPanel from '../authenticated/AdminPanel'
-import StyledAppHeader from '../styles/StyledAppHeader'
 import useUser from '../utils/customHooks/useUser'
 
-const AppHeader = props => {
+const AppHeader = () => {
   const user = useUser()
 
   return (
-    <StyledAppHeader>
-      <div className="home">
-        <Link to="/" className="home-link">
+    <div className="app-header">
+      <div className="logo">
+        <Link to="/" className="logo__link">
           todayilearned
         </Link>
       </div>
@@ -21,7 +20,7 @@ const AppHeader = props => {
           log in
         </a>
       )}
-    </StyledAppHeader>
+    </div>
   )
 }
 

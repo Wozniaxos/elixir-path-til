@@ -8,7 +8,6 @@ import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
 import Select from 'react-select'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
-import StyledAddPost from '../styles/StyledAddPost'
 
 const EditPost = () => {
   const [buttonState, setButtonState] = useState(true)
@@ -106,14 +105,13 @@ const EditPost = () => {
   }
 
   return (
-    <StyledAddPost>
-      <div className="add-post-main">
-        {/* todo - name it :) */}
-        <div className="to-be-named">
-          <div className="add-post-header">Update your post</div>
+    <div>
+      <div className="add-post-container">
+        <div className="add-post__post-create">
+          <div className="add-post__header">Update your post</div>
           <form>
             <input
-              className="add-post-title"
+              className="add-post__title"
               type="text"
               name="name"
               placeholder="Title"
@@ -147,19 +145,19 @@ const EditPost = () => {
           body={markdown || 'your content'}
         />
       </div>
-      <div className="add-post-buttons">
+      <div className="buttons">
         <button
-          className="add-post-button"
+          className="buttons__button-primary"
           disabled={buttonState}
           onClick={updatePost}
         >
           update Post
         </button>
-        <button onClick={handleCancel} className="cancel-post-button">
+        <button onClick={handleCancel} className="buttons__button-cancel">
           Cancel
         </button>
       </div>
-    </StyledAddPost>
+    </div>
   )
 }
 

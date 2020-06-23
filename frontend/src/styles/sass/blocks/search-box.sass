@@ -1,0 +1,35 @@
+.search-box
+  position: relative
+  &__input
+    background: #343434 0% 0% no-repeat
+    border-radius: 10px
+    border: none
+    color: white
+    font-size: 16px
+    height: 40px
+    margin-bottom: 40px
+    opacity: 1
+    outline: none
+    padding: 0 10px
+    width: 300px
+
+  &__icon 
+    position: absolute
+    right: 2px
+    bottom: 36px
+  
+  &::before 
+    background: #343434
+    content: ''
+    left: -55px
+    width: 64px
+    position: absolute
+    right: 0
+    top: 0
+    height: 40px
+
+  &::placeholder 
+    font-size: 16px
+    font-weight: 600
+    letter-spacing: 0.32px
+  

@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
-import StyledSearch from '../styles/StyledSearch'
 
 const Search = () => {
   const [input, setInput] = useState('')
@@ -38,14 +37,15 @@ const Search = () => {
   }
 
   return (
-    <div>
-      <StyledSearch
+    <div className="search-box">
+      <input
+        className="search-box__input"
         type="text"
         placeholder="Search"
         value={input}
         onChange={handleInput}
       />
-      <SearchIcon className="search-icon" />
+      <SearchIcon className="search-box__icon" />
     </div>
   )
 }

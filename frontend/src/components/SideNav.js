@@ -1,23 +1,20 @@
 import React from 'react'
 import Categories from '../components/Categories'
 import Search from './Search'
-import StyledSideNav from '../styles/StyledSideNav'
 
 const SideNav = () => (
-  <StyledSideNav>
-    <ul>
-      <li>
-        <div className="search-box">
-          <Search />
-        </div>
+  <div className="side-nav">
+    <ul className="side-nav__menu">
+      <li className="side-nav__menu-item">
+        <Search />
       </li>
-      <li>Users</li>
-      <li>Stats </li>
+      <li className="side-nav__menu-item">Users</li>
+      <li className="side-nav__menu-item">Stats </li>
     </ul>
-    <div className="post-categories">
+    <div className="categories">
       <Categories />
     </div>
-  </StyledSideNav>
+  </div>
 )
 
 export default SideNav

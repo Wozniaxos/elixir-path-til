@@ -11,7 +11,6 @@ import Checkboxes from '../authenticated/Checkboxes'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
-import StyledAddPost from '../styles/StyledAddPost'
 
 const AddPost = () => {
   const [buttonState, setButtonState] = useState(true)
@@ -89,14 +88,13 @@ const AddPost = () => {
   }
 
   return (
-    <StyledAddPost>
-      <div className="add-post-main">
-        {/* todo - name it :) */}
-        <div className="to-be-named">
-          <div className="add-post-header">Create a post</div>
+    <div>
+      <div className="add-post-container">
+        <div className="add-post__post-create">
+          <h2 className="add-post__header">Create a post</h2>
           <form>
             <input
-              className="add-post-title"
+              className="add-post__title"
               type="text"
               name="name"
               placeholder="Title"
@@ -112,11 +110,6 @@ const AddPost = () => {
               options={categoriesOptions}
               placeholder="Select categories"
               styles={customStyles}
-              // components={{
-              //   DropdownIndicator: () => {
-              //     return <p>hello</p>
-              //   },
-              // }}
             />
           </form>
           <ReactMde
@@ -145,20 +138,19 @@ const AddPost = () => {
           body={markdown || 'Your content'}
         />
       </div>
-
-      <div className="add-post-buttons">
+      <div className="buttons">
         <button
-          className="add-post-button"
+          className="buttons__button-primary"
           disabled={buttonState}
           onClick={savePost}
         >
           Save Post
         </button>
-        <button onClick={handleCancel} className="cancel-post-button">
+        <button onClick={handleCancel} className="buttons__button-cancel">
           Cancel
         </button>
       </div>
-    </StyledAddPost>
+    </div>
   )
 }
 

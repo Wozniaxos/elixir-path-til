@@ -17,16 +17,16 @@ const PostCategories = ({ categories, preview }) => {
 
   if (categories.length > howManyCategories) {
     moreCategories = (
-      <p className="more-categories">
+      <p className="post__more-categories">
         + {categories.length - howManyCategories} more...
       </p>
     )
   }
 
   return (
-    <div className="categories">
+    <div className="post__categories">
       {slicedCategories.map((category, index) => (
-        <p key={index} className="category">
+        <p key={index} className="post__single-category">
           {category}
         </p>
       ))}

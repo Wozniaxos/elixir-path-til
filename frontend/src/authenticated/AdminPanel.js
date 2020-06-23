@@ -1,60 +1,58 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logout from './Logout'
-import StyledAdminPanel from '../styles/StyledAdminPanel'
 import useUser from '../utils/customHooks/useUser'
 import chevron from '../assets/chevron.png'
 import classNames from 'classnames'
 
 const AdminPanel = () => {
-  const [isHidden, setIsHidden] = useState(true)
-  const [backgroundClass, setBackgroundClass] = useState('')
-  const [imgRotate, setImgRotate] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const user = useUser()
 
   const toggleDropdown = () => {
-    setIsHidden(!isHidden)
-    setBackgroundClass(backgroundClass === 'bg-dark' ? '' : 'bg-dark')
-    setImgRotate(!imgRotate)
+    setIsMenuOpen(!isMenuOpen)
   }
 
-  const dropDownClasses = classNames({
-    hidden: isHidden,
-    [`${backgroundClass}`]: true,
-    'drop-down-menu': true,
+  const userMenuClasses = classNames({
+    'user-panel__menu': true,
+    '-hidden': !isMenuOpen,
   })
 
   const chevronClasses = classNames({
     chevron: true,
-    'img-rotate': imgRotate,
+    'chevron -rotate': isMenuOpen,
   })
 
-  const profileClasses = classNames({
-    [`${backgroundClass}`]: true,
-    profile: true,
+  const userPanelClasses = classNames({
+    'user-panel': true,
+    '-active': isMenuOpen,
   })
 
   return (
-    <StyledAdminPanel>
+    <div className="user-panel-container">
       <Link to="/add-post" className="add-post-btn">
         ADD POST
       </Link>
-      <div className={profileClasses} onClick={toggleDropdown}>
-        <div className="user-info">
-          <img src={user.image} alt="user-img" />
-          <p className="user-name">
+      <div onClick={toggleDropdown}>
+        <div className={userPanelClasses}>
+          <img
+            className="user__image -margin"
+            src={user.image}
+            alt="user-img"
+          />
+          <p className="user__name">
             {user.firstName} {user.lastName}
           </p>
           <img src={chevron} alt="chevron" className={chevronClasses} />
-        </div>
-        <div className={dropDownClasses}>
-          <Link to="/profile" className="profile-link">
-            Profile
-          </Link>
-          <Logout />
+          <div className={userMenuClasses}>
+            <Link to="/profile" className="profile-link">
+              Profile
+            </Link>
+            <Logout />
+          </div>
         </div>
       </div>
-    </StyledAdminPanel>
+    </div>
   )
 }
 

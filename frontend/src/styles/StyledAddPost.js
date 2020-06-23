@@ -80,7 +80,7 @@ const StyledAddPost = styled.div`
     margin-top: 16px;
     label {
       font-size: 16px;
-      margin-left: 4px;
+      margin-left: 5px;
       margin-top: 4px;
     }
   }

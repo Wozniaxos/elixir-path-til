@@ -46,7 +46,7 @@ const Reaction = props => {
   const iconFillColor = hasReacted ? 'green' : '#8a8a8a'
 
   return (
-    <div className="reaction" onClick={toggleReaction}>
+    <div className="post__single-reaction" onClick={toggleReaction}>
       <Icon width="28px" fill={iconFillColor} />
       <div>{reactionNumber}</div>
     </div>

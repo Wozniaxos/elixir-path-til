@@ -1,0 +1,69 @@
+.checkboxes
+  margin-top: 40px
+
+  &__single-checkbox
+    -moz-user-select: none
+    -ms-user-select: none
+    -webkit-user-select: none
+    color: #707070
+    cursor: pointer
+    display: block
+    font-size: 16px
+    margin-bottom: 12px
+    padding-left: 38px
+    position: relative
+    user-select: none
+
+    input:checked ~ .checkboxes__checkmark:after
+      display: block
+
+    &.-active
+      color: #ffffff
+
+    &.-darken
+      opacity: 0.5;
+
+    label
+      align-content: center
+      color: #707070
+      cursor: pointer
+      display: flex
+      font-weight: 600
+      letter-spacing: 0.48px
+      
+    input
+      cursor: pointer
+      height: 0
+      opacity: 0
+      position: absolute
+      width: 0
+
+  &__checkmark
+    border-radius: 4px
+    border: 1px solid #707070
+    cursor: pointer
+    height: 25px
+    left: 0
+    position: absolute
+    top: 0px
+    width: 25px
+
+    &:after
+      content: ''
+      position: absolute
+      display: none
+
+    &:after
+      left: 7px;
+      top: 2px;
+      width: 7px;
+      height: 13px;
+      border: solid yellow;
+      border-width: 0 2px 2px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+
+    &.-active
+      border: 1px solid #ffffff
+

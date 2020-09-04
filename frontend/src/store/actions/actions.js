@@ -96,10 +96,3 @@ export const saveSearchedQuery = searchQuery => ({
   type: actionTypes.SEARCH_QUERY,
   searchQuery,
 })
-
-// THEME
-
-export const toggleTheme = isDark => ({
-  type: actionTypes.TOGGLE_THEME,
-  isDark,
-})

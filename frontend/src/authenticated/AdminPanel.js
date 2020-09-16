@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logout from './Logout'
 import useUser from '../utils/customHooks/useUser'
-import chevron from '../assets/chevron.png'
+import chevron from '../assets/icons/chevron.png'
 import classNames from 'classnames'
 
 const AdminPanel = () => {

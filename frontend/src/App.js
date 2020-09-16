@@ -13,7 +13,7 @@ import NonAuthenticatedApp from './nonAuthenticated'
 import useUser from './utils/customHooks/useUser'
 // needed for styling that has not been changed yet
 import './App.css'
-import './styles/sass/index.sass'
+import './assets/stylesheets/application.sass'
 
 const App = () => {
   const dispatch = useDispatch()

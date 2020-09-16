@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Logout from './Logout'
 import useUser from '../utils/customHooks/useUser'
@@ -8,6 +8,7 @@ import classNames from 'classnames'
 const AdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const user = useUser()
+  const node = useRef()
 
   const toggleDropdown = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -28,8 +29,27 @@ const AdminPanel = () => {
     '-active': isMenuOpen,
   })
 
+  const handleClickOutside = e => {
+    if (node.current.contains(e.target)) {
+      return
+    }
+    setIsMenuOpen(false)
+  }
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isMenuOpen])
+
   return (
-    <div className="user-panel-container">
+    <div className="user-panel-container" ref={node}>
       <Link to="/add-post" className="add-post-btn">
         ADD POST
       </Link>

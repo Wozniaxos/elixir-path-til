@@ -15,8 +15,8 @@ const AuthenticatedApp = () => {
     <>
       <ToastContainer />
       <SideNav />
+      <AppHeader />
       <div className="main-content">
-        <AppHeader />
         <MainRoutes />
         {/* authenticated user routes */}
         <Switch>

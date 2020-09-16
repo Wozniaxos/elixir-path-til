@@ -1,3 +1,15 @@
+/* React Modal */ 
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #212529B2;
+    backdrop-filter: blur(2px);
+    z-index: 100;
+  }
+
 .cancel-delete-btn {
     background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
     background-color: #fe1a00;
@@ -39,20 +51,17 @@ mark {
     padding: 0;
 }
 
-
-/*
- React Mde Classes  
-*/
+/* React Mde Classes  */
 
 .no-show {
     display: none !important;
 }
 
 .text-area {
-    background-color: #343434;
+    background-color: #2A2E32;
     border-radius: 20px;
     caret-color: #8a8a8a;
-    color: #8a8a8a;
+    color: #a0a0a0;
     font-size: 16px;
     font-family: Poppins;
     font-weight: 500;
@@ -61,16 +70,12 @@ mark {
     outline: none;
 }
 
-.text-area input[type='text']::placeholder {
-    color: #8a8a8a;
-    font-family: Poppins;
+.text-area::placeholder {
+    color: #a0a0a0;
     font-size: 16px;
+    font-family: Poppins;
     font-weight: 500;
-    letter-spacing: 0.48px;
-    margin-left: 16px;
-    opacity: 1;
-    text-align: left;
-  }
+}
 
 .react-mde {
     border: 1px solid #8A8A8A;
@@ -84,10 +89,6 @@ mark {
 }
 
 
-  /*
-   End React Mde Classes  
-*/
-  
 /*
   Search Hack - whitout it searched phrase is padded
   and looks like two words

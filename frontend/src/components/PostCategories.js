@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 const PostCategories = ({ categories, preview }) => {
   if (!categories) {
@@ -17,18 +18,23 @@ const PostCategories = ({ categories, preview }) => {
 
   if (categories.length > howManyCategories) {
     moreCategories = (
-      <p className="post__more-categories">
+      <div className="post__more-categories">
         + {categories.length - howManyCategories} more...
-      </p>
+      </div>
     )
   }
 
+  const postCategoriesClassnames = classNames({
+    post__categories: true,
+    '-preview': preview,
+  })
+
   return (
-    <div className="post__categories">
+    <div className={postCategoriesClassnames}>
       {slicedCategories.map((category, index) => (
-        <p key={index} className="post__single-category">
+        <div key={index} className="post__single-category">
           {category}
-        </p>
+        </div>
       ))}
       {moreCategories}
     </div>

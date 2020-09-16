@@ -13,7 +13,7 @@ const TextBlock = ({ value }) => {
 
   return (
     <Highlighter
-      highlightClassName='YourHighlightClass'
+      highlightClassName="YourHighlightClass"
       searchWords={[searchedPhrase]}
       autoEscape={true}
       textToHighlight={value}

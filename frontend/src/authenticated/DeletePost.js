@@ -25,8 +25,12 @@ const DeletePost = ({ postId }) => {
 
   return (
     <>
-      <button onClick={toggleModal}>delete</button>
-      {isModalOpen && <DeleteModal deletePost={deletePost} toggleModal={toggleModal} />}
+      <button className="delete-post-btn" onClick={toggleModal}>
+        Delete
+      </button>
+      {isModalOpen && (
+        <DeleteModal deletePost={deletePost} toggleModal={toggleModal} />
+      )}
     </>
   )
 }

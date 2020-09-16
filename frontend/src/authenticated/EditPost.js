@@ -7,7 +7,9 @@ import { saveCurrentUser, saveAllPosts } from '../store/actions/actions'
 import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
 import Select from 'react-select'
+import customStyles from '../styles/ReactSelectCustomStyles/customStyles'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
+import PostSeparator from '../components/UI/PostSeparator'
 
 const EditPost = () => {
   const [buttonState, setButtonState] = useState(true)
@@ -118,15 +120,6 @@ const EditPost = () => {
               value={title}
               onChange={handleTitle}
             />
-            <Select
-              isMulti
-              name="colors"
-              value={userCategoriesOptions}
-              options={categoriesOptions}
-              onChange={handleSelect}
-              className="basic-multi-select"
-              classNamePrefix="select"
-            />
           </form>
           <ReactMde
             classes={{
@@ -138,7 +131,18 @@ const EditPost = () => {
             onChange={handleInput}
             value={markdown}
           />
+          <Select
+            isMulti
+            name="colors"
+            value={userCategoriesOptions}
+            options={categoriesOptions}
+            onChange={handleSelect}
+            // className="basic-multi-select"
+            // classNamePrefix="select"
+            styles={customStyles}
+          />
         </div>
+        <PostSeparator />
         <PostPreview
           categories={categories}
           title={title || 'your title'}

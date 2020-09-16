@@ -13,6 +13,7 @@ import NonAuthenticatedApp from './nonAuthenticated'
 import useUser from './utils/customHooks/useUser'
 // needed for styling that has not been changed yet
 import './App.css'
+import './devicon.css'
 import './assets/stylesheets/application.sass'
 
 const App = () => {

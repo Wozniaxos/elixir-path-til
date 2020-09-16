@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import 'react-mde/lib/styles/css/react-mde-all.css'
 import { request, convertToSelectOptions } from '../utils'
 import { useHistory } from 'react-router-dom'
@@ -11,6 +11,7 @@ import Checkboxes from '../authenticated/Checkboxes'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
+import PostSeparator from '../components/UI/PostSeparator'
 
 const AddPost = () => {
   const [buttonState, setButtonState] = useState(true)
@@ -50,11 +51,6 @@ const AddPost = () => {
 
   const handleInput = input => {
     setMarkdown(input)
-    if (input.length) {
-      setButtonState(false)
-    } else {
-      setButtonState(true)
-    }
   }
 
   const handleTitle = event => {
@@ -87,6 +83,14 @@ const AddPost = () => {
     history.push('/')
   }
 
+  useEffect(() => {
+    if (markdown.length && title && userCategories.length) {
+      setButtonState(false)
+    } else {
+      setButtonState(true)
+    }
+  }, [markdown, title, userCategories])
+
   return (
     <div>
       <div className="add-post-container">
@@ -95,21 +99,11 @@ const AddPost = () => {
           <form>
             <input
               className="add-post__title"
-              type="text"
               name="name"
-              placeholder="Title"
-              value={title}
               onChange={handleTitle}
-            />
-            <CreatableSelect
-              className="basic-multi-select"
-              classNamePrefix="select"
-              isMulti
-              name="colors"
-              onChange={handleSelect}
-              options={categoriesOptions}
-              placeholder="Select categories"
-              styles={customStyles}
+              placeholder="Title"
+              type="text"
+              value={title}
             />
           </form>
           <ReactMde
@@ -125,13 +119,24 @@ const AddPost = () => {
             }}
             value={markdown}
           />
+          <CreatableSelect
+            className="basic-multi-select"
+            classNamePrefix="select"
+            isMulti
+            name="colors"
+            onChange={handleSelect}
+            options={categoriesOptions}
+            placeholder="Select categories"
+            styles={customStyles}
+          />
           <Checkboxes
             handlePublicCheckbox={handlePublicCheckbox}
-            isPublic={isPublic}
             handleReviewCheckbox={handleReviewCheckbox}
+            isPublic={isPublic}
             isReviewNeeded={isReviewNeeded}
           />
         </div>
+        <PostSeparator />
         <PostPreview
           categories={userCategories}
           title={title || 'Title'}
@@ -139,15 +144,15 @@ const AddPost = () => {
         />
       </div>
       <div className="buttons">
+        <button onClick={handleCancel} className="buttons__button-cancel">
+          Cancel
+        </button>
         <button
           className="buttons__button-primary"
           disabled={buttonState}
           onClick={savePost}
         >
           Save Post
-        </button>
-        <button onClick={handleCancel} className="buttons__button-cancel">
-          Cancel
         </button>
       </div>
     </div>

@@ -5,6 +5,7 @@ import PostCategories from '../components/PostCategories'
 // import ReactionBar from '../components/ReactionBar'
 import useUser from '../utils/customHooks/useUser'
 import { Link } from 'react-router-dom'
+import { getDate } from '../utils'
 
 const PostPreview = ({ body, title, categories }) => {
   const user = useUser()
@@ -18,7 +19,7 @@ const PostPreview = ({ body, title, categories }) => {
             <div>
               {user.firstName} {user.lastName}
             </div>
-            <div>date</div>
+            <div className="post__date">{getDate()}</div>
           </div>
         </div>
         <CopyPostURL postId={null} />
@@ -30,8 +31,7 @@ const PostPreview = ({ body, title, categories }) => {
         <Markdown source={body} />
       </div>
       <div className="post__footer">
-        <PostCategories categories={categories} />
-        {/* <ReactionBar post={post} /> */}
+        <PostCategories categories={categories} preview />
       </div>
     </article>
   )

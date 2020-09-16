@@ -1,5 +1,6 @@
 .add-post-container
   display: flex
+  margin-right: 40px
 
 .add-post
   &__header
@@ -9,20 +10,23 @@
     letter-spacing: 0.48px
     margin-bottom: 24px
   &__title
-    background: #343434;
+    background: $color-background
     border-radius: 10px;
     border: 1px solid #8a8a8a;
     caret-color: #8a8a8a;
-    color: #8a8a8a;
+    color: $color-gray
     font-size: 16px;
+    font-weight: 500
     height: 48px;
     letter-spacing: 0.48px;
     margin-bottom: 16px;
     opacity: 1;
     outline: none;
     padding-left: 16px;
-    width: 100%;
+    width: 100%
+    &::placeholder
+      color: $color-gray
+      font-family: Poppins
 
   &__post-create
     flex-basis: 45%
-    margin-right: 72px

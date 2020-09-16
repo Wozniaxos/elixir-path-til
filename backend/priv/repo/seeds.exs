@@ -3,8 +3,8 @@ alias Til.Accounts.User
 alias Til.Repo
 
 categories = [
-  "android", "angular", "aws", "chrome", "commandline", "crystal", "css", "docker", "elasticsearch",
-  "elixir", "ember", "emberjs", "erlang", "flutter", "general", "git", "heroku", "html", "javascript", "k8s",
+  "android", "angular", "aws", "chrome", "commandline", "crystal", "css", "docker",
+  "elixir", "ember", "erlang", "flutter", "general", "git", "heroku", "html", "javascript", "k8s",
   "linux", "markdown", "meetup", "mongodb", "nodejs", "osx", "phoenix", "rails", "react", "react-native", "redis",
   "ruby", "rust", "sql", "terraform", "vault"
 ]

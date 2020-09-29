@@ -74,12 +74,6 @@ const EditPost = () => {
 
   const handleInput = input => {
     setMarkdown(input)
-
-    if (input.length) {
-      setButtonState(false)
-    } else {
-      setButtonState(true)
-    }
   }
 
   const handleTitle = event => {
@@ -105,6 +99,14 @@ const EditPost = () => {
   const handleCancel = () => {
     history.push('/')
   }
+
+  useEffect(() => {
+    if (markdown.length && title && categories.length) {
+      setButtonState(false)
+    } else {
+      setButtonState(true)
+    }
+  }, [markdown, title, categories])
 
   return (
     <div>
@@ -137,8 +139,6 @@ const EditPost = () => {
             value={userCategoriesOptions}
             options={categoriesOptions}
             onChange={handleSelect}
-            // className="basic-multi-select"
-            // classNamePrefix="select"
             styles={customStyles}
           />
         </div>
@@ -150,15 +150,15 @@ const EditPost = () => {
         />
       </div>
       <div className="buttons">
+        <button onClick={handleCancel} className="buttons__button-cancel">
+          Cancel
+        </button>
         <button
           className="buttons__button-primary"
           disabled={buttonState}
           onClick={updatePost}
         >
           update Post
-        </button>
-        <button onClick={handleCancel} className="buttons__button-cancel">
-          Cancel
         </button>
       </div>
     </div>

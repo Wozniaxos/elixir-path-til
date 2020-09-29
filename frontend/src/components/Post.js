@@ -18,6 +18,8 @@ const Post = ({ post, userPost, userImage }) => {
     title = post.title
   }
 
+  console.log('==>>', ' post.createdAt ', '==>>', post.createdAt)
+  console.log('==>>', post)
   const parsed = parseISO(post.createdAt)
   const date = format(parsed, ' dd MMM  hh:mm')
 

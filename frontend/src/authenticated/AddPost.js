@@ -56,6 +56,7 @@ const AddPost = () => {
   const handleTitle = event => {
     setTitle(event.target.value)
   }
+
   const handleSelect = selectedOptions => {
     if (!selectedOptions) {
       setUserCategories([])

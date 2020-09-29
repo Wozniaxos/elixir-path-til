@@ -3,6 +3,7 @@ export {
   fetchData,
   fetchSinglePost,
   fetchUserPosts,
+  fetchCategoryPosts,
 } from './posts/CRUDposts'
 
 export { approvePost } from './reviewPost/approvePost'

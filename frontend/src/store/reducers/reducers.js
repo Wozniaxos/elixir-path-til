@@ -2,6 +2,7 @@ import * as actionTypes from '../actionTypes'
 
 const initialState = {
   categories: [],
+  categoryPosts: null,
   currentUser: null,
   users: [],
   posts: [],
@@ -45,6 +46,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: action.posts,
+      }
+
+    case actionTypes.GET_CATEGORY_POSTS:
+      return {
+        ...state,
+        categoryPosts: action.categoryPosts,
       }
 
     case actionTypes.GET_SEARCHED_POSTS:

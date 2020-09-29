@@ -3,6 +3,7 @@ import {
   fetchUser,
   fetchUserPosts,
   fetchData,
+  fetchCategoryPosts,
   fetchSearchedPosts,
 } from '../../utils'
 
@@ -47,6 +48,17 @@ export const logOut = () => dispatch => {
 export const getCurrentUserPosts = currentUserPosts => ({
   type: actionTypes.GET_CURRENT_USER_POSTS,
   currentUserPosts,
+})
+
+export const saveCategoryPosts = id => async dispatch => {
+  const categoryPosts = await fetchCategoryPosts(`/api/categories/${id}`)
+  console.log('==>>', 'categoryPosts', '==>>', categoryPosts)
+  dispatch(getCategoryPosts(categoryPosts))
+}
+
+export const getCategoryPosts = categoryPosts => ({
+  type: actionTypes.GET_CATEGORY_POSTS,
+  categoryPosts,
 })
 
 export const saveCurrentUserPosts = id => async dispatch => {

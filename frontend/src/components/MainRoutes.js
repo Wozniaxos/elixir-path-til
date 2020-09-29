@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 
 const MainRoutes = () => {
   const posts = useSelector(state => state.posts)
+  const categoryPosts = useSelector(state => state.categoryPosts?.posts)
 
   return (
     <Switch>
@@ -18,11 +19,11 @@ const MainRoutes = () => {
       <Route path="/search">
         <SearchedPosts />
       </Route>
-      {/* <Route path="/stats"> */}
-      {/*   <Stats /> */}
-      {/* </Route> */}
       <Route path="/posts/:id">
         <DisplayPost />
+      </Route>
+      <Route path="/category/:id">
+        <PostsList posts={categoryPosts} />
       </Route>
       <Route path="/user-posts/:id">
         <UserPosts />

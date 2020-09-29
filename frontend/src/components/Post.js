@@ -6,11 +6,10 @@ import UserPostMenu from '../authenticated/UserPostMenu'
 import ReactionBar from './ReactionBar'
 import { Link, useLocation } from 'react-router-dom'
 import TextBlock from './TextBlock'
-import useUser from '../utils/customHooks/useUser'
+import { format, parseISO } from 'date-fns'
 
 const Post = ({ post, userPost, userImage }) => {
   const location = useLocation()
-  const currentUser = useUser()
 
   let title
   if (location.pathname === '/search') {
@@ -18,6 +17,9 @@ const Post = ({ post, userPost, userImage }) => {
   } else {
     title = post.title
   }
+
+  const parsed = parseISO(post.createdAt)
+  const date = format(parsed, ' dd MMM  hh:mm')
 
   return (
     <article className="post">
@@ -32,7 +34,7 @@ const Post = ({ post, userPost, userImage }) => {
             <div>
               {post.author.firstName} {post.author.lastName}
             </div>
-            <div className="post__date">date</div>
+            <div className="post__date">{date}</div>
           </div>
         </div>
         <CopyPostURL postId={post.id} />

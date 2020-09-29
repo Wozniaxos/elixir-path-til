@@ -10,6 +10,16 @@ export const fetchData = async url => {
   return data
 }
 
+// FETCH CATEGORY POSTS
+export const fetchCategoryPosts = async url => {
+  const optionsToken = checkForToken()
+
+  const response = await fetch(url, optionsToken)
+  const data = response.json()
+
+  return data
+}
+
 // CREATE, UPDATE, DELETE POST
 export const request = async (action, url, data) => {
   const response = await fetch(url, {

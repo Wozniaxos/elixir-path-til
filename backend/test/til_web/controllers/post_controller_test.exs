@@ -7,7 +7,7 @@ defmodule TilWeb.PostControllerTest do
 
   describe "GET /api/posts" do
     test "returns only public and reviewed posts for unauthenticated users", %{conn: conn} do
-      insert(:post, title: "public post", is_public: true, reviewed: true)
+      first_post = insert(:post, title: "public post", is_public: true, reviewed: true)
       insert(:post, is_public: false, reviewed: false)
       insert(:post, is_public: false, reviewed: true)
       insert(:post, is_public: true, reviewed: false)
@@ -22,6 +22,7 @@ defmodule TilWeb.PostControllerTest do
       assert length(parsed_response_body) == 1
       [post] = parsed_response_body
       assert post["title"] == "public post"
+      assert post["createdAt"] != nil
     end
 
     test "returns only reviewed posts for authenticated users", %{conn: conn} do

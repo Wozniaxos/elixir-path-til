@@ -117,6 +117,18 @@ defmodule Til.ShareableContent do
 
   def get_categories, do: Repo.all(Category)
 
+  def get_category(id, only_public) do
+    case Repo.get(Category, id) do
+      nil -> {:error, :not_found}
+      category ->
+        {
+          :ok,
+          category
+          |> preload_category_posts(only_public)
+        }
+    end
+  end
+
   def encode_post_id(id) do
     jwt_handler().encode_and_sign(
       id,
@@ -162,8 +174,11 @@ defmodule Til.ShareableContent do
 
   defp preload_post_data(post_data), do: Repo.preload(post_data, [:categories, :author, reactions: :user])
 
+  defp preload_category_posts(category, only_public_posts), do: Repo.preload(category, [
+    posts: base_posts_query(only_public_posts)
+  ])
+
   defp jwt_handler do
     Application.get_env(:til, :guardian, Til.Guardian)
   end
 end
-

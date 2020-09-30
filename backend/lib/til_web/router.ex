@@ -19,7 +19,7 @@ defmodule TilWeb.Router do
     pipe_through :api
     resources "/users", UserController, only: [:index, :show]
     resources "/posts", PostController, only: [:index, :show]
-    resources "/categories", CategoryController, only: [:index]
+    resources "/categories", CategoryController, only: [:index, :show]
 
     scope "/statistics", Statistics do
       resources "/users", UserStatisticsController, only: [:index, :show]

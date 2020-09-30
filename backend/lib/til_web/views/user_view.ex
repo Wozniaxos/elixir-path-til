@@ -31,7 +31,7 @@ defmodule TilWeb.UserView do
       firstName: user.first_name,
       lastName: user.last_name,
       image: user.image,
-      posts: render(TilWeb.PostView, "index.json", posts: user.posts)
+      posts: render(TilWeb.PostView, "index_with_nested.json", posts: user.posts)
     }
   end
 end

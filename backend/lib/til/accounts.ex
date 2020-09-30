@@ -8,6 +8,8 @@ defmodule Til.Accounts do
 
   def get_user_by(attrs), do: Repo.get_by(User, attrs)
 
+  @spec get_user_with_posts(any, boolean) ::
+          nil | [%{optional(atom) => any}] | %{optional(atom) => any}
   def get_user_with_posts(uuid, only_public), do: Repo.get_by(User, uuid: uuid) |> preload_posts(only_public)
 
   def get_user_with_all_posts(uuid), do: Repo.get_by(User, uuid: uuid) |> preload_posts()
@@ -25,11 +27,14 @@ defmodule Til.Accounts do
   # private
 
   defp preload_posts(user) do
-    user |> Repo.preload([:posts])
+    user |> Repo.preload([posts: [:categories, :author, reactions: :user]])
   end
 
   defp preload_posts(user, only_public) do
-    post_query = from p in Post, where: p.is_public in ^is_public_in(only_public) and p.reviewed == true
+    post_query =
+      from p in Post,
+      where: p.is_public in ^is_public_in(only_public) and p.reviewed == true,
+      preload: [:categories, :author, reactions: :user]
     user |> Repo.preload([posts: post_query])
   end
 

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { saveCategoryPosts } from '../store/actions/actions'
+import Icon from './UI/Icon'
 
 const Categories = () => {
   const categories = useSelector(state => state.categories)
@@ -15,7 +16,7 @@ const Categories = () => {
   return categories.map(category => (
     <div key={category.name} className="categories__single-category">
       <div className="categories__icon">
-        <i className={`devicon-${category.name}-plain`}></i>
+        <Icon categoryName={category.name} />
       </div>
       <Link className="categories__name" to={`/category/${category.name}`}>
         <div

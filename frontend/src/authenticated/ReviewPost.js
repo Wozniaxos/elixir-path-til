@@ -1,11 +1,11 @@
 import React from 'react'
-import {useEffect} from 'react'
-import {useHistory} from 'react-router-dom'
-import {useDispatch} from 'react-redux'
-import {useState} from 'react'
-import {saveAllPosts} from '../store/actions/actions'
+import { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { saveAllPosts } from '../store/actions/actions'
 import Post from '../components/Post'
-import {useQuery, fetchReviewPost, approvePost} from '../utils'
+import { useQuery, fetchReviewPost, approvePost } from '../utils'
 
 const ReviewPost = () => {
   const history = useHistory()
@@ -42,12 +42,16 @@ const ReviewPost = () => {
     return <p>{post.errors.detail}</p>
   }
 
-
   return (
-    <>
+    <div className="review-post__container">
       <Post post={post} />
-      <button onClick={approvePostHandler}>approve?</button>
-    </>
+      <button
+        className="review-post__confirm-button"
+        onClick={approvePostHandler}
+      >
+        APPROVE?
+      </button>
+    </div>
   )
 }
 

@@ -5,6 +5,8 @@ import { saveAllPosts, saveCurrentUser } from '../store/actions/actions'
 import DeleteModal from './DeleteModal'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 
+const { API_URL } = process.env
+
 const DeletePost = ({ postId }) => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsOpenModal] = useState(false)
@@ -14,7 +16,7 @@ const DeletePost = ({ postId }) => {
   }
 
   const deletePost = async () => {
-    const isDeleted = await request('DELETE', `/api/me/posts/${postId}`)
+    const isDeleted = await request('DELETE', `${API_URL}/api/me/posts/${postId}`)
 
     if (isDeleted.ok) {
       dispatch(saveAllPosts())

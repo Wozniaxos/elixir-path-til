@@ -7,6 +7,8 @@ import {
   fetchSearchedPosts,
 } from '../../utils'
 
+const { API_URL } = process.env
+
 // CATEGORIES
 const getAllCategories = categories => ({
   type: actionTypes.GET_ALL_CATEGORIES,
@@ -14,7 +16,7 @@ const getAllCategories = categories => ({
 })
 
 export const saveAllCategories = () => async dispatch => {
-  const categoriesArray = await fetchData('/api/categories')
+  const categoriesArray = await fetchData(`${API_URL}/api/categories`)
 
   dispatch(getAllCategories(categoriesArray))
 }
@@ -26,7 +28,7 @@ const getCurrentUser = currentUser => ({
 })
 
 export const saveCurrentUser = () => async dispatch => {
-  let currentUser = await fetchUser('/api/me')
+  let currentUser = await fetchUser(`${API_URL}/api/me`)
 
   if (currentUser.errors) {
     currentUser = false
@@ -62,7 +64,7 @@ export const getCategoryPosts = categoryPosts => ({
 })
 
 export const saveCurrentUserPosts = id => async dispatch => {
-  const posts = await fetchUserPosts('/api/users/', id)
+  const posts = await fetchUserPosts(`${API_URL}/api/users/`, id)
 
   dispatch(getCurrentUserPosts(posts))
 }
@@ -74,7 +76,7 @@ const getAllUsers = users => ({
 })
 
 export const saveAllUsers = () => async dispatch => {
-  const allUsers = await fetchData('/api/statistics/users')
+  const allUsers = await fetchData(`${API_URL}/api/statistics/users`)
 
   dispatch(getAllUsers(allUsers))
 }
@@ -86,7 +88,7 @@ const getPosts = posts => ({
 })
 
 export const saveAllPosts = () => async dispatch => {
-  const allPosts = await fetchData('/api/posts')
+  const allPosts = await fetchData(`${API_URL}/api/posts`)
 
   dispatch(getPosts(allPosts))
 }

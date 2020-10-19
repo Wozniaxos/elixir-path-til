@@ -13,6 +13,8 @@ import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
 import PostSeparator from '../components/UI/PostSeparator'
 
+const { API_URL } = process.env
+
 const AddPost = () => {
   const [buttonState, setButtonState] = useState(true)
   const [userCategories, setUserCategories] = useState([])
@@ -35,7 +37,7 @@ const AddPost = () => {
       reviewed: !isReviewNeeded,
     }
 
-    const savePost = await request('POST', '/api/posts', JSON.stringify(post))
+    const savePost = await request('POST', `${API_URL}/api/posts`, JSON.stringify(post))
 
     if (savePost.ok) {
       dispatch(saveAllPosts())

@@ -3,13 +3,15 @@ import { fetchSinglePost } from '../utils'
 import { useParams } from 'react-router-dom'
 import Post from '../components/Post'
 
+const { API_URL } = process.env
+
 const DisplayPost = () => {
   const [post, setPost] = useState(null)
   const { id } = useParams()
 
   useEffect(() => {
     const fetchPost = async () => {
-      const post = await fetchSinglePost('/api/posts/', id)
+      const post = await fetchSinglePost(`${API_URL}/api/posts/`, id)
       setPost(post)
     }
     fetchPost()

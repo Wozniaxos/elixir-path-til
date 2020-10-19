@@ -7,6 +7,8 @@ import { saveAllPosts } from '../store/actions/actions'
 import Post from '../components/Post'
 import { useQuery, fetchReviewPost, approvePost } from '../utils'
 
+const { API_URL } = process.env
+
 const ReviewPost = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -17,7 +19,7 @@ const ReviewPost = () => {
   useEffect(() => {
     const fetchpost = async () => {
       const hash = query.get('hashed_id')
-      const post = await fetchReviewPost(`/api/posts/${hash}/review`)
+      const post = await fetchReviewPost(`${API_URL}/api/posts/${hash}/review`)
       setHash(hash)
       setPost(post)
     }
@@ -27,7 +29,7 @@ const ReviewPost = () => {
   }, [])
 
   const approvePostHandler = () => {
-    const response = approvePost(`/api/posts/${hash}/review`)
+    const response = approvePost(`${API_URL}/api/posts/${hash}/review`)
     if (response) {
       dispatch(saveAllPosts())
       history.push('/')

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { fetchUserPosts } from '../utils'
 
+const { API_URL } = process.env
+
 const UserPosts = () => {
   const [userPosts, setUserPosts] = useState([])
   const { id } = useParams()
 
   useEffect(() => {
     const posts = async () => {
-      const posts = await fetchUserPosts('/api/users/', id)
+      const posts = await fetchUserPosts(`${API_URL}/api/users/`, id)
 
       setUserPosts(posts)
     }

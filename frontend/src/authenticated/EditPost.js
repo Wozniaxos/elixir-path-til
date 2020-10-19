@@ -11,6 +11,8 @@ import customStyles from '../styles/ReactSelectCustomStyles/customStyles'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 import PostSeparator from '../components/UI/PostSeparator'
 
+const { API_URL } = process.env
+
 const EditPost = () => {
   const [buttonState, setButtonState] = useState(true)
   const [markdown, setMarkdown] = useState('')
@@ -29,7 +31,7 @@ const EditPost = () => {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const post = await fetchSinglePost('/api/posts/', id)
+      const post = await fetchSinglePost(`${API_URL}/api/posts/`, id)
 
       setMarkdown(post.body)
       setTitle(post.title)
@@ -60,7 +62,7 @@ const EditPost = () => {
     }
     const post = await request(
       'PATCH',
-      '/api/me/posts/' + id,
+      `${API_URL}/api/me/posts/` + id,
       JSON.stringify(markdownPost)
     )
 

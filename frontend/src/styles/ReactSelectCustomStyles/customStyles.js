@@ -38,7 +38,6 @@ const customStyles = {
     background: 'transparent',
     color: '#a0a0a0',
     border: '1px solid #8a8a8a',
-    'border-radius': '8px',
     display: 'flex',
     'justify-content': 'space-between',
     padding: '4px 14px',

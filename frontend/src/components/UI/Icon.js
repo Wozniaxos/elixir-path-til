@@ -31,104 +31,71 @@ const Icon = ({ categoryName }) => {
   switch (categoryName) {
     case 'android':
       return <AiOutlineAndroid />
-      break
     case 'angular':
       return <SiAngular />
-      break
     case 'aws':
       return <FaAws />
-      break
     case 'chrome':
       return <FiChrome />
-      break
     case 'commandline':
       return <BsTerminalFill />
-      break
     // case 'crystal':
     //   return <Crystal />
-    //   break
     case 'css':
       return <FaCss3 />
-      break
     case 'docker':
       return <SiDocker />
-      break
     case 'elixir':
       return <SiElixir />
-      break
     case 'ember':
       return <SiEmberDotJs />
-      break
     case 'erlang':
       return <FaErlang />
-      break
     case 'flutter':
       return <SiFlutter />
-      break
     // case 'general':
     case 'git':
       return <BiGitBranch />
-      break
     case 'heroku':
       return <SiHeroku />
-      break
     case 'html':
       return <AiFillHtml5 />
-      break
     case 'javascript':
       return <SiJavascript />
-      break
     // case 'k8s':
     //   return < />
-    //   break
     case 'linux':
       return <SiLinux />
-      break
     case 'markdown':
       return <GoMarkdown />
-      break
     // case 'meetup':
     //   return < />
-    //   break
     case 'mongodb':
       return <DiMongodb />
-      break
     case 'nodejs':
       return <GrNode />
-      break
     case 'osx':
       return <FaApple />
-      break
     // case 'phoenix':
     //   return < />
-    //   break
     case 'rails':
       return <SiRails />
-      break
     case 'react':
       return <SiReact />
-      break
     // case 'react-native':
     //   return < />
-    //   break
     case 'redis':
       return <SiRedis />
-      break
     case 'ruby':
       return <DiRuby />
-      break
     case 'rust':
       return <SiRust />
-      break
     // case 'sql':
     //   return < />
-    //   break
     case 'terraform':
       return <SiTerraform />
-      break
     // case 'vault':
     //   return < />
-    //   break
     default:
       return null
   }

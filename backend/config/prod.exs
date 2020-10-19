@@ -14,7 +14,7 @@ config :til, TilWeb.Endpoint,
   url: [host: "selleo-til-beta.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]]
 
-config :hello, Til.Repo,
+config :til, Til.Repo,
   ssl: true,
   url: System.get_env("DATABASE_URL"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")

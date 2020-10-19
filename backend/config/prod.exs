@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :til, TilWeb.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "selleo-til-api.herokuapp.com", port: 443],
+  url: [host: "selleo-til-beta.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]]
 
 config :hello, Til.Repo,

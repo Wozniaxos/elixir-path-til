@@ -7,7 +7,7 @@ import { saveAllPosts } from '../store/actions/actions'
 import Post from '../components/Post'
 import { useQuery, fetchReviewPost, approvePost } from '../utils'
 
-const { API_URL } = process.env
+const { REACT_APP_API_URL: API_URL } = process.env
 
 const ReviewPost = () => {
   const history = useHistory()

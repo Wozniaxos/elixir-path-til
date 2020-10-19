@@ -5,7 +5,7 @@ import { saveAllPosts, saveCurrentUser } from '../store/actions/actions'
 import DeleteModal from './DeleteModal'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 
-const { API_URL } = process.env
+const { REACT_APP_API_URL: API_URL } = process.env
 
 const DeletePost = ({ postId }) => {
   const dispatch = useDispatch()

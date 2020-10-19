@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { fetchUserPosts } from '../utils'
 
-const { API_URL } = process.env
+const { REACT_APP_API_URL: API_URL } = process.env
 
 const UserPosts = () => {
   const [userPosts, setUserPosts] = useState([])

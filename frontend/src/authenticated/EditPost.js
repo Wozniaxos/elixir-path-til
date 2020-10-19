@@ -11,7 +11,7 @@ import customStyles from '../styles/ReactSelectCustomStyles/customStyles'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 import PostSeparator from '../components/UI/PostSeparator'
 
-const { API_URL } = process.env
+const { REACT_APP_API_URL: API_URL } = process.env
 
 const EditPost = () => {
   const [buttonState, setButtonState] = useState(true)

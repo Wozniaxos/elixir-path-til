@@ -7,7 +7,7 @@ import {
   fetchSearchedPosts,
 } from '../../utils'
 
-const { API_URL } = process.env
+const { REACT_APP_API_URL: API_URL } = process.env
 
 // CATEGORIES
 const getAllCategories = categories => ({

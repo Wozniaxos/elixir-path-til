@@ -3,7 +3,7 @@ import { fetchSinglePost } from '../utils'
 import { useParams } from 'react-router-dom'
 import Post from '../components/Post'
 
-const { API_URL } = process.env
+const { REACT_APP_API_URL: API_URL } = process.env
 
 const DisplayPost = () => {
   const [post, setPost] = useState(null)

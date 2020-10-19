@@ -13,7 +13,7 @@ import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
 import PostSeparator from '../components/UI/PostSeparator'
 
-const { API_URL } = process.env
+const { REACT_APP_API_URL: API_URL } = process.env
 
 const AddPost = () => {
   const [buttonState, setButtonState] = useState(true)

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { saveCategoryPosts } from '../store/actions/actions'
 import Icon from './UI/Icon'
+import { sortCategories } from '../utils/array/helpers.js'
 
 const Categories = () => {
   const categories = useSelector(state => state.categories)
@@ -12,8 +13,9 @@ const Categories = () => {
   const handleClick = id => {
     dispatch(saveCategoryPosts(id))
   }
+  const sortedCategories = sortCategories(categories)
 
-  return categories.sort().map(category => (
+  return sortedCategories.map(category => (
     <div key={category.name} className="categories__single-category">
       <div className="categories__icon">
         <Icon categoryName={category.name} />

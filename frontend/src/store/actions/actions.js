@@ -56,7 +56,6 @@ export const saveCategoryPosts = id => async dispatch => {
   const categoryPosts = await fetchCategoryPosts(
     `${API_URL}/api/categories/${id}`
   )
-  console.log('==>>', 'categoryPosts', '==>>', categoryPosts)
   dispatch(getCategoryPosts(categoryPosts))
 }
 

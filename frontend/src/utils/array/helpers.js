@@ -21,3 +21,17 @@ export const checkHasReacted = (reaction, userId) => {
 
   return reactionArray.includes(userId)
 }
+
+const compare = (a, b) => {
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+}
+
+export const sortCategories = (categories) => {
+  return categories.sort(compare)
+}

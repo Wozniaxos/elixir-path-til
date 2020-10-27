@@ -3,7 +3,7 @@ import 'react-mde/lib/styles/css/react-mde-all.css'
 import { request, convertToSelectOptions } from '../utils'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { saveCurrentUser, saveAllPosts } from '../store/actions/actions'
+import { saveAllCategories, saveCurrentUser, saveAllPosts } from '../store/actions/actions'
 import CreatableSelect from 'react-select/creatable'
 import customStyles from '../styles/ReactSelectCustomStyles/customStyles'
 import errorToast from '../utils/toasts/errorToast'
@@ -42,6 +42,7 @@ const AddPost = () => {
     if (savePost.ok) {
       dispatch(saveAllPosts())
       dispatch(saveCurrentUser())
+      dispatch(saveAllCategories())
       postSuccessToast('Post added successfully!')
       history.push('/')
     } else {
@@ -75,7 +76,7 @@ const AddPost = () => {
 
   const handlePublicCheckbox = () => {
     setIsPublic(!isPublic)
-    ;(!isReviewNeeded || isPublic) && handleReviewCheckbox()
+      ; (!isReviewNeeded || isPublic) && handleReviewCheckbox()
   }
 
   const handleReviewCheckbox = () => {

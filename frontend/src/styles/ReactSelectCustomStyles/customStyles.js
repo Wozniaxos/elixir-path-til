@@ -47,8 +47,6 @@ const customStyles = {
     ...provided,
     color: '#a0a0a0',
     'text-transform': 'uppercase',
-    // border: '1px solid #8a8a8a',
-    // 'border-radius': '8px',
   }),
   multiValueRemove: (provided, state) => ({
     ...provided,
@@ -84,6 +82,9 @@ const customStyles = {
   indicatorSeparator: (provided, state) => ({
     ...provided,
     display: 'none',
+  }),
+  input: () => ({
+    color: '#A0A0A0'
   }),
   dropdownIndicator: (provided, state) => ({
     ...provided,

@@ -13,7 +13,7 @@ const Categories = () => {
     dispatch(saveCategoryPosts(id))
   }
 
-  return categories.map(category => (
+  return categories.sort().map(category => (
     <div key={category.name} className="categories__single-category">
       <div className="categories__icon">
         <Icon categoryName={category.name} />

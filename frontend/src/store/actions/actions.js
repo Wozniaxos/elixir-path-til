@@ -1,4 +1,5 @@
 import * as actionTypes from '../actionTypes'
+
 import {
   fetchUser,
   fetchUserPosts,
@@ -8,7 +9,6 @@ import {
 } from '../../utils'
 
 const { REACT_APP_API_URL: API_URL } = process.env
-console.log('==>>', process.env)
 
 // CATEGORIES
 const getAllCategories = categories => ({
@@ -105,6 +105,7 @@ const getSerchedPosts = searchedPosts => ({
 export const saveSearchedPosts = query => async dispatch => {
   const searchedPosts = await fetchSearchedPosts(query)
 
+  dispatch(saveSearchedQuery(query))
   dispatch(getSerchedPosts(searchedPosts))
 }
 

@@ -3,7 +3,11 @@ import 'react-mde/lib/styles/css/react-mde-all.css'
 import { request, convertToSelectOptions } from '../utils'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { saveAllCategories, saveCurrentUser, saveAllPosts } from '../store/actions/actions'
+import {
+  saveAllCategories,
+  saveCurrentUser,
+  saveAllPosts,
+} from '../store/actions/actions'
 import CreatableSelect from 'react-select/creatable'
 import customStyles from '../styles/ReactSelectCustomStyles/customStyles'
 import errorToast from '../utils/toasts/errorToast'
@@ -37,7 +41,11 @@ const AddPost = () => {
       reviewed: !isReviewNeeded,
     }
 
-    const savePost = await request('POST', `${API_URL}/api/posts`, JSON.stringify(post))
+    const savePost = await request(
+      'POST',
+      `${API_URL}/api/posts`,
+      JSON.stringify(post)
+    )
 
     if (savePost.ok) {
       dispatch(saveAllPosts())
@@ -76,7 +84,7 @@ const AddPost = () => {
 
   const handlePublicCheckbox = () => {
     setIsPublic(!isPublic)
-      ; (!isReviewNeeded || isPublic) && handleReviewCheckbox()
+    ;(!isReviewNeeded || isPublic) && handleReviewCheckbox()
   }
 
   const handleReviewCheckbox = () => {

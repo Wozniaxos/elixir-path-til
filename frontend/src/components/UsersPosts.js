@@ -21,9 +21,9 @@ const UserPosts = () => {
   return (
     <>
       <h3>Users posts</h3>
-      {userPosts.map(post => (
-        <Link to={`/posts/${post.id}`} key={post.id}>
-          <p>{post.title}</p>
+      {userPosts.map(({ id, title }) => (
+        <Link to={`/posts/${id}`} key={id}>
+          <p>{title}</p>
         </Link>
       ))}
     </>

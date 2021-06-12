@@ -1,5 +1,6 @@
 defmodule TilWeb.PostView do
   use TilWeb, :view
+  import Phoenix.Pagination.JSON
 
   def render("index.json", %{posts: posts}) do
     posts
@@ -9,6 +10,11 @@ defmodule TilWeb.PostView do
   def render("index_with_nested.json", %{posts: posts}) do
     posts
     |> Enum.map(fn post -> serialize_post(post, :nested) end)
+  end
+
+  def render("paginated_index_with_nested.json", %{posts: posts, conn: conn}) do
+    serialized_posts = Enum.map(posts.posts, fn post -> serialize_post(post, :nested) end)
+    %{data: serialized_posts, pagination: paginate(conn, posts.pagination)}
   end
 
   def render("show.json", %{post: post}) do

@@ -4,13 +4,22 @@ defmodule TilWeb.PostController do
   alias Til.ShareableContent
   alias Til.Notifications
 
-  def index(conn, params) do
+  def index(conn, %{"q" => _} = params) do
     only_public = is_nil conn.private[:guardian_default_resource]
     posts = ShareableContent.get_posts(only_public, params)
 
     conn
       |> put_status(:ok)
-      |> render("index_with_nested.json", posts: posts)
+      |> render("index_with_nested.json", posts: posts, conn: conn)
+  end
+
+  def index(conn, params) do
+    only_public = is_nil conn.private[:guardian_default_resource]
+    posts = ShareableContent.get_paginated_posts(only_public, params)
+
+    conn
+      |> put_status(:ok)
+      |> render("paginated_index_with_nested.json", posts: posts, conn: conn)
   end
 
   def show(conn, %{"id" => id}) do

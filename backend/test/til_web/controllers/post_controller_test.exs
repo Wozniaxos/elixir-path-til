@@ -19,8 +19,9 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert length(parsed_response_body) == 1
-      [post] = parsed_response_body
+
+      assert length(parsed_response_body["data"]) == 1
+      [post] = parsed_response_body["data"]
       assert post["title"] == "public post"
       assert post["createdAt"] != nil
     end
@@ -42,8 +43,8 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert length(parsed_response_body) == 2
-      [first_post, second_post] = parsed_response_body
+      assert length(parsed_response_body["data"]) == 2
+      [first_post, second_post] = parsed_response_body["data"]
       assert first_post["title"] == "public reviewed post"
       assert second_post["title"] == "internal reviewed post"
     end
@@ -63,7 +64,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      [first_post, second_post] = parsed_response_body
+      [first_post, second_post] = parsed_response_body["data"]
       assert first_post["categories"] == [first_category.name, second_category.name]
       assert second_post["categories"] == [first_category.name]
     end
@@ -86,7 +87,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      [first_responded_post, second_responded_post] = parsed_response_body
+      [first_responded_post, second_responded_post] = parsed_response_body["data"]
       assert first_responded_post["reactionCount"] == 2
       assert second_responded_post["reactionCount"] == 1
     end
@@ -110,7 +111,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      [first_responded_post, second_responded_post] = parsed_response_body
+      [first_responded_post, second_responded_post] = parsed_response_body["data"]
 
       [first_responded_reaction, second_responded_reaction] = first_responded_post["reactions"]
       [third_responded_reaction] = second_responded_post["reactions"]

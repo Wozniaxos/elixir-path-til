@@ -80,6 +80,14 @@ defmodule Til.ShareableContent do
     |> Enum.map(&Post.populate_reaction_count/1)
   end
 
+  def get_paginated_posts(only_public, paging_params) do
+    {posts, pagination} = base_posts_query(only_public)
+    |> Repo.paginate(paging_params)
+
+    populated_posts = Enum.map(posts, fn x -> Post.populate_reaction_count(x) end)
+    %{posts: populated_posts, pagination: pagination}
+  end
+
   def create_post(_, %{"is_public" => true, "reviewed" => true}) do
     {:error, :public_reviewed_forbidden}
   end

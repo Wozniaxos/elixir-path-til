@@ -46,7 +46,8 @@ defmodule Til.MixProject do
       {:ex_machina, "~> 2.3", only: :test},
       {:bodyguard, "~> 2.4"},
       {:httpoison, "~> 1.6"},
-      {:cors_plug, "~> 2.0"}
+      {:cors_plug, "~> 2.0"},
+      {:jsonapi, "~> 1.3.0"}
     ]
   end
 

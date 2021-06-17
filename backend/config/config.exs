@@ -7,6 +7,9 @@
 # General application configuration
 use Mix.Config
 
+config :jsonapi,
+  field_transformation: :camelize
+
 config :til,
   ecto_repos: [Til.Repo],
   frontend_host: System.get_env("FRONTEND_HOST"),

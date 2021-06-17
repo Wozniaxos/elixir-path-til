@@ -15,6 +15,11 @@ defmodule TilWeb.Router do
     get "/:provider/callback", AuthController, :callback
   end
 
+  scope "/api/v2", TilWeb.JSONAPI do
+    pipe_through :api
+    resources "/posts", PostController, only: [:index, :show]
+  end
+
   scope "/api", TilWeb do
     pipe_through :api
     resources "/users", UserController, only: [:index, :show]

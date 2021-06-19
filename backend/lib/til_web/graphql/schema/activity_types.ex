@@ -1,5 +1,5 @@
 # lib/graphql_tutorial_web/schema/product_types.ex
-defmodule TilWeb.Schema.ActivityTypes do
+defmodule TilWeb.GraphQL.Schema.ActivityTypes do
   use Absinthe.Schema.Notation
 
   @desc "A reaction"

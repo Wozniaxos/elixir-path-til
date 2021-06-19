@@ -1,5 +1,5 @@
 # lib/graphql_tutorial_web/schema/product_types.ex
-defmodule TilWeb.Schema.AccountTypes do
+defmodule TilWeb.GraphQL.Schema.AccountTypes do
   use Absinthe.Schema.Notation
 
   @desc "A user"

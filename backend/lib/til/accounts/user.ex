@@ -15,7 +15,7 @@ defmodule Til.Accounts.User do
   end
 
   def changeset(struct, params) do
-    params = if params.password,
+    params = if params["password"],
       do: Map.put(params, :password, Comeonin.Argon2.hashpwsalt(params.password)),
       else: params
 

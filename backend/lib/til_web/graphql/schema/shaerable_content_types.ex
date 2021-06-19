@@ -1,5 +1,5 @@
 # lib/graphql_tutorial_web/schema/product_types.ex
-defmodule TilWeb.Schema.ShareableContentTypes do
+defmodule TilWeb.GraphQL.Schema.ShareableContentTypes do
   use Absinthe.Schema.Notation
 
   @desc "A post"

@@ -46,12 +46,12 @@ defmodule TilWeb.Router do
     pipe_through :api
     pipe_through :graphql
 
-    forward "/", Absinthe.Plug, schema: TilWeb.Schema
+    forward "/", Absinthe.Plug, [schema: TilWeb.GraphQL.Schema, adapter: Absinthe.Adapter.LanguageConventions]
   end
 
   if Mix.env == :dev do
     pipe_through :api
     pipe_through :graphql
-    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: TilWeb.Schema
+    forward "/graphiql", Absinthe.Plug.GraphiQL, [schema: TilWeb.GraphQL.Schema, adapter: Absinthe.Adapter.LanguageConventions]
   end
 end

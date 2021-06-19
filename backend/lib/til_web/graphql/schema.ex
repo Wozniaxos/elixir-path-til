@@ -1,12 +1,12 @@
-defmodule TilWeb.Schema do
+defmodule TilWeb.GraphQL.Schema do
   use Absinthe.Schema
 
   import_types Absinthe.Type.Custom
-  import_types TilWeb.Schema.AccountTypes
-  import_types TilWeb.Schema.ActivityTypes
-  import_types TilWeb.Schema.ShareableContentTypes
+  import_types TilWeb.GraphQL.Schema.AccountTypes
+  import_types TilWeb.GraphQL.Schema.ActivityTypes
+  import_types TilWeb.GraphQL.Schema.ShareableContentTypes
 
-  alias TilWeb.Resolvers
+  alias TilWeb.GraphQL.Resolvers
 
   query do
     @desc "Get all posts"

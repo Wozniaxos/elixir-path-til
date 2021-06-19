@@ -1,4 +1,4 @@
-defmodule TilWeb.Resolvers.ShareableContent do
+defmodule TilWeb.GraphQL.Resolvers.ShareableContent do
   alias Til.ShareableContent
 
   def list_posts(_parent, _args, _context) do

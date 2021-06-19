@@ -1,4 +1,4 @@
-defmodule TilWeb.Resolvers.Accounts do
+defmodule TilWeb.GraphQL.Resolvers.Accounts do
   alias Til.Accounts
   alias Til.Accounts.User
 

@@ -5,6 +5,7 @@ defmodule Til.Accounts.User do
 
   schema "users" do
     field :email, :string
+    field :password, :string
     field :first_name, :string
     field :last_name, :string
     field :image, :string
@@ -14,8 +15,12 @@ defmodule Til.Accounts.User do
   end
 
   def changeset(struct, params) do
+    params = if params["password"],
+      do: Map.put(params, :password, Comeonin.Argon2.hashpwsalt(params.password)),
+      else: params
+
     struct
-    |> cast(params, [:uuid, :email, :first_name, :last_name, :image])
+    |> cast(params, [:uuid, :email, :first_name, :password, :last_name, :image])
     |> validate_format(:email, ~r/@/)
     |> validate_required([:email, :uuid])
     |> unique_constraint(:email)

@@ -10,6 +10,10 @@ defmodule TilWeb.Router do
     plug TilWeb.Plug.AuthAccessPipeline
   end
 
+  pipeline :graphql do
+    plug TilWeb.Context
+  end
+
   scope "/auth", TilWeb do
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
@@ -36,5 +40,18 @@ defmodule TilWeb.Router do
       get "/review", Posts.ReviewController, :show
       put "/review", Posts.ReviewController, :approve
     end
+  end
+
+  scope "/api/graphql" do
+    pipe_through :api
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug, [schema: TilWeb.GraphQL.Schema, adapter: Absinthe.Adapter.LanguageConventions]
+  end
+
+  if Mix.env == :dev do
+    pipe_through :api
+    pipe_through :graphql
+    forward "/graphiql", Absinthe.Plug.GraphiQL, [schema: TilWeb.GraphQL.Schema, adapter: Absinthe.Adapter.LanguageConventions]
   end
 end
